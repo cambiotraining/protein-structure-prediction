@@ -1,0 +1,47 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+# Note: we use the author alias to record author contributions
+# This is a known limitation of CFF files: https://github.com/citation-file-format/citation-file-format/issues/112
+
+cff-version: 1.2.0
+title: Course Development Guidelines
+message: >-
+  You may cite these materials using the metadata in this
+  file. Please cite our materials if you publish materials
+  derived from these, run a workshop using them, or use
+  the information in your own work.
+type: dataset
+authors:
+  - given-names: Bajuna
+    family-names: Salehe
+    affiliation: Cambridge Centre for Research Informatics Training
+    website: 'https://bioinfotraining.bio.cam.ac.uk/staff/bajuna-salehe-phd'
+    orcid: ''
+    alias: 'conceptualisation; primary author; data curation; software'
+  - given-names: Matthew
+    family-names: Jackson
+    affiliation: MRC Toxicology Unit, University of Cambridge
+    orcid: ''
+    alias: 'conceptualisation; primary author; software'
+  - given-names: Isabelle
+    family-names: Zane
+    affiliation: Wellcome Sanger Institute
+    orcid: ''
+    alias: 'conceptualisation; primary author; data curation; software'
+  - given-names: Yu
+    family-names: Zhu
+    affiliation: Department of Pharmacology, University of Cambridge
+    orcid: ''
+    alias: 'conceptualisation; primary author; data curation; software'
+  - given-names: Hugo
+    family-names: Tavares
+    affiliation: Cambridge Centre for Research Informatics Training
+    website: 'https://bioinfotraining.bio.cam.ac.uk/staff/hugo-tavares-phd'
+    orcid: 'https://orcid.org/0000-0001-9373-2726'
+    alias: 'editor'
+repository-code: 'https://github.com/cambiotraining/protein-structure-prediction'
+url: 'https://cambiotraining.github.io/protein-structure-prediction'
+license: CC-BY-4.0
+commit: 
+date-released: '2025-04-09'

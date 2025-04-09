@@ -1,0 +1,14 @@
+book:
+  chapters:
+    - part: "Formats and databases"
+      chapters:
+        - materials/00-template.md
+    - part: "Structure prediction"
+      chapters:
+        - materials/00-template.md
+    - part: "Visualisation"
+      chapters: 
+        - materials/00-template.md
+    - part: "Ligand binding"
+      chapters:
+        - materials/00-template.md
