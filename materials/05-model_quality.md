@@ -9,12 +9,21 @@ title: Model quality assessment
 :::
 
 
-## Section
+## Exercise
 
-Headings for material sections start at level 2. 
+Scores the models using ModFOLDdock for “numb_delta_human_complexes” generated from the exercise 6.
 
-More guidelines for content available here: https://cambiotraining.github.io/quarto-course-template/materials/02-content_guidelines.html
-
+- Open the submission form in the web page.
+- Copy your sequences from FASTA file and paste them to the form
+- + FASTA file is “data/04_multimers/numb_delta_human_complex.fasta”
+- Type the letters indicating the stoichiometry for your structure (A1B1)
+- Copy both models predicted from exercise 6 to a single directory which is relevantly named and compress this folder (tar and gzip it)
+- Upload them into the ModFOLDdock
+- Write the job name and your email
+- Submit the model for quality estimation or scoring
+- Create results directory (results/06_quality/numb_delta_scoring)
+- Once the outputs are generated save them in the results directory.
+- Download both pdb files and machine readable data from the results page
 
 ## Summary
 
