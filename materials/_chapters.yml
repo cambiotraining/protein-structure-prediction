@@ -1,14 +1,18 @@
 book:
   chapters:
-    - part: "Formats and databases"
+    - part: "Introduction"
       chapters:
-        - materials/00-template.md
-    - part: "Structure prediction"
+        - materials/00-intro.md
+        - materials/01-formats.md
+        - materials/02-databases.md
+    - part: "Structure prediction and analysis"
       chapters:
-        - materials/00-template.md
-    - part: "Visualisation"
-      chapters: 
-        - materials/00-template.md
-    - part: "Ligand binding"
+        - materials/03-monomer.md
+        - materials/04-multimer.md
+        - materials/05-model_quality.md
+        - materials/06-model_comparison.md
+        - materials/07-chimerax.md
+    - part: "Functional analysis"
       chapters:
-        - materials/00-template.md
+        - materials/08-ligand.md
+        - materials/09-docking.md
