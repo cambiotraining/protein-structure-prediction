@@ -18,7 +18,7 @@ More guidelines for content available here: https://cambiotraining.github.io/qua
 
 ## Exercise
 
-In exercise 1, we managed to polish our sequence input by removing spaces and other unwanted characters. You were asked to save its output as “numb_delta_human_complex.fasta” in the directory “data/04_multimers/”. You are now required to:
+In exercise 4.2, we managed to polish our sequence input by removing spaces and other unwanted characters. You were asked to save its output as “numb_delta_human_complex.fasta” in the directory “data/04_multimers/”. You are now required to:
 
 - perform multimer predictions with ColabFold and AlphaFold3. You are free to choose any flag options in your modelling, but it is good practice to note them down for reproducibility.
 
