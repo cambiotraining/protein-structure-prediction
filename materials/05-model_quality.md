@@ -13,7 +13,7 @@ title: Model quality assessment
 
 Open an AlphaFold Protein Database (AFDB) and search GPCR protein AF-Q5T6X5-F1-v4. Interpret its structure which is visualised based on pLDDT scores and PAE plots. 
 
-:::{callout-note}
+:::{.callout-note}
 ## Hint
 
 - Look at the regions with low pLDDT and note their positions
