@@ -37,7 +37,7 @@ Model the protein target in FASTA file “data/06_chimerax/rcsb_pdb_1ERE.fasta�
 
 - Which fold/model looks similar to the reference PDB structure (1ERE)? 
 
-:::{callout-note}
+::: {.callout-tip}
 ## Hint
 
 Try to load 1ERE.pdb and structure model into ChimeraX and superimpose them. If you can’t do at the moment, we will cover later in the ChimeraX session.
