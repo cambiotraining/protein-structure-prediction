@@ -21,9 +21,9 @@ More guidelines for content available here: https://cambiotraining.github.io/qua
 
 2. Have you obtained the 3D structure?
 
-- + If YES, open the CATH database website (http://www.cathdb.info/search/by_structure) and upload your structure which should be in PDB format into CATH search textbox and submit to search the database to classify your structure’s fold according to the CATH classification system.
+ + If YES, open the CATH database website (http://www.cathdb.info/search/by_structure) and upload your structure which should be in PDB format into CATH search textbox and submit to search the database to classify your structure’s fold according to the CATH classification system.
 
-- + If NO, then do you have any thought why you did not get any results? What could you do to proceed with your analysis?
+ + If NO, then do you have any thought why you did not get any results? What could you do to proceed with your analysis?
 
 
 ## Summary
