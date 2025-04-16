@@ -24,7 +24,7 @@ Open an AlphaFold Protein Database (AFDB) and search GPCR protein AF-Q5T6X5-F1-v
 
 ## Exercise
 
-Scores the models using ModFOLDdock for “numb_delta_human_complexes” generated from the exercise 6.
+Scores the models using ModFOLDdock for “numb_delta_human_complexes” generated from the exercise 7.2.
 
 - Open the submission form in the web page.
 
@@ -34,7 +34,7 @@ Scores the models using ModFOLDdock for “numb_delta_human_complexes” generat
 
 - Type the letters indicating the stoichiometry for your structure (A1B1)
 
-- Copy both models predicted from exercise 6 to a single directory which is relevantly named and compress this folder (tar and gzip it)
+- Copy both models predicted from exercise 7.2 to a single directory which is relevantly named and compress this folder (tar and gzip it)
 
 - Upload them into the ModFOLDdock
 
