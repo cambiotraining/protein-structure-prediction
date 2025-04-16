@@ -33,7 +33,7 @@ More guidelines for content available here: https://cambiotraining.github.io/qua
 
 ## Exercise
 
-In exercise 3 in the structural database question we attempted to look for the 3D structure of our unknown phage sequence (data/02_structural_databases/T1113_phage.fasta) using AlphaFoldDB. But we could not find the related structure for our sequence. Now you are asked to use ColabFold, and AlphaFold3 to model the structure of the sequence. In the results directory, create two folders for each of the individual software outputs. Remember to note down all parameter flags you used for each tool.
+In exercise 5.2 in the structural database section we attempted to look for the 3D structure of our unknown phage sequence (data/02_structural_databases/T1113_phage.fasta) using AlphaFoldDB. But we could not find the related structure for our sequence. Now you are asked to use ColabFold, and AlphaFold3 to model the structure of the sequence. In the results directory, create two folders for each of the individual software outputs. Remember to note down all parameter flags you used for each tool.
 
 - Observe the plots and scores from each tool
 
