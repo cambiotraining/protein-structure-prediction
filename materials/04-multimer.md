@@ -16,7 +16,8 @@ Headings for material sections start at level 2.
 More guidelines for content available here: https://cambiotraining.github.io/quarto-course-template/materials/02-content_guidelines.html
 
 
-## Exercise
+:::{.callout-exercise}
+#### Modelling protein-protein interaction
 
 In exercise 4.2 in the File Format section, we managed to polish our sequence input by removing spaces and other unwanted characters. You were asked to save its output as “numb_delta_human_complex.fasta” in the directory “data/04_multimers/”. You are now required to:
 
@@ -26,8 +27,10 @@ In exercise 4.2 in the File Format section, we managed to polish our sequence in
 
 - Load each model into ChimeraX and observe their structures by rotating the models in different ways. Note any differences.
 
+:::
 
-## Exercise
+:::{.callout-exercise}
+#### Ligand-binding protein
 
 Model the protein target in FASTA file “data/06_chimerax/rcsb_pdb_1ERE.fasta” using ColabFold and AlphaFold3. Save the output in the folder “results/04_multimers/<tool_name>”.
 
@@ -36,6 +39,8 @@ Model the protein target in FASTA file “data/06_chimerax/rcsb_pdb_1ERE.fasta�
 - Which model has the highest score in pTM?
 
 - Which fold/model looks similar to the reference PDB structure (1ERE)? 
+
+:::
 
 ::: {.callout-tip}
 ## Hint

@@ -15,8 +15,8 @@ Headings for material sections start at level 2.
 
 More guidelines for content available here: https://cambiotraining.github.io/quarto-course-template/materials/02-content_guidelines.html
 
-
-## Exercise
+:::{.callout-exercise}
+#### Identifying interactions
 
 - 1ERE (Human Estrogen Receptor bound with Estradiol)
 
@@ -26,8 +26,10 @@ More guidelines for content available here: https://cambiotraining.github.io/qua
 
 ![](../course_files/images/chimerax_exercise1.png)
 
+:::
 
-## Exercise
+:::{.callout-exercise}
+#### Finding potential pockets (binding sites)
 
 1ERE (Human Estrogen Receptor bound with Estradiol)
 Modelled protein from previous exercises
@@ -37,6 +39,7 @@ Where are potential pockets located on the protein surface?
 
 ![](../course_files/images/chimera_exercise2.png)
 
+:::
 
 ## Summary
 

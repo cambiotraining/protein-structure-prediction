@@ -16,8 +16,8 @@ Headings for material sections start at level 2.
 More guidelines for content available here: https://cambiotraining.github.io/quarto-course-template/materials/02-content_guidelines.html
 
 
-
-## Exercise
+:::{.callout-exercise}
+#### Tweaking flags for model improvement
 
 1. Use default ColabFold flags and AlphaFold3 to predict the model for protein “data/03_monomers/H1151_MTB_s2_116res.fasta”. Save results in the results folder.
 
@@ -30,8 +30,10 @@ More guidelines for content available here: https://cambiotraining.github.io/qua
 
 3. Is there any improvement in the score (< PAE, > pLDDT) after tweaking flags parameters? Which model has higher pLDDT or smaller PAE?
 
+:::
 
-## Exercise
+:::{.callout-exercise}
+#### Using ColabFold and AlphaFold3 to predict sequence
 
 In the structural database exercise 5.2 we attempted to look for the 3D structure of our unknown phage sequence (data/02_structural_databases/T1113_phage.fasta) using AlphaFoldDB. But we could not find the related structure for our sequence. Now you are asked to use ColabFold, and AlphaFold3 to model the structure of the sequence. In the results directory, create two folders for each of the individual software outputs. Remember to note down all parameter flags you used for each tool.
 
@@ -39,9 +41,9 @@ In the structural database exercise 5.2 we attempted to look for the 3D structur
 
 - You can use spreadsheet tool to write down the best scores and their associated metric from each individual tools. 
 
-- + Are there any notable differences in the scores between ColabFold and AlphaFold3 models?
+- Are there any notable differences in the scores between ColabFold and AlphaFold3 models?
 
-
+:::
 
 ## Summary
 

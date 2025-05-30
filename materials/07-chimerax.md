@@ -15,11 +15,8 @@ Headings for material sections start at level 2.
 
 More guidelines for content available here: https://cambiotraining.github.io/quarto-course-template/materials/02-content_guidelines.html
 
-
-## Exercises
-
 ::: {.callout-tip collapse="true"}
-## Case study 1 - basic features of ChimeraX
+#### Estrogen Receptor (PDB: 1ERE)
 
 We will be using the structure of the ligand binding domain of the Estrogen Receptor (PDB: 1ERE).
 
@@ -33,7 +30,10 @@ The Estrogen Receptor is:
 
 - Targeted by several FDA-approved drugs
 
-### Exercise - Selections using the CLI
+:::
+
+:::{.callout-exercise}
+#### Exercise - Selections using the CLI
 Spend 1-2 minutes now trying to select different parts of the protein:
 
 - Select chain B and chain D in the model
@@ -42,7 +42,10 @@ Spend 1-2 minutes now trying to select different parts of the protein:
 
 - Select everything except chain E
 
-### Exercise - Sequence viewer
+:::
+
+:::{.callout-exercise}
+#### Sequence viewer
 
 Consider the sequence below:
 
@@ -52,17 +55,10 @@ Why are some residues in a black border?
 
 :::
 
+:::{.callout-exercise}
+#### Structural Analysis - Revealing other interactions
 
-::: {.callout-tip collapse="true"}
-## Case study 2 - basics of protein structure analysis
-
-We will continue using the structure of the ligand binding domain of the Estrogen Receptor (PDB: 1ERE).
-
-There are numerous drugs that are designed to target the Estrogen Receptor as treatment for breast cancer and other reproductive diseases, and all of them interact with the receptor in its ligand binding pocket. 
-
-We will learn to analyse the protein-ligand interactions of the Estrogen Receptor. The same tools can be used to analyse predicted interactions between AlphaFold models and ligands.
-
-### Exercise - Reveal other interactions
+Analysing the protein-ligand interactions of the Estrogen Receptor (1ERE).
 
 Consider the following diagram:
 
@@ -72,18 +68,12 @@ What does this information tell us about potential mutations at these positions?
 
 :::
 
-::: {.callout-tip collapse="true"}
-## Case study 3 - analysis of predicted structures
+::: {.callout-exercise}
+#### Wildtype-mutant analysis of predicted structures
 
-We will use a protein called SLC52A2 (UniProt ID: Q9HAB3), a human protein that currently has no experimentally-solved structure.
-This is a membrane transporter for vitamin B2/riboflavin. 
-
-Some mutations in SLC52A2 can cause a childhood onset motor neuron disease known as Brown-Vialetto-Van Laere syndrome. 
+Analysing mutations in SLC52A2 which can cause a childhood onset motor neuron disease known as Brown-Vialetto-Van Laere syndrome. 
 
 These mutations are thought to reduce protein expression or reduce riboflavin uptake
-
-
-### Exercise - AlphaFold confidence scores
 
 Drag your mouse across the PAE plot below to highlight the corresponding residues on the protein
 
@@ -91,7 +81,10 @@ Drag your mouse across the PAE plot below to highlight the corresponding residue
 
 What does this PAE plot tell us about the relative positions of the main parts of this protein?
 
-### Exercise - Fetching information from AlphaMissense
+:::
+
+:::{.callout-exercise}
+### Fetching information from AlphaMissense
 
 With the following command: `cartoon byattribute r:avg #!1` and the images below:
 

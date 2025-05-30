@@ -8,10 +8,10 @@ title: Model quality assessment
 - Bulleted list of learning objectives
 :::
 
+:::{.callout-exercise}
+#### Model Quality Assessment - Metrics
 
-## Exercise
-
-Open an AlphaFold Protein Database (AFDB) and search GPCR protein AF-Q5T6X5-F1-v4. Interpret its structure which is visualised based on pLDDT scores and PAE plots. 
+Open an AlphaFold Protein Database (AFDB) and search GPCR protein AF-Q5T6X5-F1-v4. Interpret its structure which can be visualised based on pLDDT scores and PAE plots. 
 
 :::{.callout-note}
 ## Hint
@@ -22,7 +22,10 @@ Open an AlphaFold Protein Database (AFDB) and search GPCR protein AF-Q5T6X5-F1-v
 
 :::
 
-## Exercise
+:::
+
+:::{.callout-exercise}
+#### Model Quality Assessment - Scoring multimers with ModFOLDdock
 
 Scores the models using ModFOLDdock for “numb_delta_human_complexes” generated from the exercise 7.2.
 
@@ -47,6 +50,8 @@ Scores the models using ModFOLDdock for “numb_delta_human_complexes” generat
 - Once the outputs are generated save them in the results directory.
 
 - Download both pdb files and machine readable data from the results page
+
+:::
 
 ## Summary
 
