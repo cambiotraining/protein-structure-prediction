@@ -135,7 +135,7 @@ When server started to run, copy the token from the screen outputs after the abo
 
 5. In the ColabFold notebook, click on the small downwards pointing arrow in the top-right corner (just below the settings symbol). Click it and select “Connect to a local runtime” in the dropdown menu. A “local connection settings” window will pop-up with an empty field where you can paste in your jupyter token above.
 
-To run prediction, you might disable codes to use templete in the google colab notebook in your browser as this led up to ModuleNotFound (google.colab) error. More on this see this [issue]().
+To run prediction, you might disable codes to use templete in the google colab notebook in your browser as this led up to ModuleNotFound (google.colab) error. More on this see this [issue](https://github.com/cambiotraining/protein-structure-prediction/issues/1#issue-3235397784).
 
 The images below illustrate how to disable the codes for customer templates upload which caused the issue above.
 
