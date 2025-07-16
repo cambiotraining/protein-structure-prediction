@@ -137,7 +137,7 @@ When server started to run, copy the token from the screen outputs after the abo
 
 To run prediction, you might need to disable codes for uploading custom pdb templates in the google colab notebook in your browser as this may lead up to `ModuleNotFound (google.colab)` error. More on this see this [issue](https://github.com/cambiotraining/protein-structure-prediction/issues/1#issue-3235397784).
 
-The images below illustrate how to disable the codes for customer templates upload which caused the issue above.
+The images below illustrate how to disable the codes for custom templates upload which caused the issue above.
 
 ![](course_files/images/Doc1-1.png)
 
