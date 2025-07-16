@@ -99,6 +99,8 @@ Objective:
 - Setting up a local runtime for running ColabFold job using personal GPU resources (Running )
 - Testing to run prediction
 
+The steps below worked well over WSL2 but not tested on native Ubuntu Linux machine.
+
 ### Steps
 
 1. Create an isolated environment for colabfold
