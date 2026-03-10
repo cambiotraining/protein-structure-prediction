@@ -55,7 +55,7 @@ book:
         href: https://genomic.social/@BioInfoCambs
       - text: "{{< iconify mdi web size=lg title='CRIT Website' >}}"
         href: https://bioinfotraining.bio.cam.ac.uk/
-    title: "Protein Structure Prediction and Modelling"
+    title: "Prediction and Analysis of Protein Structures"
   chapters:
     - part: "Welcome"
       chapters:

@@ -2,17 +2,16 @@ book:
   chapters:
     - part: "Introduction"
       chapters:
-        - materials/00-intro.md
-        - materials/01-formats.md
+        - materials/01-intro.md
         - materials/02-databases.md
-    - part: "Structure prediction and analysis"
+        - materials/03-chimerax_basics.md
+    - part: "Structure prediction"
       chapters:
-        - materials/03-monomer.md
-        - materials/04-multimer.md
-        - materials/05-model_quality.md
-        - materials/06-model_comparison.md
-        - materials/07-chimerax.md
-    - part: "Functional analysis"
+        - materials/04-monomer.md
+        - materials/05-model_comparison.md
+        - materials/06-multimer.md
+    - part: "Structure analysis"
       chapters:
-        - materials/08-ligand.md
-        - materials/09-docking.md
+        - materials/07-chimerax_ligand.md
+        - materials/08-chimerax_alphamissense.md
+        - materials/09-chimerax_publication.md

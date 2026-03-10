@@ -1,8 +1,4 @@
----
-title: "Protein Structure Prediction and Modelling"
-date: today
-number-sections: false
----
+# Protein Structure Prediction and Modelling {.unnumbered}
 
 ## Overview 
 
@@ -11,10 +7,14 @@ Include a one-paragraph summary of the course here.
 ::: {.callout-tip}
 ### Learning Objectives
 
-- List course learning objectives here.
-- These describe concepts the learners should grasp and techniques they should be able to use by the end of the course.
-- You can think of these as completing the phrase "after this course, the participant should be able to..."
-- They are not supposed to be as detailed as the learning objectives of each section, but more high-level.
+- Understand the basic principles behind protein folding and de novo protein structure prediction. 
+- Select and justify which software to use for predicting 3D structures.
+- Use several web-based tools for structural prediction and analysis.
+- Evaluate, compare and select high quality 3D structural protein model(s). 
+- Understand when to utilise protein structure prediction with other experimental techniques.
+- Generate novel testable hypotheses from protein structure predictions. 
+- Perform structural and functional analysis with proteins and their ligands in ChimeraX.
+
 :::
 
 
