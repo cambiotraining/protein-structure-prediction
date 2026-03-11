@@ -1,16 +1,38 @@
 # Publication-quality visualisations
 
-The [ChimeraX gallery](https://www.cgl.ucsf.edu/chimerax/gallery.html) contains several examples of publication-quality visualisations, showcasing some of the advanced functionality of this software. 
-Click on the `.cxc` file links to see the commands corresponding to each visualisation. 
+:::{.callout-tip}
+#### Learning Objectives
+
+- Create clear and informative molecular visualisations using ChimeraX.
+- Combine structural representations such as cartoons, surfaces, and atoms.
+- Adjust lighting, background, and outlines to improve figure clarity.
+- Generate rotating or animated movies of molecular structures.
+- Use tiled views to compare multiple structures simultaneously.
+:::
+
+High-quality molecular visualisations are an important part of communicating structural biology results.
+Figures used in publications or presentations should aim to be:
+
+- **informative** - highlighting the structural features relevant to the question
+- **clear** - avoiding unnecessary clutter
+- **visually consistent** - using colour and representation carefully
+
+ChimeraX provides a wide range of tools for producing such figures.
+
+The [ChimeraX gallery](https://www.cgl.ucsf.edu/chimerax/gallery.html) showcases many examples of publication-quality visualisations.
+Each example includes a downloadable `.cxc` script that reproduces the image using ChimeraX commands.
+
+Studying these scripts is often a useful way to learn new visualisation techniques.
 
 ## Surface representation
 
-Consider the following view of the oestrogen receptor in complex with a conserved peptide motif characteristic of activator proteins (PDB: 4J26).
+Consider the following view of the estrogen receptor in complex with a conserved peptide motif characteristic of activator proteins (PDB: **4J26**).
 
 ![](images/chimerax_4j26_surface.png)
 
-This view combines several features that make it both visually appealing and informative. 
-Here is the full list of commands to create this view, followed by a detailed explanation of each step:
+This visualisation combines several features to highlight the interaction between the receptor and the peptide.
+
+Below are the commands used to generate the figure:
 
 ```bash
 close
@@ -28,46 +50,96 @@ surface /B transparency 85
 surface /J transparency 85
 ```
 
-- We start by closing any open structures, and opening the structure of interest.
-- We have 4 chains in this structure, as two complexes were co-crystallised in the same structure. We delete one of the complexes (chains A and I) to simplify our visualisation.
-- We set the background colour to white, and delete the default labels.
-- We set the lighting to simple, and enable silhouettes to make the structure stand out more.
-- We use `graphics silhouettes` to add a black outline to the structure, which helps to make it stand out against the white background.
-- We show the atoms of chain J, which contains the coactivator peptide motif, and colour the two chains differently to make them easier to distinguish.
-- We colour the ligand (EST) red to make it stand out.
-- Finally, we show the molecular surface of the two chains, and set the transparency to 85 to allow us to see the secondary structure underneath the surface.
+We begin by loading the structure and simplifying the model.
+
+The crystal structure contains **two receptor-peptide complexes**, so we remove chains A and I to keep only one complex.
+
+```bash
+delete /A,I
+```
+
+Next we adjust the global visual settings.
+
+```bash
+set bgcolor white
+label delete
+light simple
+graphics silhouettes true width 1
+```
+
+These commands:
+
+- set a **white background**, which is standard for publications
+- remove default residue labels
+- use **simple lighting** to improve contrast
+- add **silhouettes** (black outlines) around objects
+
+Silhouettes are particularly useful because they help the structure stand out clearly against the background.
+
+We then highlight the relevant structural components.
+
+```bash
+show /J atoms
+color /B steelblue
+color /J goldenrod
+color :EST red
+```
+
+Here we:
+
+- display the **coactivator peptide** atoms
+- colour the receptor chain blue
+- colour the peptide gold
+- colour the ligand red
+
+Using distinct colours makes it easier to identify the different molecular components.
+
+Finally, we display **transparent molecular surfaces** for both chains:
+
+```bash
+surface /B transparency 85
+surface /J transparency 85
+```
+
+The transparent surface illustrates the **shape of the binding interface**, while still allowing the underlying secondary structure to remain visible.
 
 ## Creating a movie
 
-There are a few basic steps to create a movie: 
+Movies can help illustrate structural features that are difficult to appreciate in a static image.
 
-- Decide on which type of movement you would like:
-  - `rock` for a back-and-forth movement around a defined axis (y-axis, i.e. vertical, by default)
-  - `roll` to rotate the model 360 degrees around a defined axis (y-axis, i.e. vertical, by default)
-  - `wobble` to rotate the model in a figure of eight motion
-  - `turn` for a more flexible rotation definition (which can recreate `roll`, `rock` and `wobble`)
-- Record the movie
-- Encode the movie as a video file (e.g. mp4)
+ChimeraX supports several types of automatic motion:
 
-Let's see an example of how to create a rocking movie from our oestrogen receptor example. 
-Using the rock command will start our rocking motion:
+- `rock` - oscillating back-and-forth motion
+- `roll` - continuous 360 degree rotation
+- `wobble` - figure-eight style motion
+- `turn` - flexible rotation around arbitrary axes
+
+The general workflow for creating a movie is:
+
+1. start recording
+2. perform the desired movement
+3. stop recording
+4. encode the frames into a video file
+
+### Example: rocking animation
+
+We can create a rocking animation of the estrogen receptor using:
 
 ```bash
 rock
 ```
 
-To stop the motion, use the `stop` command:
+To stop the motion:
 
 ```bash
 stop
 ```
 
-To record a movie, we can use the `movie record` command. 
-However, it is useful to specify how long we want the movie to be in framerates (number of frames per second). 
-This is so we end up with a movie that can be looped smoothly.
+To record a movie, we use the `movie record` command.
+It is helpful to record **complete motion cycles**, so that the movie loops smoothly.
 
-Looking at the documentation for the `rock` command, we can see the default number of frames per cycle is 136.
-Therefore, we can use the `wait` command before `stop` to ensure that we record a full cycle of the rocking motion:
+According to the ChimeraX documentation, the default rocking motion completes one cycle in **136 frames**.
+We therefore record one full cycle using:
 
 ```bash
 movie record
@@ -76,76 +148,26 @@ wait 136
 stop
 ```
 
-Finally, we can use the `movie encode` command to save our movie as an mp4 file:
+Finally, we encode the movie as an MP4 file:
 
 ```bash
 movie encode 4j26_rock.mp4 framerate 60
 ```
 
+The `framerate` option determines how many frames are shown per second in the final movie.
+
 ![](images/4j26_rock.gif)
-
-
-<!--
-NOTE: leaving this here as a note
-
-Converting a MP4 to GIF with ffmpeg:
-
-```bash
-# this gives higher quality but larger file size
-ffmpeg \
-  -i 4j26_rock.mp4 \
-  -r 20 \
-  -vf "crop=iw*0.6:ih*0.95,scale=512:-1,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
-  -ss 00:00:00 \
-  4j26_rock.gif
-
-ffmpeg \
-  -i 4j26_rock.mp4 \
-  -r 20 \
-  -vf "scale=512:-1,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
-  -ss 00:00:00 \
-  4j26_rock.gif
-
-
-ffmpeg \
-  -i 4j26_roll.mp4 \
-  -r 15 \
-  -vf "crop=iw*0.5:ih*0.90,scale=512:-1" \
-  -ss 00:00:00 \
-  4j26_roll.gif
-  
-ffmpeg \
-  -i 4j26_rock.mp4 \
-  -r 15 \
-  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
-  -ss 00:00:00 \
-  4j26_rock.gif
-
-ffmpeg \
-  -i 4j26_views.mp4 \
-  -r 15 \
-  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
-  -ss 00:00:00 \
-  4j26_views.gif
-  
-ffmpeg \
-  -i 4j26_views_rock.mp4 \
-  -r 15 \
-  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
-  -ss 00:00:00 \
-  4j26_views_rock.gif
-``` 
--->
 
 ## Animated views
 
-ChimeraX also allows you to create animated views, where you can define a sequence of views that are then played in a sequence.
+ChimeraX also allows you to define **named views** and smoothly transition between them.
+This approach is useful for guiding the viewer through different parts of a structure.
 
-First, let's define and name a few views of interest: 
+First we define a set of views:
 
-- View 1: The entire protein
-- View 2: The coactivator peptide motif
-- View 3: The ligand
+- View 1: entire protein
+- View 2: coactivator peptide
+- View 3: ligand binding site
 
 ```bash
 view protein
@@ -156,13 +178,17 @@ view ligand
 view name 3
 ```
 
-Now, we will make a sequence of these views, to record as a movie. 
-The `view <name of view> <duration in framerates>` command allows us to specify how long we want each view to be shown for.
-We combine this with the `wait` command, to specify how long we want the transition between views to be. 
-Deciding on the framerates for each view and transition can require some trial and error, but it helps to think about it in relation to the framerate used to encode the movie at the end.
+Each `view name` command stores the current camera position.
+We can then transition between these views while recording a movie.
+The syntax:
 
-We will use 30 frames per second for our movie, so we can use this to guide our decisions on how long to show each view for, and how long to transition between views for.
-For example, if we want to show a view for 2 seconds, we would specify 60 frames (30 frames/second * 2 seconds = 60 frames).
+```
+view <name> <frames>
+```
+
+controls how long the transition takes.
+
+For example:
 
 ```bash
 view 1
@@ -178,34 +204,31 @@ wait 30
 movie encode 4j26_views.mp4 framerate 30
 ```
 
-- Our movie starts with view 1, which shows the entire protein structure.
-- We then transition to view 2, which zooms in on the coactivator peptide motif, and show this view for 60 framerates (2 seconds).
-  - Note that we wait for 80 frames before transitioning to the next view, to allow for a brief pause.
-- We then zoom back out to view 1 slightly faster, showing it for 30 framerates (1 second) and immediately transition to the next view (we wait for the same number of frames as the view transition).
-- Next, we transition to view 3, which zooms in on the ligand, and show this view for 60 framerates (2 seconds), pausing again for 80 frames.
-- We finish by zooming back out to view 1 again, showing it for 30 framerates (1 second), before encoding the movie as an mp4 file.
+Deciding on the framerates for each view and transition can require some trial and error, but it helps to think about it in relation to the **framerate used to encode the movie**.
+In this example:
+
+- the movie is encoded at **30 frames per second**
+- a transition of **60 frames** corresponds to **2 seconds**
+- pauses are introduced using the `wait` command
 
 ![](images/4j26_views.gif)
 
 ## UniProt annotations
 
-You can add additional features to the models, such as mutations, transmembrane regions, etc., by opening the corresponding files from UniProt. 
-From the PDB entry for 4J26, we can find the UniProt ID for the oestrogen receptor is P03372.
-We can open the UniProt metadata in ChimeraX using the following command:
+Functional annotations can also be incorporated into visualisations.
+
+For example, we can retrieve UniProt information for the estrogen receptor.
+The UniProt identifier for the receptor is **P03372**:
 
 ```bash
-open Q92731 from uniprot format uniprot
+open P03372 from uniprot format uniprot
 ```
 
-This opens a window with the sequence and annotated features. 
-You can click on the features to select the corresponding residues in the structure.
+This opens the **sequence annotation panel**, where features such as domains, mutations, and binding sites can be inspected.
+Selecting a feature highlights the corresponding residues in the structure.
 
-For example, we can see there is a sequence variant (mutation) annotated in UniProt as: "K → R completely inactive in positive regulation of DNA-binding transcription factor activity".
-This might be a mutation of interest, which we could highlight in our structure. 
-By clicking on the mutation, the corresponding residues are automatically selected in the structure. 
-The log window shows us that this corresponds to residue 303 in chain A, which is a lysine (K) in the wild-type structure.
-
-We could colour this residue in the structure differently, if we wanted to make it stand out:
+For example, one of the mutations annotated in UniProt is described as: "K → R completely inactive in positive regulation of DNA-binding transcription factor activity".
+Once selected, the residue can be highlighted in the structure:
 
 ```bash
 select /B:314
@@ -215,11 +238,28 @@ colour sel green
 select clear
 ```
 
+Highlighting biologically important residues is often helpful when preparing figures that illustrate **functional mechanisms**.
+
 ![](images/chimerax_4j26_mutation.png)
 
 ## Tiled views
 
-TODO: the `tile` command
+ChimeraX also supports **tiled layouts**, allowing multiple structures to be displayed side-by-side.
+This is particularly useful when comparing:
+
+- different ligand-bound structures
+- conformational states
+- homologous proteins
+
+The `tile` command automatically arranges open models into a grid layout.
+For example:
+
+```bash
+tile column 4 spacingfactor 0.8
+```
+
+This arranges four models in a **single row**, with slightly reduced spacing between panels.
+Tiled views are frequently used in publications to compare related structures under consistent orientations.
 
 ## Exercises
 
@@ -523,3 +563,56 @@ This should give you the following view:
 
 :::
 :::
+
+
+<!--
+NOTE: leaving this here as a note
+
+Converting a MP4 to GIF with ffmpeg:
+
+```bash
+# this gives higher quality but larger file size
+ffmpeg \
+  -i 4j26_rock.mp4 \
+  -r 20 \
+  -vf "crop=iw*0.6:ih*0.95,scale=512:-1,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+  -ss 00:00:00 \
+  4j26_rock.gif
+
+ffmpeg \
+  -i 4j26_rock.mp4 \
+  -r 20 \
+  -vf "scale=512:-1,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+  -ss 00:00:00 \
+  4j26_rock.gif
+
+
+ffmpeg \
+  -i 4j26_roll.mp4 \
+  -r 15 \
+  -vf "crop=iw*0.5:ih*0.90,scale=512:-1" \
+  -ss 00:00:00 \
+  4j26_roll.gif
+  
+ffmpeg \
+  -i 4j26_rock.mp4 \
+  -r 15 \
+  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
+  -ss 00:00:00 \
+  4j26_rock.gif
+
+ffmpeg \
+  -i 4j26_views.mp4 \
+  -r 15 \
+  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
+  -ss 00:00:00 \
+  4j26_views.gif
+  
+ffmpeg \
+  -i 4j26_views_rock.mp4 \
+  -r 15 \
+  -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
+  -ss 00:00:00 \
+  4j26_views_rock.gif
+``` 
+-->

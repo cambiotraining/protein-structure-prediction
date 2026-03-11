@@ -1,22 +1,71 @@
-# Model comparison
+# Comparing protein structures
 
-In this session we will use a protein called SLC52A2 (UniProt ID: Q9HAB3), a human protein that currently has no experimentally-solved structure.
-This is a membrane transporter for vitamin B2/riboflavin. 
-Some mutations in SLC52A2 can cause a childhood onset motor neuron disease known as Brown-Vialetto-Van Laere syndrome. 
-These mutations are thought to reduce protein expression or reduce riboflavin uptake
+:::{.callout-tip}
+#### Learning objectives
+
+- Align protein structures using structural alignment tools such as MatchMaker.
+- Compare predicted models with experimentally solved structures.
+- Interpret structural differences using RMSD-based colouring.
+- Recognise when global alignments fail for multidomain proteins.
+- Evaluate the consistency of multiple AlphaFold predictions.
+- Identify conserved structural features across species.
+:::
+
+## Overview
+
+Predicting a protein structure is only the first step.
+We must also ask an important question:
+
+**How reliable is this model?**
+
+One useful approach is **structural comparison**. 
+By aligning a predicted structure with other models or experimentally solved structures, we can:
+
+- evaluate whether the predicted fold is plausible
+- identify conserved structural regions
+- detect flexible or uncertain parts of the protein
+
+In this section we will explore several common comparison scenarios:
+
+- compare a predicted structure with **homologous experimental structures**
+- compare predictions from **different AlphaFold versions**
+- compare **multiple predictions of the same protein**
+- interpret structural differences using **RMSD colouring**
+
+## Example protein: SLC52A2
+
+We will begin with a human protein called **SLC52A2** (UniProt ID: **Q9HAB3**).
+
+SLC52A2 is a **membrane transporter for vitamin B2 (riboflavin)**.
+Mutations in this protein can cause a childhood-onset neurological disorder called **Brown-Vialetto-Van Laere syndrome**.
+
+Many of these mutations reduce protein expression, or riboflavin transport activity.
+At present, **no experimentally determined structure** exists for the human protein.
+This makes it a good example for exploring how predicted structures can be evaluated using structural comparisons.
+
+First, we load the AlphaFold prediction from AlphaFoldDB:
 
 ```bash
+close
 alphafold fetch Q9HAB3 version 6
 hide atoms
+color #1 salmon
 ```
 
 ## Searching for homologous structures
 
-We can use FoldSeek to search for homologous structures in the PDB.
-This can be done from the FoldSeek webserver, or from within ChimeraX (Tools > Structure Comparison > FoldSeek).
+Even when a protein has no solved structure, **related proteins may have been crystallised**.
+If a homologous structure exists, we can align it to our model and examine how well the folds match.
 
-One of the first hits is the structure of `6ob6`. 
-We can open this in the same session:
+A powerful tool for this is **FoldSeek**, which searches structural databases using the three-dimensional fold rather than sequence similarity alone.
+
+FoldSeek can be accessed:
+
+- Through the **FoldSeek web server**
+- Directly within ChimeraX: `Tools > Structure Comparison > FoldSeek`
+
+One of the first hits for SLC52A2 is the structure **6OB6**.
+We can open this structure in the same session:
 
 ```bash
 open 6ob6
@@ -24,7 +73,7 @@ label delete
 hide atoms
 ```
 
-We can check how our models and chains are named:
+Before aligning structures, it is helpful to check the models and chains present in the session:
 
 ```bash
 info chains
@@ -36,34 +85,57 @@ chain id #2/A chain_id A
 chain id #2/B chain_id B
 ```
 
-We can see that the AlphaFold model is in model #1, and the PDB structure is in model #2, with chains A and B.
+Here we see that:
 
-We are now ready to align the two structures using the Matchmaker command:
+- the **AlphaFold model** is stored in **model #1**
+- the **PDB structure** is stored in **model #2**
+- the experimental structure contains **two chains (A and B)**
+
+We are now ready to perform a structural alignment.
+
+## Structural alignment with MatchMaker
+
+ChimeraX provides the **MatchMaker (`mm`)** command for structural alignment.
 
 ```bash
-mm #2 to #1 showAlignment true
+mm #1 to #2 showAlignment true
 ```
 
-- The `showAlignment true` option will show the pairwise sequence alignment in the Sequence Viewer.
+This command:
 
-We can visualise our predicted structure as a cartoon again, and colour it by the RMSD to the experimentally solved structure. 
-If you examine the residue attributes (`c`), you will see that there is an attribute called `seq_rmsd`, which gives the RMSD of each residue to the aligned structure.
+- aligns model **#1** (the predicted structure) to model **#2** (the experimental structure)
+- displays the **sequence alignment** in the Sequence Viewer
 
-We can therefore colour by this attribute: 
+Structural alignment works by finding the best superposition of corresponding residues between two structures.
+
+After the alignment, ChimeraX calculates several useful attributes, including **per-residue RMSD values**.
+
+## Visualising structural differences
+
+The attribute `seq_rmsd` stores the **root mean square deviation (RMSD)** for each aligned residue.
+
+RMSD measures how far corresponding atoms are apart after structural superposition.
+Small RMSD values indicate strong agreement between structures.
+
+We can colour the predicted model according to this attribute:
 
 ```bash
-select #1
 color #1 white
 color byattribute r:seq_rmsd #1 target csab palette RdYlBu key true
-select clear
 ```
 
-Knowing the alignment is only to chain B, we can hide the other chain to make it easier to see the differences:
+This produces a colour gradient showing structural agreement:
+
+- **Red** - small deviation, strong structural agreement
+- **Blue** - larger structural differences
+
+Because the alignment only involves **chain B**, we hide the other chain to simplify the view:
 
 ```bash
-hide cartoon
-cartoon #1 #2/B
+cartoon hide #2/A
 ```
+
+This allows us to focus on the comparison between the predicted model and the experimental structure.
 
 ## Exercises
 
@@ -73,7 +145,7 @@ In this exercise series you are investigating the structure of the amphioxus est
 :::{.callout-exercise}
 #### Comparing two model predictions
 
-In the [monomer prediction exercises](04-monomer.md), we predicted the structure of the full amphioxus ERα protein using AlphaFold3. 
+In the [monomer prediction exercises](04-monomer.md), we predicted the structure of the full amphioxus ER protein using AlphaFold3. 
 We will now align and compare this model with the prediction available in AlphaFoldDB, which was generated using AlphaFold2.
 
 Run the following code in ChimeraX to open and align the two models:

@@ -1,8 +1,14 @@
-# Protein Structure Prediction and Modelling {.unnumbered}
+---
+pagetitle: Protein Structure Prediction
+---
+
+# Prediction and Analysis of Protein Structures {.unnumbered}
 
 ## Overview 
 
-Include a one-paragraph summary of the course here. 
+Advances in machine learning have transformed structural biology, making accurate protein structure predictions widely accessible. 
+This course introduces practical approaches for exploring and analysing protein structures using modern tools such as AlphaFold and ChimeraX. 
+You will learn how to retrieve structural models from biological databases, visualise protein structures, and analyse key features such as domains, ligand-binding sites, and protein-protein interfaces.
 
 ::: {.callout-tip}
 ### Learning Objectives
@@ -11,34 +17,16 @@ Include a one-paragraph summary of the course here.
 - Select and justify which software to use for predicting 3D structures.
 - Use several web-based tools for structural prediction and analysis.
 - Evaluate, compare and select high quality 3D structural protein model(s). 
-- Understand when to utilise protein structure prediction with other experimental techniques.
-- Generate novel testable hypotheses from protein structure predictions. 
 - Perform structural and functional analysis with proteins and their ligands in ChimeraX.
-
 :::
-
 
 ### Target Audience
 
-Brief description of target audience here.
-
+Researchers interested in generating, interpreting and exploring protein structures. 
 
 ### Prerequisites
 
-Detail any prerequisite skills needed to attend this course, with links to other relevant materials/courses if possible.
-
-
-<!-- Training Developer note: comment the following section out if you did not assign levels to your exercises -->
-### Exercises
-
-Exercises in these materials are labelled according to their level of difficulty:
-
-| Level | Description |
-| ----: | :---------- |
-| {{< fa solid star >}} {{< fa regular star >}} {{< fa regular star >}} | Exercises in level 1 are simpler and designed to get you familiar with the concepts and syntax covered in the course. |
-| {{< fa solid star >}} {{< fa solid star >}} {{< fa regular star >}} | Exercises in level 2 combine different concepts together and apply it to a given task. |
-| {{< fa solid star >}} {{< fa solid star >}} {{< fa solid star >}} | Exercises in level 3 require going beyond the concepts and syntax introduced to solve new problems. |
-
+Understanding of the basics of protein structure is expected.
 
 ## Citation & Authors
 
@@ -53,11 +41,3 @@ If you think you should be added as an author, please get in touch with us.
 -->
 
 {{< citation CITATION.cff >}}
-
-
-## Acknowledgements
-
-<!-- if there are no acknowledgements we can delete this section -->
-
-- List any other sources of materials that were used.
-- Or other people that may have advised during the material development (but are not authors).

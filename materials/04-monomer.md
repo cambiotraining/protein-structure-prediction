@@ -1,4 +1,4 @@
-# Monomer prediction
+# Monomer structure prediction
 
 ::: {.callout-tip}
 #### Learning Objectives
@@ -32,10 +32,94 @@ For a simple monomer prediction, the workflow is straightforward.
 
 The server will return the predicted models along with confidence metrics.
 
-#### Download and interpret results
+### ColabFold (AlphaFold2)
 
-After a run completes, the AlphaFold Server provides several output files.
+**ColabFold** provides a convenient way to run AlphaFold2 predictions using Google Colab notebooks.
 
+It uses a streamlined pipeline based on the original AlphaFold2 method but replaces the heavy sequence search step with the fast **MMseqs2** search algorithm.
+This makes predictions much faster and easier to run on standard hardware.
+
+ColabFold also provides several parameters that allow users to customise their predictions.
+These are detailed next.
+
+#### Parameter: `num_relax`
+
+Controls how many predicted models undergo **energy minimisation** using the AMBER force field.
+Relaxation improves local geometry but does not change the overall fold.
+
+Typical settings:
+
+- `0` - no relaxation (fastest)
+- `1` - relax only the top model (good compromise)
+- `5` - relax all models (slowest)
+
+#### Parameter: `template_mode`
+
+Controls whether the model uses **structural templates**.
+
+Options:
+
+- `none` - no templates (pure de novo prediction). Fastest and ideal when no homologous structure exists. 
+- `pdb100` - search PDB for structural templates. Improves accuracy if close homologues exist.
+- `custom` - user-provided templates
+
+#### Parameter: `msa_mode`
+
+Controls how homologous sequences are collected.
+
+Options:
+
+- `single_sequence` - only the input sequence (very fast; not recommended)
+- `mmseqs2_uniref` - search UniRef database (balance of speed and depth)
+- `mmseqs2_uniref_env` - include environmental sequences from metagenomic experiments (slower, but can improve accuracy)
+- `custom` - user-supplied alignment
+
+In most cases `mmseqs2_uniref_env` provides the best balance between speed and depth.
+
+#### Parameter: `model_type`
+
+Controls which AlphaFold model is used.
+
+The **auto** setting usually works best because it selects the appropriate model based on the input (monomer or multimer).
+
+#### Parameter: `num_recycles`
+
+Controls how many times the model refines its prediction.
+During each cycle the predicted structure is fed back into the network, which has been shown to improve model accuracy.
+
+Typical settings:
+
+- `0` - fastest, but not recommended
+- `3` - good balance between speed and accuracy
+- `6+` - higher accuracy for difficult folds
+- `auto` - run until convergence
+
+#### Parameter: `num_seeds`
+
+AlphaFold predictions include stochastic elements.
+Different **random seeds** can produce slightly different structures.
+Running multiple seeds increases the diversity of predictions.
+
+Typical settings:
+
+- `1` - sufficient for most proteins
+- `2+` - useful when exploring uncertain folds
+
+#### Parameter: `use_dropout`
+
+Dropout introduces additional stochasticity into the neural network.
+This can generate more diverse predictions, particularly in:
+
+- flexible regions
+- uncertain interfaces
+- multimer predictions
+
+It is often combined with **multiple seeds** to explore alternative conformations.
+:::
+
+## Download results
+
+After a run completes, the results can be downloaded for further analysis. 
 The most important outputs are:
 
 **Predicted structures**
@@ -52,139 +136,171 @@ The most important outputs are:
 
 - A matrix describing the predicted positional error between residue pairs.
 - Often visualised as a heatmap.
+- These are stored in files with extension `.json`.
 
 **Ranking information**
 
 - AlphaFold typically produces multiple models.
 - These models are ranked according to confidence metrics such as **pTM** or **ipTM** (for multimers).
+- The ranking is included in the file name.
 
-In practice, researchers usually examine the **top-ranked model first**, then compare it with alternative predictions.
-
-### ColabFold (AlphaFold2)
-
-**ColabFold** provides a convenient way to run AlphaFold2 predictions using Google Colab notebooks.
-
-It uses a streamlined pipeline based on the original AlphaFold2 method but replaces the heavy sequence search step with the fast **MMseqs2** search algorithm.
-This makes predictions much faster and easier to run on standard hardware.
-
-ColabFold also provides several parameters that allow users to customise their predictions.
-These are detailed next.
-
-#### `num_relax`
-
-Controls how many predicted models undergo **energy minimisation** using the AMBER force field.
-Relaxation improves local geometry but does not change the overall fold.
-
-Typical settings:
-
-- `0` - no relaxation (fastest)
-- `1` - relax only the top model (good compromise)
-- `5` - relax all models (slowest)
-
-#### `template_mode`
-
-Controls whether the model uses **structural templates**.
-
-Options:
-
-- `none` - no templates (pure de novo prediction). Fastest and ideal when no homologous structure exists. 
-- `pdb100` - search PDB for structural templates. Improves accuracy if close homologues exist.
-- `custom` - user-provided templates
-
-#### `msa_mode`
-
-Controls how homologous sequences are collected.
-
-Options:
-
-- `single_sequence` - only the input sequence (very fast; not recommended)
-- `mmseqs2_uniref` - search UniRef database (balance of speed and depth)
-- `mmseqs2_uniref_env` - include environmental sequences from metagenomic experiments (slower, but can improve accuracy)
-- `custom` - user-supplied alignment
-
-In most cases `mmseqs2_uniref_env` provides the best balance between speed and depth.
-
-#### `model_type`
-
-Controls which AlphaFold model is used.
-
-The **auto** setting usually works best because it selects the appropriate model based on the input (monomer or multimer).
-
-#### `num_recycles`
-
-Controls how many times the model refines its prediction.
-During each cycle the predicted structure is fed back into the network, which has been shown to improve model accuracy.
-
-Typical settings:
-
-- `0` - fastest, but not recommended
-- `3` - good balance between speed and accuracy
-- `6+` - higher accuracy for difficult folds
-- `auto` - run until convergence
-
-#### `num_seeds`
-
-AlphaFold predictions include stochastic elements.
-Different **random seeds** can produce slightly different structures.
-Running multiple seeds increases the diversity of predictions.
-
-Typical settings:
-
-- `1` - sufficient for most proteins
-- `2+` - useful when exploring uncertain folds
-
-#### `use_dropout`
-
-Dropout introduces additional stochasticity into the neural network.
-This can generate more diverse predictions, particularly in:
-
-- flexible regions
-- uncertain interfaces
-- multimer predictions
-
-It is often combined with **multiple seeds** to explore alternative conformations.
-:::
+In practice, one usually examines the **top-ranked model first**, then compare it with alternative predictions.
 
 ## Model scores
 
-There are two main scores: 
+AlphaFold predictions include several **confidence scores**. 
+These scores help us estimate how reliable a predicted structure is.
 
-- **pLDDT (predicted Local Distance Difference Test)** is a per-residue confidence score that ranges from 0 to 100, with higher scores indicating higher confidence in the predicted structure.
-- **PAE (Predicted Aligned Error)** is a matrix that provides an estimate of the expected positional error between pairs of residues in the predicted structure. Lower values indicate higher confidence in the relative positions of those residues.
+Broadly, these scores fall into two categories:
+
+- **Global scores** - measure confidence in the overall fold of the protein.
+- **Local scores** - measure confidence in specific regions of the structure.
+
+Both are useful, but they answer different questions.
+The following table summarises these scores, with details in the following sections:
+
+| Metric | What it measures             | Range         | Interpretation                                                              |
+| ------ | ---------------------------- | ------------- | --------------------------------------------------------------------------- |
+| pLDDT  | Local per-residue confidence | 0-100         | High = accurate local geometry<br>Low = uncertain or disordered region      |
+| PAE    | Pairwise positional error    | angstroms (A) | Low = confident domain relationships<br>High = uncertain domain orientation |
+| pTM    | Global fold accuracy         | 0-1           | >0.5 → overall fold likely correct<br><0.5 → unreliable model               |
+
+### Global confidence scores
+
+Global scores describe the reliability of the **overall protein fold**.
+
+#### pTM
+
+The **predicted Template Modelling score (pTM)** estimates how accurate the global structure is expected to be.
+
+The score ranges from **0 to 1**.
+
+Typical interpretation:
+
+| pTM     | Interpretation              |
+| ------- | --------------------------- |
+| >0.7    | very reliable fold          |
+| 0.5-0.7 | likely correct overall fold |
+| <0.5    | unreliable prediction       |
+
+This score is particularly useful when comparing **multiple predicted models**.
+
+#### Average pLDDT
+
+Although pLDDT is calculated **per residue**, some tools (such as ColabFold) also report the **average pLDDT** across the entire structure.
+This value provides a quick summary of model quality.
+
+Typical interpretation:
+
+| Avg pLDDT | Interpretation                 |
+| --------- | ------------------------------ |
+| >90       | very high confidence model     |
+| 70-90     | good model                     |
+| 50-70     | uncertain structure            |
+| <50       | likely disordered or incorrect |
+
+However, average values can hide local properties of the prediction.
+A model may have a high average pLDDT while still containing **poorly predicted loops or flexible regions**.
+Conversely, a model may have low average pLDDT while still containing **confidently predicted domains**. 
+
+### Local confidence scores
+
+Local scores describe confidence **within specific regions of the structure**.
+These scores help identify flexible loops, disordered regions, or uncertain domain orientations.
+
+#### pLDDT
+
+The **predicted Local Distance Difference Test (pLDDT)** measures confidence **for each residue**.
+
+Scores range from **0 to 100**.
+
+Typical interpretation:
+
+| pLDDT | Confidence           |
+| ----- | -------------------- |
+| >90   | very high confidence |
+| 70-90 | confident            |
+| 50-70 | low confidence       |
+| <50   | likely disordered    |
+
+AlphaFold stores pLDDT values in the **B-factor column** of the structure file (`.pdb`/`.cif`). 
+ChimeraX can colour residues using this information, as we will see below.
+
+#### PAE
+
+The **Predicted Aligned Error (PAE)** describes the expected positional error between **pairs of residues**.
+It is usually shown as a **matrix heatmap**.
+
+This score answers a different question:
+
+> How confident is the model about the _relative positions_ of different parts of the protein?
+
+Here, lower values are better, and typical patterns include:
+
+- **Dark diagonal blocks** → well-defined secondary structures or structural domains
+- **Light off-diagonal regions** → uncertain orientation between domains
+
+High PAE between domains often indicates that the domains fold correctly but their **relative orientation is flexible or uncertain**.
 
 :::{.callout-note}
 #### How are these scores calculated?
 
-Both of these scores are themselves learned from the training process of the AlphaFold model.
-Roughly, here is what happens: 
+AlphaFold learns to estimate its own prediction confidence during training.
 
-- A model is trained to take an sequence as input and predict the 3D structure of the protein. The output of this model includes the pairwise distances between the residues of the protein. 
-- A second model is trained to take the predicted structure as input and predict the pLDDT score for each residue, and the PAE matrix for the pairs of residues.
+During training:
 
-So, in reality, the scores themselves are learned from the training process. 
-You can think of it as: for this given predicted structure, how likely is it that this structure is correct, based on the patterns that the model has learned from the training data.
+1. The model learns to predict protein structures from sequence data.
+2. Additional components of the network learn to estimate the reliability of those predictions.
 
+The pLDDT, PAE, and pTM scores therefore reflect the model's **internal estimate of accuracy**, based on patterns it learned from many experimentally solved protein structures.
 :::
 
 ## ChimeraX
 
-AlphaFold Server provides its predictions in the modern `.cif` format, while ColabFold still uses the older `.pdb` format.
-Either can be opened in ChimeraX.
+The three-dimensional structures predicted by AlphaFold can be loaded into ChimeraX, along with their confidence scores.
+
+First, it is convenient to change the ChimeraX workding directory to where the data is located on the computer.
+On our training computers, this is: 
+
+```bash
+cd ~/Course_Materials
+```
 
 ::: {.panel-tabset group="language-choice"}
 ### AlphaFold Server (AlphaFold3)
 
+AlphaFold Server outputs the structure as a `.cif` file, with the following naming convention:
+
+- The prefix `fold_`
+- The name used by the user upon job submission
+- The model ranking - `model_[0-5]` - for the five models generated, in order of global confidence score (i.e. model 0 is the highest-confidence model)
+
+We use the `open` command to load the structure into ChimeraX:
+
 ```bash
-cd ~/Course_Materials
 open p53_monomer_af3/fold_p53_monomer_af3_model_0.cif
 ```
 
 ### ColabFold (AlphaFold2)
 
+ColabFold outputs the structure as a `.pdb` file, with the following naming convention:
+
+- The name used by the user upon job submission, followed by a job submission string
+
+- An indicator of whether the model is unrelaxed or relaxed (if using `num_relax` option)
+
+- The model ranking - `rank_[001-X]` - for the X models generated, in order of global confidence score (i.e. `rank_001` is the highest-confidence model)
+
+- The model number - `_alphafold2_ptm_model_[1-5]` - corresponding to the five AlphaFold2 neural network models
+
+- The random seed number - `seed_[000-X]`
+
+We use the `open` command to load the structure into ChimeraX:
+
 ```bash
-cd ~/Course_Materials
-open p53_monomer_af2/p53_monomer_af2_7c637_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb
+open p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb
 ```
+
 :::
 
 Once loaded, the structure appears in the main viewer.
@@ -192,8 +308,8 @@ Once loaded, the structure appears in the main viewer.
 ### Colouring by confidence score
 
 AlphaFold stores **pLDDT values** in the **B-factor column** of the structure file.
-
-The B-factor field normally stores atomic temperature factors in experimental structures. AlphaFold repurposes this field to store confidence values.
+The B-factor field normally stores atomic temperature factors in experimental structures. 
+AlphaFold repurposes this field to store confidence values.
 
 To colour residues by confidence:
 
@@ -214,13 +330,15 @@ Regions coloured yellow or red often correspond to:
 - disordered regions
 - poorly constrained predictions
 
+The `key true` option opens a menu to set a legend, but can be left out if you prefer.
+
 ### Viewing the PAE matrix
 
 The **Predicted Aligned Error (PAE)** describes the expected positional error between pairs of residues.
-
 Lower values indicate higher confidence in the relative positions of those residues.
 
-To load the PAE matrix:
+The PAE matrix is stored in a text-based format called `.json`, following a naming convention matching the corresponding structure file.  
+To load the PAE matrix in ChimeraX:
 
 ::: {.panel-tabset group="language-choice"}
 ### AlphaFold Server (AlphaFold3)
@@ -232,19 +350,28 @@ alphafold pae #1 palette paegreen file p53_monomer_af3/fold_p53_monomer_af3_full
 ### ColabFold (AlphaFold2)
 
 ```bash
-alphafold pae #1 palette paegreen file p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.json
+alphafold pae #1 palette paegreen file p53_monomer_af2/p53_monomer_af2_7c637_scores_rank_001_alphafold2_ptm_model_1_seed_000.json
 ```
 
 :::
 
 ChimeraX will display the matrix as a heatmap.
+You can interactively select blocks on the heatmap, which will get highlighted in the structure. 
 
-Typical patterns include:
+You can also ask ChimeraX to **automatically identify potential structural domains** based on the PAE matrix.
 
-- **dark diagonal blocks** → well-defined structural domains
-- **light off-diagonal regions** → uncertain relative positioning between domains
+```bash
+alphafold pae #1 colorDomains true
+```
 
-This plot helps identify **flexible domain arrangements**.
+This command analyses the PAE matrix and groups residues into **coherent domains** - regions where the model predicts low relative positional error. 
+ChimeraX then colours each domain with a different colour in the structure.
+
+This can be very useful when analysing large proteins, especially when domain boundaries are not known in advance. 
+In many cases the automatically identified domains correspond closely to **independently folded structural units**.
+
+ChimeraX also stores the domain assignments as an attribute (`pae_domain`). 
+You can use this attribute to select or recolour individual domains later if needed.
 
 ## Exercises
 
@@ -258,10 +385,10 @@ ER proteins function as dimers and regulate transcription by binding DNA and rec
 
 ![Domain organisation of the estrogen receptor. Image source: Fig. 5 in [Fuentes & Silveyra 2019](https://doi.org/10.1016/bs.apcsb.2019.01.001)](https://ars.els-cdn.com/content/image/1-s2.0-S1876162319300112-f03-04-9780128155615_lrg.jpg)
 
-The structure of the human ER ligand-binding domain has been resolved experimentally (for example PDB 1ERE). 
+The structure of the human ERα ligand-binding domain has been resolved experimentally (for example PDB 1ERE). 
 In this exercise series, you will compare this experimentally determined structure with predicted structures from an evolutionarily distant species.
 
-Based on [Baker et al. (2015)](https://doi.org/10.1016/j.jsbmb.2014.10.020), the most basal lineage known to contain an estrogen receptor is the cephalochordate amphioxus (genus _Branchiostoma_), an invertebrate chordate that diverged before vertebrates. 
+Based on [Baker et al. (2015)](https://doi.org/10.1016/j.jsbmb.2014.10.020), the most basal lineage known to contain estrogen receptor proteins is the cephalochordate amphioxus (genus _Branchiostoma_), an invertebrate chordate that diverged before vertebrates. 
 Studying the ER from amphioxus provides an opportunity to explore how conserved the structure of this protein is across deep evolutionary time.
 For example, the ligand binding domain is only around 35% identical at the sequence level compared to human.
 
@@ -270,7 +397,7 @@ For example, the ligand binding domain is only around 35% identical at the seque
 :::{.callout-exercise}
 #### Sequence retrieval
 
-Open <a href="https://www.uniprot.org/uniprotkb/B3V8B7/entry" target="_blank">UniProt entry **B3V8B7**</a>, which contains the known information for the ERα in the species _Branchiostoma floridae_.
+Open <a href="https://www.uniprot.org/uniprotkb/B3V8B7/entry" target="_blank">UniProt entry **B3V8B7**</a>, which contains the known information for a ER protein in the species _Branchiostoma floridae_.
 
 Questions: 
 
@@ -308,7 +435,7 @@ Questions:
 The predicted protein structure on AlphaFoldDB was generated using AlphaFold2. 
 We will investigate whether the prediction improves using AlphaFold3.
 
-Submit the ERα protein sequence from _Branchiostoma floridae_ to the <a href="https://alphafoldserver.com" target="_blank">AlphaFold Server (AlphaFold3)</a> to predict its structure.
+Submit the ER protein sequence from _Branchiostoma floridae_ to the <a href="https://alphafoldserver.com" target="_blank">AlphaFold Server (AlphaFold3)</a> to predict its structure.
 
 - <a href="https://rest.uniprot.org/uniprotkb/B3V8B7.fasta" target="_blank">Link to sequence</a>
 
@@ -343,7 +470,7 @@ As running predictions with the free ColabFold can take some time, for this exer
 - [Run 1](https://colab.research.google.com/drive/1yWi3xDWQ7Vk7Uoz1mRBFTnuZ3NFQtl8J?usp=sharing) - used default settings
 - [Run 2](https://colab.research.google.com/drive/1hSzm1NeXSlsXCEyyqAmnQNjrFR5lCj9T?usp=sharing) - changed `num_relax`, `template_mode`, `num_recycles` and `num_seeds`
 
-These predictions focused on the LBD domain of the ERα from _Branchiostoma floridae_, which is annotated as residues 441-682 on UniProt B3V8B7.
+These predictions focused on the LBD domain of the ER from _Branchiostoma floridae_, which is annotated as residues 441-682 on UniProt B3V8B7.
 To ensure the full domain was included, a few flanking residues were included in the prediction (residues 420-705):
 
 ```

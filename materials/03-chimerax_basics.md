@@ -1,4 +1,4 @@
-# Structure visualisation with ChimeraX
+# Visualising structures with ChimeraX
 
 :::{.callout-tip}
 #### Learning objectives

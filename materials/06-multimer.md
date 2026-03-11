@@ -1,28 +1,178 @@
-# Multimer prediction
+# Predicting protein complexes
 
-::: {.callout-tip}
+:::{.callout-tip}
 #### Learning Objectives
 
-- Prepare multimer inputs correctly for ColabFold (AF2) and AlphaFold Server (AF3)
-- Interpret inter-chain confidence metrics (e.g. ipTM)
-- Evaluate predicted interfaces critically
+- Prepare inputs correctly for multimer predictions using ColabFold (AlphaFold2) and AlphaFold Server (AlphaFold3).
+- Understand how AlphaFold models protein complexes.
+- Interpret global and interface confidence metrics (pTM and ipTM).
+- Use the PAE matrix to assess interactions between chains.
+- Evaluate predicted interfaces critically.
+- Understand how binding partners (e.g. DNA) can stabilise protein complexes.
 :::
 
-## AlphaFold Server (AF3)
+## Overview
 
-## ColabFold (AF2)
+Many proteins do not act alone.
+Instead they form **complexes** with:
 
-All the same parameters discussed in the [monomer section](04-monomer.md) apply to multimer prediction, but there are some additional parameters that are important to consider when modelling multimers.
+- other proteins
+- DNA or RNA
+- small molecules or ligands
 
-### Parameter: `pair_mode`
+These interactions often determine the biological function of the protein.
+For example:
+
+- enzymes may assemble into multimeric complexes
+- transcription factors bind DNA
+- receptors dimerise when activated
+
+Predicting the structure of a **single monomer** can reveal the fold of a protein.
+However, to understand function we often need to predict **how molecules interact**.
+
+AlphaFold can now model such complexes directly.
+This process is often called **multimer prediction** or **co-folding**.
+
+## How AlphaFold predicts complexes
+
+When predicting a complex, AlphaFold receives **multiple sequences as input**.
+These may represent:
+
+- several copies of the same protein (homomers)
+- different proteins (heteromers)
+- proteins together with nucleic acids or ligands (AlphaFold3 only)
+
+The model then attempts to predict:
+
+- the fold of each chain
+- the **relative positioning of the chains**
+- the **interaction interface** between them
+
+This means AlphaFold must solve two related problems:
+
+1. **Folding** - predicting the structure of each individual chain
+2. **Docking** - predicting how the chains assemble together
+
+The same confidence metrics used for monomers still apply (e.g. **pLDDT** and **PAE**), but multimer predictions also introduce additional **interface-specific metrics**.
+
+## Multimer confidence scores
+
+When evaluating multimer predictions, it is important to distinguish between:
+
+- **confidence in the fold of each chain**
+- **confidence in the interaction between chains**
+
+Several scores help us assess this.
+
+### pLDDT
+
+As for monomers, **pLDDT** reports local confidence in the structure of each residue.
+High pLDDT values indicate that the model is confident in the **local geometry of the fold**.
+
+However, high pLDDT **does not guarantee that the interface is correct**.
+
+### PAE
+
+The **Predicted Aligned Error (PAE)** matrix becomes particularly useful in multimer predictions.
+The matrix can be divided into blocks:
+
+- **diagonal blocks** describe confidence within each chain
+- **off-diagonal blocks** describe confidence between chains
+
+Low PAE values between chains suggest that the **relative positioning of the chains is well defined**.
+High cross-PAE indicates that the model is uncertain about the interface.
+
+### pTM and ipTM
+
+Multimer predictions also report global confidence metrics:
+
+- **pTM (predicted TM-score)** - estimates the accuracy of the **overall fold of the complex**
+
+- **ipTM (interface predicted TM-score)** - estimates the accuracy of the **interface between chains**
+
+Typical interpretations are:
+
+| Score      | Interpretation              |
+| ---------- | --------------------------- |
+| pTM > 0.5  | overall fold likely correct |
+| ipTM > 0.7 | interface likely reliable   |
+| ipTM < 0.5 | interface uncertain         |
+
+These scores should always be interpreted **together with the PAE matrix and structural inspection**.
+
+## Structure prediction in practice 
+
+::: {.panel-tabset group="language-choice"}
+### AlphaFold Server (AlphaFold3)
+
+To perform a multimer prediction using the AlphaFold Server web interface:
+
+1. Submit the sequences of all chains involved in the complex.
+2. Specify the **copy number** for each chain if the complex contains multiple identical subunits.
+3. If nucleic acids are present, include them as additional sequences.
+
+For example:
+
+- A **homodimer** requires the setting 2 copies for the protein in the input.
+- A **heterodimer** requires adding two separate protein entities
+- A **protein-DNA complex** requires adding the protein sequence(s) as well as the DNA sequence.
+  - When adding DNA, create a DNA entity and then click the `⋮` button to add a **reverse complement copy**
+
+AlphaFold3 automatically performs co-folding of all components.
+
+After the prediction completes, the results include:
+
+- predicted structure files
+- global scores (pTM and ipTM)
+- per-residue confidence (pLDDT)
+- PAE matrices
+
+These outputs can be explored directly on the server or downloaded for visualisation in ChimeraX.
+
+### ColabFold (AlphaFold2)
+
+ColabFold also supports multimer prediction using AlphaFold2.
+
+The **same parameters discussed in the [monomer section](04-monomer.md)** apply here, but an additional parameter becomes important when modelling complexes.
+
+#### Parameter: `pair_mode`
 
 This parameter controls how ColabFold pairs sequences across multiple chains.
 
-- `unpaired` → separate MSAs for each chain; fast, but assumes no coevolution between chains.
-- `paired` → MSA sequences are paired by species, allowing for correlations between residues of both chains to be estimated. May be sparse if paired data is missing for some organisms.
-- `unpaired_paired` → include full MSA for each chain individually to learn intra-chain folding; use available pairs of chains to learn how chains interact. 
-This is the recommended as it strikes a good balance
+AlphaFold relies heavily on **multiple sequence alignments (MSAs)**.
+For complexes, these alignments may contain information about **coevolving residues between interacting proteins**.
 
+The `pair_mode` parameter determines how this information is used.
+
+- `unpaired`: Each chain receives its own independent MSA.
+  Fast, but ignores possible correlations between interacting chains.
+
+- `paired`: Sequences are paired by species, allowing the model to detect **coevolution between residues of different chains**.
+  This can improve interface prediction but often results in sparse alignments.
+
+- `unpaired_paired`: Combines both strategies.
+
+  - full MSAs for learning the fold of each chain
+  - paired sequences when available to infer interactions.
+
+This is usually the **recommended option**, as it balances folding accuracy with interface prediction.
+
+:::
+
+## Evaluating predicted interfaces
+
+Evaluating whether the predicted interface is biologically plausible can be done with several checks:
+
+- **Inspect the PAE matrix** - low cross-PAE suggests confident interfaces
+
+- **Examine ipTM scores** - higher scores indicate more reliable interfaces
+
+- **Visualise contacts between chains** - interface residues should form realistic interactions
+
+- **Consider biological context** - does the predicted interface match what is known about the protein?
+
+Importantly, AlphaFold sometimes produces **interfaces that are geometrically plausible but biologically irrelevant**.
+Confidence scores and biological knowledge should therefore always be used together.
 
 ## Exercises
 
@@ -35,7 +185,7 @@ In this exercise series you are investigating the structure of the amphioxus est
 The estrogen receptor (ER) forms a homodimer upon ligand binding.
 This dimer then migrates to the nucleus, where it binds DNA at conserved ER-response elements (EREs).
 
-So far, our predictions of the amphioxus ERα focused on a single copy of the protein.
+So far, our predictions of the amphioxus ER focused on a single copy of the protein.
 Your task now is to perform and assess a **homodimer prediction** of the ligand-binding domain (LBD).
 
 Use the annotated LBD sequence from [UniProt entry B3V8B7](https://www.uniprot.org/uniprotkb/B3V8B7):
@@ -132,13 +282,13 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
 
 **Tasks:**
 
-1. Submit **two copies of the full amphioxus ERα sequence** ([link to sequence](https://rest.uniprot.org/uniprotkb/B3V8B7.fasta)) to the AlphaFold Server (AlphaFold3) to predict the receptor dimer.
+1. Submit **two copies of the full amphioxus ER sequence** ([link to sequence](https://rest.uniprot.org/uniprotkb/B3V8B7.fasta)) to the AlphaFold Server (AlphaFold3) to predict the receptor dimer.
 
    - Examine the **PAE matrix**, focusing on the interactions between the two DNA-binding domains.
 
    - What does the cross-PAE suggest about the relative positioning of the two DBDs?
 
-2. Next, submit the same **two ERα sequences together with an estrogen response element (ERE) DNA sequence**.
+2. Next, submit the same **two ER sequences together with an estrogen response element (ERE) DNA sequence**.
    Use the following sequence: 
    
     ```

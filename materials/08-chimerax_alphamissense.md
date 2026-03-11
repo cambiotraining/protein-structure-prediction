@@ -1,13 +1,39 @@
-# Missense variants
+# Mapping mutation effects onto structures
+
+:::{.callout-tip}
+#### Learning Objectives
+
+- Visualise predicted protein structures from AlphaFold Database.
+- Inspect model confidence using pLDDT and PAE scores.
+- Load and explore protein annotations from UniProt.
+- Map AlphaMissense mutation scores onto protein structures.
+- Interpret how structural context influences mutation sensitivity.
+:::
 
 ## Functional mutation consequences
 
-Mutations in proteins can have very different functional effects depending on **where in the structure they occur**.  
-Residues that are structurally important - for example those involved in ligand binding, DNA recognition, or dimerisation - are often **less tolerant to mutation**.
+Mutations can affect proteins in many different ways.
 
-## Working with AlphaFold models
+A **missense mutation** replaces one amino acid with another.
+The impact of such mutations depends strongly on **where they occur in the protein structure**.
 
-You can obtain predicted structures from AlphaFold Database using the `alphafold fetch` command: 
+For example, mutations may disrupt:
+
+- **ligand-binding sites**
+- **protein-protein interfaces**
+- **DNA-binding regions**
+- the **structural core** of the protein
+
+Residues involved in these functions are often **less tolerant to mutation**, because changes can destabilise the structure or disrupt key interactions.
+
+Mapping mutation sensitivity onto protein structures therefore helps identify **functionally important regions**.
+
+## Preparing the structure
+
+Following from the [model comparison](05-model_comparison.md) chapter, we will use the human protein **SLC52A2** (UniProt ID: **Q9HAB3**).
+As a reminder, this is a **membrane transporter for vitamin B2 (riboflavin)**, and mutations in this protein can cause a childhood-onset neurological disorder called Brown-Vialetto-Van Laere syndrome.
+
+We begin by loading the predicted structure from the AlphaFold Database:
 
 ```bash
 alphafold fetch Q9HAB3 version 6
@@ -15,70 +41,93 @@ alphafold fetch Q9HAB3 version 6
 
 {{< mol-afdb Q9HAB3 >}}
 
-In this case, we explicitly define the model version we want to download, as this may not always default to the latest available. 
-By default the structure is coloured by pLDDT (local structure confidence) score. 
+In this command we explicitly specify the **model version**.
+This ensures that we retrieve the correct version of the prediction, but you should always check what the latest version available is.
 
-We can obtain the PAE score matrix, using the `alphafold pae` command:
-
-```bash
-alphafold pae uniprotId Q9HAB3 version 6
-```
-
-This opens a PAE matrix heatmap, that you can zoom-in and out of to higlight the respective regions of the protein.
-
-To colour the protein by pLDDT score again:
+We can also load the corresponding PAE matrix:
 
 ```bash
-colour byattribute pLDDT_score palette alphafold
+alphafold pae #1 palette paegreen uniprotId Q9HAB3 version 6
 ```
 
-or: 
+### Adding UniProt annotations
 
-```bash
-colour bfactor palette alphafold
-```
-
-- See the available palettes in the [palettes documentation page](https://www.cgl.ucsf.edu/chimerax/docs/user/commands/palettes.html). 
-- See the available residue attributes using the `info resattr` command.
-
-## UniProt annotations
-
-You can add additional features to the AlphaFold model, such as mutations, transmembrane regions, etc., by opening the corresponding files from UniProt:
+Structural information is often easier to interpret alongside **functional annotations**.
+ChimeraX can retrieve UniProt annotations directly:
 
 ```bash
 open Q9HAB3 from uniprot format uniprot
 ```
 
-This opens a window with the sequence and annotated features. 
-You can click on the features to select the corresponding residues in the structure.
+This opens a **sequence annotation panel** showing features such as:
+
+- functional domains
+- transmembrane regions
+- experimentally observed variants
+- binding sites
+
+Clicking a feature in the panel will highlight the corresponding residues in the structure.
+
+Combining structural and functional annotations helps identify **regions likely to be sensitive to mutation**.
 
 ## AlphaMissense mutation scores
 
-The **AlphaMissense** model predicts the likely impact of every possible amino acid substitution in a protein sequence.  
-Each mutation receives a score indicating whether it is predicted to be **benign (tolerated)** or **deleterious (damaging)**.
+The **AlphaMissense** model predicts the likely functional impact of every possible amino acid substitution in a protein.
+For each possible mutation, the model assigns a **score between 0 and 1**:
 
+- values near **0** suggest the mutation is likely **benign**
+- values near **1** suggest the mutation is likely **deleterious**
 
-
-We can obtain AlphaMissense scores:
+These scores can be loaded directly in ChimeraX.
 
 ```bash
 open Q9HAB3 from alpha_missense format amiss
 ```
 
+The scores are loaded and a histogram showing the **distribution of mutation impact scores** opens on the side. 
+
+We can add a label to each residue displaying the mutation impact score for every possible mutation:
+
 ```bash
 mutationscores label #1 amiss height 3 palette bluered
 ```
 
+This view can be useful to look at the impact of specific mutations in each residue.
+However, it doesn't give a good overall view of the mutational sensitivity across the protein.
+
+We can remove the labels with:
+
 ```bash
-mutationscores define avg fromScore amiss setAttribute true combine mean
 label delete
-color byattribute r:avg #!1 palette bluered key true
-cartoon byattribute r:avg #!1
 ```
 
-TODO:
+### Summarising scores
 
-- Change the range of the colour palette from 0 - 1
+Because each residue can mutate to many different amino acids, it is often useful to summarise these predictions.
+For example, we can compute the **average predicted mutation effect per residue**:
+
+```bash
+mutationscores define avg fromScore amiss setAttribute true combine mean
+```
+
+This creates a new residue attribute called `avg`.
+We can then map these scores onto the structure:
+
+```bash
+color byattribute r:avg palette bluered key true range 0,1
+cartoon byattribute r:avg
+```
+
+- **blue** residues with a **thinner** cartoon representation are more tolerant to mutation
+- **red** residues with a **thicker** cartoon representation are predicted to be highly sensitive to mutation
+
+Mapping mutation sensitivity onto the structure provides insight into which regions of the protein are **structurally or functionally constrained**.
+These regions often correspond to:
+
+- catalytic residues
+- ligand-binding pockets
+- protein interaction interfaces
+- structurally critical elements of the fold
 
 ## Exercises
 
@@ -103,7 +152,7 @@ What parts of the protein appear most sensitive to mutation?
     ```bash
     close
     alphafold fetch P03372 version 6
-    alphafold pae uniprotId P03372 version 6
+    alphafold pae #1 palette paegreen uniprotId P03372 version 6
     ```
 
 2. Next we load the UniProt annotation and the AlphaMissense mutation scores:
@@ -123,8 +172,8 @@ What parts of the protein appear most sensitive to mutation?
 4. Finally, we map these scores onto the protein structure:
 
     ```bash
-    color byattribute r:avg #!1 palette bluered key true
-    cartoon byattribute r:avg #!1
+    color byattribute r:avg palette bluered key true
+    cartoon byattribute r:avg
     ```
 
    - In this colouring scheme:

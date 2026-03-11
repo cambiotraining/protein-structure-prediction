@@ -1,23 +1,55 @@
-# Protein-ligand complexes
+# Analysing protein-ligand interactions
+
+:::{.callout-tip}
+#### Learning Objectives
+
+- Visualise protein-ligand complexes in ChimeraX.
+- Identify hydrogen bonds and other intermolecular contacts.
+- Explore ligand binding pockets using surface representations.
+- Select residues interacting with a ligand using distance-based selections.
+- Interpret the structural features that stabilise ligand binding.
+:::
 
 ## Overview
 
-In this section we will learn to analyse the protein-ligand interactions using ChimeraX. 
-As an example, we will continue working with the Estrogen Receptor (PDB: 1ERE), which we have already visualised in the previous section.
+Proteins often interact with **small molecules**.
+These molecules may be:
 
-There are numerous drugs that are designed to target the Estrogen Receptor as treatment for breast cancer and other reproductive diseases, and all of them interact with the receptor in its ligand binding pocket. 
-In this section, we will look at the protein-ligand interactions of the Estrogen Receptor. 
+- natural metabolites
+- signalling molecules
+- cofactors
+- drugs designed to target a protein
 
-The same tools can be used to analyse predicted interactions between AlphaFold models and ligands.
+The region where a small molecule binds is called the **binding pocket**.
+Understanding this pocket is central to many areas of biology and medicine, including **drug design**.
 
-We start our session with the following commands: 
+In this section we will learn how to analyse **protein-ligand interactions** using ChimeraX.
+
+As an example, we will continue working with the **estrogen receptor** structure (PDB: **1ERE**).
+This structure contains the hormone **estradiol**, labelled `EST` in the PDB file.
+
+The estrogen receptor is an important drug target.
+Many therapies for breast cancer act by blocking or modifying ligand binding in this pocket.
+
+The same tools we use here also apply to:
+
+- experimentally determined structures
+- predicted protein models
+- predicted ligand docking results
+
+## Preparing the structure
+
+We begin by loading the structure and keeping a single chain for clarity.
 
 ```bash
 close
 open 1ERE
-select #1/A
-delete ~sel
-select clear
+delete #1/B-F
+```
+
+Next we create a visual representation that highlights the ligand.
+
+```bash
 style protein ball
 hide atoms
 show cartoon
@@ -28,37 +60,54 @@ colour :EST & O magenta
 cofr :EST
 ```
 
-Which give us a view of the secondary structure of the Estrogen Receptor, with the EST ligand shown as atoms.
-For convenience, we also set the centre of rotation (`cofr`) on the ligand. 
+These commands:
+
+- show the protein as a **cartoon**, emphasising secondary structure
+- display the ligand as **atoms**
+- colour the ligand atoms by element
+- set the **centre of rotation (`cofr`)** on the ligand for easier inspection
+
+The result is a view of the receptor with the ligand clearly positioned in the binding pocket.
 
 ## Hydrogen bonds
 
-To identify the hydrogen bonds between the ligand and the protein, we can use the `hbonds` command.
+One of the most important stabilising interactions between proteins and ligands is the **hydrogen bond**.
+Hydrogen bonds often determine:
+
+- ligand specificity
+- binding affinity
+- orientation of the ligand in the pocket
+
+ChimeraX can detect hydrogen bonds automatically using the `hbonds` command.
 
 ```bash
 hbonds :EST reveal true log true
 ```
 
-- `reveal true` will show the hydrogen bonds as dashed lines in the structure (cyan by default, but you can change this with `colour hbonds <colour>`).
-- `log true` will display the details of the interactions in the log window.
+- `reveal true` displays hydrogen bonds as **cyan dashed lines** and reveals the corresponding atoms involved in the interaction
+- `log true` reports the interaction details in the **log window**
 
-## Other interactions
+The output lists the atoms involved and the distances between them.
+Keep in mind that hydrogen bonds are **inferred geometrically** based on distance and angle criteria.
 
-To reveal other interactions such as Van der Waals, we can use the `contacts` command.
+## Other contacts
+
+Hydrogen bonds are not the only interactions stabilising ligand binding.
+Ligands are often held in place by **non-specific contacts**, such as van der Waals interactions.
+
+These interactions can be detected using the `contacts` command.
 
 ```bash
 contacts :EST reveal true log true
 ```
 
-- `reveal true` will show the contacts as dashed lines in the structure (green by default, but you can change this with `contacts :EST color <colour>`).
-- `log true` will display the details of the interactions in the log window.
+This command displays nearby atoms as **green dashed lines**, and reveals the corresponding atoms involved in the interaction.
+
+Together, hydrogen bonds and other contacts provide a useful picture of how the ligand fits inside the binding pocket.
 
 ## Surface representation
 
-To better visualise the binding pocket and the ligand, we can show:
-
-- The ligand in stick style
-- A surface representation of the molecular surface of the atoms
+To better visualise the binding pocket, we can display the **molecular surface** of the ligand.
 
 ```bash
 style :EST stick
@@ -66,16 +115,34 @@ show :EST surfaces
 surface :EST color white transparency 65
 ```
 
-## Select residues by distance
+Surface representations help illustrate:
 
-Let’s hide atoms outside the ligand binding pocket area to see the pocket area clearly. First, deselect the ligand, select the protein, then hide the model. 
-Then we only show the residues that are within 5 Ä of the ligand. 
+- how tightly the ligand fits inside the pocket
+- which parts of the ligand remain exposed to solvent
+- the shape of the binding cavity
+
+Surfaces are especially useful when examining **drug binding sites**.
+
+## Selecting residues near the ligand
+
+Often we want to focus only on the residues that form the binding pocket.
+ChimeraX allows **distance-based selections** using the `<` operator.
+
+The following command shows residues **within 5 Å** of the ligand:
 
 ```bash
 hide protein cartoon
 hide protein atoms
 show :EST :<5
 ```
+
+This reveals only the local environment surrounding the ligand.
+
+Distance-based selections are useful for:
+
+- identifying binding pocket residues
+- analysing mutation effects
+- preparing structures for docking or modelling studies
 
 ## Exercises
 
@@ -145,8 +212,6 @@ select subtract :EST
 colour sel darkorange
 select clear
 ```
-
-Finally, we can reset our selection with `select clear`. 
 
 :::
 :::
