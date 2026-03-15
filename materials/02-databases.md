@@ -298,16 +298,16 @@ We could find further details for the protein, namely specific binding sites fro
 
 - Some of the main resources include:
 
-  - **UniProt** - protein sequence and functional annotation
-  - **PDB** - experimentally determined structures
-  - **AlphaFoldDB** - predicted protein structures
-  - **InterPro** - domain and motif annotations
-  - **CATH** - structural classification of protein folds
+  - **UniProt** - protein sequence and functional annotation [https://www.uniprot.org/](https://www.uniprot.org/)
+  - **PDB** - experimentally determined structures [https://www.rcsb.org/](https://www.rcsb.org/)
+  - **AlphaFoldDB** - predicted protein structures [https://alphafold.ebi.ac.uk/](https://alphafold.ebi.ac.uk/)
+  - **InterPro** - domain and motif annotations [https://www.ebi.ac.uk/interpro/](https://www.ebi.ac.uk/interpro/)
+  - **CATH** - structural classification of protein folds [https://cathdb.github.io/](https://cathdb.github.io/)
+
 
 - Two main file formats are used to store protein structures:
   - **PDB** - the original file format definition to store three-dimensional structures, which is still used by many applications.
   - **PDBx/mmCIF** - a modern format that is now widely adopted, allowing storing larger structures and more complex metadata.
 
 - Protein sequences are stored in FASTA format.
-
 :::

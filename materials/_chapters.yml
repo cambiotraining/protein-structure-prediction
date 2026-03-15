@@ -15,3 +15,9 @@ book:
         - materials/07-chimerax_ligand.md
         - materials/08-chimerax_alphamissense.md
         - materials/09-chimerax_publication.md
+    - part: "Additional exercises"
+      chapters:
+        - materials/additional_exercises/whib6.md
+  appendices:
+    - materials/appendices/further_reading.md
+    - materials/appendices/glossary.md

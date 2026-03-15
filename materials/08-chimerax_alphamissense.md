@@ -195,7 +195,12 @@ Mapping mutation sensitivity onto the structure reveals that **deleterious mutat
 
 ## Summary
 
+:::{.callout-tip}
+#### Key points
+
 - The functional impact of mutations often depends on their structural location.
+
 - Variants occurring in conserved structural regions are more likely to affect protein stability or function.
+
 - Computational tools such as AlphaMissense can help prioritise mutations for further study.
-- Example: In the ER exercises, analysing mutations within the structured domains helps illustrate how structural context informs variant interpretation.
+:::

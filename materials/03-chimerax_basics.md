@@ -7,6 +7,7 @@
 - Load and import solved protein structures.
 - Perform basic manipulations: rotate, zoom, colour, and highlight.
 - Select residues, chains, and atoms using the selection syntax.
+- Import data from UniProt and combine it with structural information.
 - Save and manage ChimeraX sessions for later use.
 :::
 
@@ -100,7 +101,7 @@ Selections use a **target specifier syntax** ([docs](https://www.cgl.ucsf.edu/ch
 
 - Select **model #1**:
 
-    ```bash
+    ```text
     select #1
     ```
 
@@ -346,6 +347,48 @@ Proteins can be represented visually in different ways.
    - Colour the `muts` selection blue.
    - Colour the ligand (EST) red.
 
+## Surface representation
+
+You can also represent structures using surfaces, which can help visualise the shape of the molecule.
+
+Example: 
+
+```bash
+surface protein color white transparency 65
+```
+
+This command creates a surface representation of the protein, coloured white with 65% transparency.
+We keep the cartoon representation, allowing us to view the secondary structure inside the surface.
+
+To hide the surface: 
+
+```bash
+surface hide
+```
+
+## Adding UniProt annotations
+
+Structural information is often easier to interpret alongside **functional annotations**.
+ChimeraX can retrieve UniProt annotations directly. 
+
+For ESR1, the corresponding UniProt entry is **P03372**. 
+We can open its annotations with:
+
+```bash
+open P03372 from uniprot format uniprot
+```
+
+This opens a **sequence annotation panel** showing features such as:
+
+- functional domains
+- transmembrane regions
+- experimentally observed variants
+- binding sites
+
+Clicking a feature in the panel will highlight the corresponding residues in the structure.
+
+Combining structural and functional annotations helps identify **regions likely to be sensitive to mutation**.
+
 ## Saving sessions and structures
 
 **Save a ChimeraX session** by changing to the destination directory, and use the `save` command: 
@@ -423,9 +466,7 @@ Start a new session with chain A of 1ERE (Human estrogen receptor):
 ```bash
 close
 open 1ere
-select #1/A
-delete ~sel
-select clear
+delete #1/B-F
 ```
 
 Try to recreate the visualisation shown below, where: 
@@ -459,7 +500,72 @@ view :353,394,524,525
 :::
 
 :::{.callout-exercise}
-#### Recreate a view
+#### Using UniProt annotations
+
+Starting from this view of chain A of 1ERE:
+
+```bash
+close
+open 1ere
+delete #1/B-F
+hide atoms
+show cartoon
+show :EST atoms
+style :EST sphere
+color :EST red
+```
+
+**Tasks:**
+
+1. Import the UniProt annotations for ESR1 (P03372).
+2. Identify which residues are annotated as ligand-binding residues.
+3. Save this selection as `binding_site`, for later reuse.
+4. Highlight these residues using a different colour, with atoms shown in ball style.
+5. Can you identify a sequence variant that coincides with a ligand-binding residue?
+   Highlight it in a different colour.
+
+:::{.callout-answer}
+
+1. We can import the UniProt annotations with:
+
+    ```bash
+    open P03372 from uniprot format uniprot
+    ```
+    
+2. The ligand-binding residues are annotated in the sequence annotation panel as "Binding site".
+   In the log window we can see this corresponds to:
+   
+    ```bash
+    select /A:353,394,524
+    ```
+
+3. We can save this selection as `binding_site`:
+
+    ```bash
+    name frozen binding_site /A:353,394,524
+    ```
+
+4. Finally, we can highlight these residues with a different colour and style:
+
+    ```bash
+    color binding_site gold
+    show binding_site atoms
+    style binding_site ball
+    ```
+
+5. By clicking through the variants listed under the **"sequence variant"** feature type, we can identify that residue 394 (Arg394) is annotated as a variant site.
+   We can select this residue and highlight it in a different colour:
+
+    ```bash
+    select /A:394
+    color sel cyan
+    ```
+
+:::
+:::
+
+:::{.callout-exercise}
+#### Cartoon view and colour by chain
 
 Try to recreate this view of the murine AA amyloid fibril (PDB: **6DSO**):
 
@@ -482,6 +588,98 @@ The default colour palette doesn't exactly match the colours shown in the image,
 :::
 :::
 
+:::{.callout-exercise}
+#### Surface representation
+
+Try and recreate this RCSB-PDB molecule of month view (PDB: 1AOI):
+
+![Complex between the _Xenopus_' nucleosome (purple) with DNA (orange) wrapped around it. Image source: [RCSB PDB Molecule of the Month: Nucleosome](https://pdb101.rcsb.org/motm/7)](https://cdn.rcsb.org/pdb101/motm/7/1aoi.gif)
+
+Make sure to colour each DNA chain slightly differently. 
+You can use `log chains` to find out which chains correspond to the protein and which are the DNA.
+
+:::{.callout-answer}
+
+This gets us close to the visualisation:
+
+```bash
+close
+open 1AOI
+surface protein
+surface nucleic
+colour protein plum
+colour /I tomato
+colour /J coral
+```
+
+We used `log chains` to find out that chains I and J correspond to the DNA, and coloured them differently using the `colour` command.
+
+:::
+:::
+
+:::{.callout-exercise}
+#### Surfaces and annotations
+
+Try to create a similar view to the following RBSB-PDB molecule of the month (PDB: 1SU4).
+
+![ATP-driven calcium pump in the sarcoplasmic reticulum membrane that restores low cytosolic calcium to enable muscle relaxation. Image source: [RCSB PDB Molecule of the Month: Calcium Pump](https://pdb101.rcsb.org/motm/51)](https://cdn.rcsb.org/pdb101/motm/51/1eul-membrane.gif)
+
+It might be hard to recreate exactly the same view, but here are some guidelines for what you could try: 
+
+- Hide the atoms
+- Draw a surface representation of the protein using a transparency of 60%
+- Show the calcium ion and colour it cyan
+  - Use `log metadata` to see how the Calcium molecule is called
+- Import metadata from UniProt (you might have to go to PDB to find the UniProt ID). This should allow you to select: 
+  - Active site: Show as atoms and colour red 
+  - Topological domain lumenal: Colour `#1b9e77`
+  - topological domain cytoplasmic: Colour `#7570b3`
+  - transmembrane region: Colour `#d95f02`
+
+:::{.callout-answer}
+
+We start by opening the structure and hiding the atoms, then showing the surface representation of the protein with a transparency of 60%, and showing the CA atoms coloured cyan:
+
+```bash
+close
+open 1SU4
+hide cartoon
+hide atoms
+surface protein transparency 60
+show :CA
+colour :CA cyan
+```
+
+We import metadata from UniProt, using the UniProt ID P04191, which we can find in the PDB entry for 1SU4:
+
+```bash
+open P04191 from uniprot format uniprot
+```
+
+We select each of the features indicated, and colour them accordingly. 
+Here, we give the exact residues, which we copied from the log window, as we clicked on each of the UniProt annotations.
+
+```bash
+select /A:70-89,274-295,778-787,852-897,950-964
+colour sel #1b9e77
+select /A:1-48,111-253,314-757,809-828,918-930,986-994
+colour sel #7570b3
+select /A:49-69,90-110,254-273,296-313,758-777,788-808,829-851,898-917,931-949,965-985
+colour sel #d95f02
+select /A:351
+show sel atoms
+style sel sphere
+colour sel red
+select clear
+```
+
+This should give you the following view:
+
+![](images/chimerax_1su4.png)
+
+:::
+:::
+
 ## Summary 
 
 :::{.callout-tip}
@@ -490,7 +688,6 @@ The default colour palette doesn't exactly match the colours shown in the image,
 At first, ChimeraX may look like a graphics program, however its real power comes from its **range of commands and flexible selection syntax**.
 
 - ChimeraX combines a graphical interface and command line interface.
-  You can rotate structures with the mouse while using commands for precise control.
 
 - Structures are loaded with the `open` command.
   ChimeraX can fetch structures directly from the PDB using their identifier.
@@ -498,26 +695,26 @@ At first, ChimeraX may look like a graphics program, however its real power come
 - Structural information can be inspected using `info` commands.
   These commands reveal models, chains, residues, ligands, and experimental metadata.
 
-- Selections are central to structural analysis.
-  ChimeraX uses a concise syntax to specify models (`#`), chains (`/`), residues (`:`), and atoms (`@`).
+- ChimeraX uses a concise syntax to specify models (`#`), chains (`/`), residues (`:`), and atoms (`@`).
 
 - Selections can be modified and combined.
-  Commands such as `add`, `subtract`, `&`, and `|` allow complex queries within a structure.
+  Commands such as `add`, `subtract`, `&`, and `|` allow complex selections.
 
-- Structures can be displayed in different representations.
-  Cartoon views emphasise secondary structure, while atom-based views show detailed interactions.
+- Structures can be displayed in different representations:
+  - Cartoon views emphasise secondary structure
+  - Atom-based views show detailed interactions
+  - Surface views reveal overall shape and interfaces
 
-- Named selections help organise analyses.
-  Saving selections allows you to refer to important residues or regions later.
+- Saving selections allows you to refer to important residues or regions later.
 
 - ChimeraX sessions can be saved and reopened.
   This allows you to preserve visualisations and annotations for later work.
 
-- Mastering selection syntax will allow you to:
+**ChimeraX documentation**
 
-  - highlight important residues
-  - isolate binding pockets
-  - compare structures
-  - inspect mutation sites
-  - visualise interfaces
+- ChimeraX User Guide
+  [https://www.cgl.ucsf.edu/chimerax/docs/user/index.html](https://www.cgl.ucsf.edu/chimerax/docs/user/index.html)
+
+- ChimeraX Tutorials
+  [https://www.cgl.ucsf.edu/chimerax/tutorials.html](https://www.cgl.ucsf.edu/chimerax/tutorials.html)
 :::

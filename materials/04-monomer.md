@@ -521,8 +521,8 @@ These are both very similar, but run 2 has slightly higher confidence scores, su
 
     ```bash
     close
-    cd ~/Course_Materials/er_amphioxus_full_monomer_af2_run1/
-    open er_amphioxus_full_monomer_af2_run1_a80a1_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb
+    cd ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run1/
+    open er_amphioxus_lbd_monomer_af2_run1_a80a1_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb
     colour byattribute bfactor palette alphafold
     alphafold pae #1 palette paegreen file er_amphioxus_full_monomer_af2_run1_a80a1_scores_rank_001_alphafold2_ptm_model_2_seed_000.json
     ```
@@ -550,4 +550,19 @@ These are both very similar, but run 2 has slightly higher confidence scores, su
   - Example: In the ER case study, the DNA-binding and ligand-binding domains appear as high-confidence regions, while other parts of the protein show low confidence consistent with flexible regions.
 - Predicting individual domains can sometimes yield more reliable models than predicting the entire protein.
 
+**Foundational AlphaFold papers**
+
+- Jumper et al. (2021) Highly accurate protein structure prediction with AlphaFold.
+  [https://doi.org/10.1038/s41586-021-03819-2](https://doi.org/10.1038/s41586-021-03819-2)
+
+- Abramson et al. (2024) Accurate structure prediction of biomolecular interactions with AlphaFold3.
+  [https://doi.org/10.1038/s41586-024-07487-w](https://doi.org/10.1038/s41586-024-07487-w)
+
+**Accessible explainers**
+
+- Illustrated AlphaFold
+  [https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/](https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/)
+
+- AlphaFold2 is here: what's behind the structure prediction miracle?
+  [https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/](https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/)
 :::

@@ -237,7 +237,7 @@ Load one of the AlphaFold predictions into a new ChimeraX session (the code belo
 
 ```bash
 close
-cd ~/Course_Materials/er_amphioxus_lbd_homodimer_af3
+cd ~/Course_Materials/er_amphioxus/lbd_homodimer_af3
 open fold_er_amphioxus_lbd_homodimer_af3_model_0.cif
 alphafold pae #2 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_data_0.json
 ```
@@ -309,7 +309,7 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
 
     ```bash
     close
-    cd ~/Course_Materials/er_amphioxus_full_homodimer_dna_complex_af3/
+    cd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/
     open fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif
     color bychain
     cartoon hide nucleic
@@ -360,7 +360,7 @@ Open the AlphaFold3 prediction of the full complex:
 
 ```bash
 close
-cd ~/Course_Materials/er_amphioxus_full_homodimer_dna_complex_af3/
+cd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/
 open fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif
 color bychain
 cartoon hide nucleic
@@ -445,7 +445,8 @@ This final comparison also illustrates a broader principle in structural bioinfo
 #### Key Points
 
 - Many proteins function as oligomers rather than as single monomers.
+
 - Structure prediction methods can model protein-protein or protein-nucleic acid complexes.
+
 - Considering the biological assembly is often essential for understanding protein function.
-- Example: The ER used in the exercises functions as a dimer that binds DNA, illustrating how oligomeric state is central to biological activity.
 :::

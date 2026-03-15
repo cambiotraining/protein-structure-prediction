@@ -50,6 +50,8 @@ surface /B transparency 85
 surface /J transparency 85
 ```
 
+Let's break these down step-by-step.
+
 We begin by loading the structure and simplifying the model.
 
 The crystal structure contains **two receptor-peptide complexes**, so we remove chains A and I to keep only one complex.
@@ -327,7 +329,6 @@ We therefore include the following code after view 2 and view 3:
 ```bash
 rock
 wait 136
-stop
 ```
 
 Here is the commented code in full:
@@ -337,33 +338,32 @@ Here is the commented code in full:
 view 1
 movie record
 
-# View 2 with rocking motion
+# Zoom-in on view 2
 view 2 60
 wait 60
 
 # Add rocking motion to view 2
 rock
 wait 136
-stop
 
 # Transition back to view 1
 view 1 30
 wait 30
 
-# View 3 with rocking motion
+# Zoom-in on view 3
 view 3 60
 wait 60
 
 # Add rocking motion to view 3
 rock
 wait 136
-stop
 
 # Transition back to view 1
 view 1 30
 wait 30
 
 # Encode the movie as an mp4 file
+stop
 movie encode 4j26_views_rock.mp4 framerate 30
 ```
 
@@ -470,100 +470,6 @@ And this gets us close to the original publication:
 
 :::
 :::
-
-:::{.callout-exercise}
-#### Surface representation
-
-Try and recreate this RCSB-PDB molecule of month view (PDB: 1AOI):
-
-![Complex between the _Xenopus_' nucleosome (purple) with DNA (orange) wrapped around it. Image source: [RCSB PDB Molecule of the Month: Nucleosome](https://pdb101.rcsb.org/motm/7)](https://cdn.rcsb.org/pdb101/motm/7/1aoi.gif)
-
-Make sure to colour each DNA chain slightly differently. 
-You can use `log chains` to find out which chains correspond to the protein and which are the DNA.
-
-:::{.callout-answer}
-
-This gets us close to the visualisation:
-
-```bash
-close
-open 1AOI
-surface protein
-surface nucleic
-colour protein plum
-colour /I tomato
-colour /J coral
-```
-
-We used `log chains` to find out that chains I and J correspond to the DNA, and coloured them differently using the `colour` command.
-
-:::
-:::
-
-
-:::{.callout-exercise}
-#### UniProt annotations
-
-Try to create a similar view to the following RBSB-PDB molecule of the month (PDB: 1SU4).
-
-![ATP-driven calcium pump in the sarcoplasmic reticulum membrane that restores low cytosolic calcium to enable muscle relaxation. Image source: [RCSB PDB Molecule of the Month: Calcium Pump](https://pdb101.rcsb.org/motm/51)](https://cdn.rcsb.org/pdb101/motm/51/1eul-membrane.gif)
-
-It might be hard to recreate exactly the same view, but here are some guidelines for what you could try: 
-
-- Hide the atoms
-- Draw a surface representation of the protein using a transparency of 60%
-- Show the calcium ion and colour it cyan
-  - Use `log metadata` to see how the Calcium molecule is called
-- Import metadata from UniProt (you might have to go to PDB to find the UniProt ID). This should allow you to select: 
-  - Active site: Show as atoms and colour red 
-  - Topological domain lumenal: Colour `#1b9e77`
-  - topological domain cytoplasmic: Colour `#7570b3`
-  - transmembrane region: Colour `#d95f02`
-
-:::{.callout-answer}
-
-We start by opening the structure and hiding the atoms, then showing the surface representation of the protein with a transparency of 60%, and showing the CA atoms coloured cyan:
-
-```bash
-close
-open 1SU4
-hide cartoon
-hide atoms
-surface protein transparency 60
-show :CA
-colour :CA cyan
-```
-
-We import metadata from UniProt, using the UniProt ID P04191, which we can find in the PDB entry for 1SU4:
-
-```bash
-open P04191 from uniprot format uniprot
-```
-
-We select each of the features indicated, and colour them accordingly. 
-Here, we give the exact residues, which we copied from the log window, as we clicked on each of the UniProt annotations.
-
-```bash
-select /A:70-89,274-295,778-787,852-897,950-964
-colour sel #1b9e77
-select /A:1-48,111-253,314-757,809-828,918-930,986-994
-colour sel #7570b3
-select /A:49-69,90-110,254-273,296-313,758-777,788-808,829-851,898-917,931-949,965-985
-colour sel #d95f02
-select /A:351
-show sel atoms
-style sel sphere
-colour sel red
-select clear
-```
-
-This should give you the following view:
-
-![](images/chimerax_1su4.png)
-
-:::
-:::
-
 
 <!--
 NOTE: leaving this here as a note

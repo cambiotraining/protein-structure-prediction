@@ -1,4 +1,4 @@
-# Glossary
+# Glossary {.unnumbered}
 
 ## Structural biology terms
 

@@ -152,7 +152,7 @@ Run the following code in ChimeraX to open and align the two models:
 
 ```bash
 close
-cd ~/Course_Materials/er_amphioxus_full_monomer_af3
+cd ~/Course_Materials/er_amphioxus/full_monomer_af3
 open fold_er_amphioxus_full_monomer_af3_model_0.cif
 alphafold fetch B3V8B7 version 6
 color #2 steelblue
@@ -213,7 +213,7 @@ Run the following commands in ChimeraX to open the models and align them:
 
 ```bash
 close
-cd ~/Course_Materials/er_amphioxus_lbd_monomer_af2_run2/
+cd ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run2/
 open *unrelaxed*.pdb
 mm #2-20 to #1
 ```
@@ -273,7 +273,7 @@ show cartoon
 Next, open the AlphaFold3 prediction of the amphioxus ligand-binding domain:
 
 ```bash
-cd ~/Course_Materials/er_amphioxus_lbd_monomer_af3/
+cd ~/Course_Materials/er_amphioxus/lbd_monomer_af3/
 open fold_er_amphioxus_lbd_monomer_af3_model_0.cif
 ```
 
@@ -315,9 +315,29 @@ This analysis illustrates how key functional regions of proteins can remain stru
 :::
 :::
 
+:::{.callout-exercise}
+#### Search for homologous structures
+
+We have focused our comparisons of the amphioxus ER with experimentally determined human structures.
+However, it is possible that more closely related structures exist in the PDB, for example from other invertebrates.
+
+- Search for homologous structures using FoldSeek, either through the web server or directly in ChimeraX.
+- Search using the Dali server as an alternative approach.
+- Compare the top hits between the two search methods. Do they identify the same structures? Are there any differences in the ranking of hits?
+- Align the top hits to your amphioxus prediction and evaluate the structural agreement, particularly in the ligand-binding domain.
+
+:::
+
 ## Summary
 
-- Structural comparison tools (e.g. FoldSeek or structural alignment methods) can identify related proteins even when sequence similarity is low.
+:::{.callout-tip}
+#### Key points
+
+- Structural comparison tools (e.g. FoldSeek, DALI, or structural alignment methods) can identify related proteins even when sequence similarity is low.
+
 - Conserved protein domains often maintain similar three-dimensional folds across large evolutionary distances.
+
 - Structural alignment allows comparison of predicted models with experimentally determined structures.
-- Example: In the ER exercises, structural alignment can reveal similarities between the amphioxus receptor domains and experimentally determined structures from vertebrates.
+
+- RMSD-based colouring can highlight regions of strong agreement or divergence between structures.
+:::
