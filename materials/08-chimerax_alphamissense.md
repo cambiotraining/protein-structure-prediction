@@ -199,8 +199,11 @@ Mapping mutation sensitivity onto the structure reveals that **deleterious mutat
 #### Key points
 
 - The functional impact of mutations often depends on their structural location.
-
-- Variants occurring in conserved structural regions are more likely to affect protein stability or function.
+  - Variants occurring in conserved structural regions are more likely to affect protein stability or function.
 
 - Computational tools such as AlphaMissense can help prioritise mutations for further study.
+
+- AlphaMissense scores can be imported into ChimeraX using: `open <UniProt_ID> from alpha_missense format amiss`.
+
+- Scores can be summarised using `mutationscores define` and mapped onto the structure using `color byattribute` and `cartoon byattribute`.
 :::

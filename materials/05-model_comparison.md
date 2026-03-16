@@ -57,15 +57,101 @@ color #1 salmon
 Even when a protein has no solved structure, **related proteins may have been crystallised**.
 If a homologous structure exists, we can align it to our model and examine how well the folds match.
 
-A powerful tool for this is **FoldSeek**, which searches structural databases using the three-dimensional fold rather than sequence similarity alone.
+Two web-based tools for comparing protein structures are:
+
+- **DALI** - high-sensitivity method of structure alignment ([Holm et al. 2023](https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.4519))
+- **FoldSeek** - rapid structure search at proteome scale ([van Kempen et al. 2024](https://www.nature.com/articles/s41587-023-01773-0))
+
+Both of these tools allow searching structural databases using the three-dimensional fold rather than sequence similarity alone.
+
+### FoldSeek
 
 FoldSeek can be accessed:
 
-- Through the **FoldSeek web server**
+- Through the <a href="https://search.foldseek.com/search" target="_blank">**FoldSeek web server**</a>
 - Directly within ChimeraX: `Tools > Structure Comparison > FoldSeek`
 
-One of the first hits for SLC52A2 is the structure **6OB6**.
-We can open this structure in the same session:
+After submiting a PDB file, FoldSeek will return a ranked list of similar structures against several of its databases. 
+For experimentally-resolved structures, the most relevant database is the **PDB100**.
+
+The results table includes:
+
+- **Target:** The PDB ID of each hit, with a suffix indicating the assembly and specific chain. E.g. `6ob6-assembly1_A` refers to chain A of the first assembly in PDB entry 6OB6.
+- **Description:** A short description of the hit, often including the protein name.
+- **Scientific name:** The species from which the structure was derived.
+- **Prob:** The probability that the hit is a true structural homologue.
+- **Seq. Id.:** The identity between the aligned sequences of the hit and the query.
+- **E-Value:** The expectation value for the hit, indicating the significance of the match. Lower E-values indicate more significant matches.
+- **Position in query:** A schematic representation of the range of residues in the query structure that align with the hit.
+- **Alignment:** Clicking this button will display the sequence alignment between the query and the hit, along with a superposition of the two structures.
+
+The top hits often include structures with similar folds, even if their sequences are very different.
+For example, one of the top hits for SLC52A2 the Human equilibrative nucleoside transporter-1 (PDB **6OB6**), which shares only ~12% sequence identity with SLC52A2.
+
+The structural alignment provides two scores: 
+
+- **TM-score:** A measure of structural similarity that is independent of protein length. Scores above 0.5 generally indicate similar folds.
+- **RMSD:** The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.
+
+:::{.callout-note}
+#### Redundancy-filtered PDB lists
+
+You may often see references to "PDB25", "PDB50", "PDB90" or "PDB100" in the results of database searching tools such as FoldSeek and DALI.
+
+These refer to different versions of the Protein Data Bank (PDB) that have been filtered to remove redundant structures based on sequence similarity.
+
+- **PDB25** - contains only one representative structure for each cluster of sequences with >25% identity. This is a highly non-redundant set, useful for identifying distant homologues.
+- **PDB50** - contains one representative for each cluster of sequences with >50% identity. This is a moderately non-redundant set, useful for general searches.
+- **PDB90** - contains one representative for each cluster of sequences with >90% identity. This is a less redundant set, useful for finding closely related structures.
+- **PDB100** - contains all structures in the PDB, only removing chains that are 100% identical. This is the most comprehensive set, but may include many similar structures.
+:::
+
+### DALI
+
+DALI can be accessed from the <a href="http://ekhidna2.biocenter.helsinki.fi/dali/" target="_blank">DALI web server</a>.
+Click on "PDB Search" and upload your structure file to search for similar folds in the PDB.
+
+The results will often be similar to FoldSeek, although the ranking of hits may differ due to differences in the underlying algorithms.
+
+One the job completes, you can choose to view the results from against different redundancy-filtered versions of the PDB (see information box above). 
+DALI provides three target lists: PDB25, PDB50 and PDB90. 
+Lower numbers remove more redundancy and highlight more distant structural relationships.
+You can also view the results against the full PDB, which may include more redundant structures.
+
+The results table includes:
+
+- **Chain:** The PDB ID and chain of the hit structure. E.g. `6OB6-A` refers to chain A of PDB entry 6OB6.
+- **Z:** A Z-score indicating the significance of the structural match. Higher Z-scores indicate more significant matches, with scores above 2 generally considered significant.
+- **rmsd:** The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.
+- **lali:** The number of aligned residues between the query and the hit.
+- **nres:** The total number of residues in the hit structure.
+- **%id:** The percentage of identical residues in the aligned region between the query and the hit.
+- **PDB:** A link to the PDB structure.
+- **Description:** A brief description of the hit structure.
+
+You can select a hit and click:
+
+- **Structural Alignment** to view the sequence alignment
+- **3D Superposition** to view the 3D alignment of the two structures
+
+:::{.callout-warning}
+#### DALI server security and stability
+
+The DALI server currently **only supports HTTP** (rather than HTTPS), which may cause security warnings in modern browsers.
+Although unlikely, data transferred over HTTP could potentially be intercepted by third parties.
+If you encounter security warnings, you can usually proceed, however, be cautious if you are working with sensitive data.
+
+We have also sometimes found the **DALI server to be unstable**, with long wait times or failed jobs.
+You may experience a "Connection has timed out" error after submitting a job. 
+We have found that **refreshing the results page** after a while will often reveal the results. 
+:::
+
+## Structural alignment with MatchMaker
+
+Once we have identified a homologous structure, we can perform a structural alignment in ChimeraX to compare the folds in more detail.
+
+As an example, consider one of the top FoldSeek hits for SLC52A2: **6OB6**.
+We can import this structure into the session:
 
 ```bash
 open 6ob6
@@ -93,8 +179,6 @@ Here we see that:
 
 We are now ready to perform a structural alignment.
 
-## Structural alignment with MatchMaker
-
 ChimeraX provides the **MatchMaker (`mm`)** command for structural alignment.
 
 ```bash
@@ -108,27 +192,6 @@ This command:
 
 Structural alignment works by finding the best superposition of corresponding residues between two structures.
 
-After the alignment, ChimeraX calculates several useful attributes, including **per-residue RMSD values**.
-
-## Visualising structural differences
-
-The attribute `seq_rmsd` stores the **root mean square deviation (RMSD)** for each aligned residue.
-
-RMSD measures how far corresponding atoms are apart after structural superposition.
-Small RMSD values indicate strong agreement between structures.
-
-We can colour the predicted model according to this attribute:
-
-```bash
-color #1 white
-color byattribute r:seq_rmsd #1 target csab palette RdYlBu key true
-```
-
-This produces a colour gradient showing structural agreement:
-
-- **Red** - small deviation, strong structural agreement
-- **Blue** - larger structural differences
-
 Because the alignment only involves **chain B**, we hide the other chain to simplify the view:
 
 ```bash
@@ -136,6 +199,51 @@ cartoon hide #2/A
 ```
 
 This allows us to focus on the comparison between the predicted model and the experimental structure.
+
+![](images/chimerax_6ob6_alignment.png){width=50% fig-align="center"}
+
+## Visualising structural differences
+
+After the alignment, ChimeraX calculates several useful attributes, including **per-residue RMSD values**.
+The attribute `seq_rmsd` stores the RMSD for each aligned residue.
+
+RMSD measures **how far corresponding atoms are apart** after structural superposition.
+Small RMSD values indicate strong agreement between structures.
+
+We can colour the predicted model according to this attribute (we hide the experimental structure to make the colouring easier to see):
+
+```bash
+color #1 white
+color byattribute r:seq_rmsd #1 target csab palette RdYlBu key true
+cartoon hide #2
+```
+
+This produces a colour gradient showing structural agreement:
+
+- **Red** - smaller deviation, strong structural agreement
+- **Yellow** - intermediate values
+- **Blue** - larger structural differences
+
+![](images/chimerax_6ob6_rmsd_colouring_default.png){width=50% fig-align="center"}
+
+One important thing to note is the choice of colour scale breaks. 
+Above, the breaks between colours are automatically set by ChimeraX based on the distribution of RMSD values.
+This can sometimes lead to a colour scheme that is dominated by a few outliers with very high RMSD values, making it difficult to see the variation in the rest of the structure.
+It may also give the impression that most of the structure has very high agreement, when in fact several of the residues have intermediate or even high RMSD values.
+
+An alternative approach is to set the colour breaks manually, using the graphical user interface **"Tools → Structure Analysis → Render/Select by Attribute"**:
+
+- Choose: “Attributes of residues”
+- Choose: “Attribute: seq_rmsd”
+- Adjust colouring thresholds using the sliding bars on the histogram of RMSD values
+
+The image below shows the same alignment with:
+
+- Lower threshold (red) set to 0 Å, indicating perfect agreement
+- Midpoint (yellow) set to 5 Å, which would indicate some deviation from the reference structure
+- Upper threshold (blue) set to 10 Å, meaning that anything above that value will be coloured blue
+
+![](images/chimerax_6ob6_rmsd_colouring_manual.png){width=50% fig-align="center"}
 
 ## Exercises
 
@@ -309,7 +417,7 @@ open fold_er_amphioxus_lbd_monomer_af3_model_0.cif
    We can see that residues forming the ligand-binding pocket show **low RMSD values**, indicating strong structural agreement with the experimentally determined human structure. 
    This suggests that the architecture of the ligand-binding pocket is highly conserved, even between distantly related species such as amphioxus and humans.
 
-TODO: add rotating gif of the expected final result
+![](images/chimerax_er_alignment_roll.gif){fig-align="center"}
 
 This analysis illustrates how key functional regions of proteins can remain structurally conserved over long evolutionary timescales.
 :::

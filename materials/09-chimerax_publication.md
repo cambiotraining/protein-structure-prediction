@@ -28,7 +28,7 @@ Studying these scripts is often a useful way to learn new visualisation techniqu
 
 Consider the following view of the estrogen receptor in complex with a conserved peptide motif characteristic of activator proteins (PDB: **4J26**).
 
-![](images/chimerax_4j26_surface.png)
+![](images/chimerax_4j26_surface.png){width=50% fig-align="center"}
 
 This visualisation combines several features to highlight the interaction between the receptor and the peptide.
 
@@ -158,7 +158,7 @@ movie encode 4j26_rock.mp4 framerate 60
 
 The `framerate` option determines how many frames are shown per second in the final movie.
 
-![](images/4j26_rock.gif)
+![](images/4j26_rock.gif){fig-align="center"}
 
 ## Animated views
 
@@ -213,7 +213,7 @@ In this example:
 - a transition of **60 frames** corresponds to **2 seconds**
 - pauses are introduced using the `wait` command
 
-![](images/4j26_views.gif)
+![](images/4j26_views.gif){fig-align="center"}
 
 ## UniProt annotations
 
@@ -242,7 +242,7 @@ select clear
 
 Highlighting biologically important residues is often helpful when preparing figures that illustrate **functional mechanisms**.
 
-![](images/chimerax_4j26_mutation.png)
+![](images/chimerax_4j26_mutation.png){width=50% fig-align="center"}
 
 ## Tiled views
 
@@ -271,7 +271,7 @@ Tiled views are frequently used in publications to compare related structures un
 Create a movie of the oestrogen receptor structure rotating 360 degrees around the y-axis.
 Save it as a mp4 file.
 
-![](images/4j26_roll.gif)
+![](images/4j26_roll.gif){fig-align="center"}
 
 :::{.callout-hint}
 - You can use the `roll` command to rotate the structure around the y-axis.
@@ -288,7 +288,7 @@ roll
 movie record
 wait 360
 stop
-movie encode 4j26_roll.mp4 framerate 60
+movie encode er_amphioxus_alignment_roll.mp4 framerate 60
 ```
 
 In this case, we have decided to use a framerate of 60 frames per second, so the movie will be 6 seconds long (360 frames / 60 frames per second = 6 seconds).
@@ -318,7 +318,7 @@ movie encode 4j26_views.mp4 framerate 30
 
 Can you modify the code above, to include a rocking movement after zooming in on view 2 and view 3?
 
-![](images/4j26_views_rock.gif)
+![](images/4j26_views_rock.gif){fig-align="center"}
 
 :::{.callout-answer}
 
@@ -369,7 +369,6 @@ movie encode 4j26_views_rock.mp4 framerate 30
 
 :::
 :::
-
 
 :::{.callout-exercise}
 #### Tiled views
@@ -520,5 +519,12 @@ ffmpeg \
   -vf "crop=iw*0.6:ih*0.95,scale=512:-1" \
   -ss 00:00:00 \
   4j26_views_rock.gif
+  
+ffmpeg \
+  -i er_amphioxus_alignment_roll.mp4 \
+  -r 15 \
+  -vf "scale=512:-1" \
+  -ss 00:00:00 \
+  er_amphioxus_alignment_roll.gif
 ``` 
 -->

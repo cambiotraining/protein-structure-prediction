@@ -278,7 +278,7 @@ AlphaFold Server outputs the structure as a `.cif` file, with the following nami
 We use the `open` command to load the structure into ChimeraX:
 
 ```bash
-open p53_monomer_af3/fold_p53_monomer_af3_model_0.cif
+open p53_human/p53_monomer_af3/fold_p53_monomer_af3_model_0.cif
 ```
 
 ### ColabFold (AlphaFold2)
@@ -298,7 +298,7 @@ ColabFold outputs the structure as a `.pdb` file, with the following naming conv
 We use the `open` command to load the structure into ChimeraX:
 
 ```bash
-open p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb
+open p53_human/p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb
 ```
 
 :::
@@ -316,6 +316,8 @@ To colour residues by confidence:
 ```bash
 colour bfactor palette alphafold key true
 ```
+
+![](images/chimerax_p53_monomer_coloured.png){width=50%}
 
 This applies the standard AlphaFold colour scheme:
 
@@ -344,13 +346,13 @@ To load the PAE matrix in ChimeraX:
 ### AlphaFold Server (AlphaFold3)
 
 ```bash
-alphafold pae #1 palette paegreen file p53_monomer_af3/fold_p53_monomer_af3_full_data_0.json
+alphafold pae #1 palette paegreen file p53_human/p53_monomer_af3/fold_p53_monomer_af3_full_data_0.json
 ```
 
 ### ColabFold (AlphaFold2)
 
 ```bash
-alphafold pae #1 palette paegreen file p53_monomer_af2/p53_monomer_af2_7c637_scores_rank_001_alphafold2_ptm_model_1_seed_000.json
+alphafold pae #1 palette paegreen file p53_human/p53_monomer_af2/p53_monomer_af2_7c637_scores_rank_001_alphafold2_ptm_model_1_seed_000.json
 ```
 
 :::
@@ -358,7 +360,10 @@ alphafold pae #1 palette paegreen file p53_monomer_af2/p53_monomer_af2_7c637_sco
 ChimeraX will display the matrix as a heatmap.
 You can interactively select blocks on the heatmap, which will get highlighted in the structure. 
 
+![](images/chimerax_p53_monomer_pae.gif){width=50% fig-align="center"}
+
 You can also ask ChimeraX to **automatically identify potential structural domains** based on the PAE matrix.
+Either by clicking the "Color PAE Domains" in the PAE menu, or by running the following command:
 
 ```bash
 alphafold pae #1 colorDomains true
@@ -366,6 +371,8 @@ alphafold pae #1 colorDomains true
 
 This command analyses the PAE matrix and groups residues into **coherent domains** - regions where the model predicts low relative positional error. 
 ChimeraX then colours each domain with a different colour in the structure.
+
+![](images/chimerax_p53_monomer_domains.png){width=50% fig-align="center"}
 
 This can be very useful when analysing large proteins, especially when domain boundaries are not known in advance. 
 In many cases the automatically identified domains correspond closely to **independently folded structural units**.

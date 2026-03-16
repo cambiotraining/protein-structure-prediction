@@ -199,7 +199,7 @@ RLKALIDALDVKEGEHRGEENHPTGQQAGNWQEISNPELIESVSSLVDRELTGIICWGKKIPGYSKLSLNDQVLLMESTW
 1. Submit the LBD sequence to the [AlphaFold Server (AlphaFold3)](https://alphafoldserver.com), making sure to **set the number of copies to 2** to generate a homodimer prediction. 
    Assess the quality using global (pTM, ipTM) and local (pLDDT, PAE) scores.
 
-2. Compare this prediction with the [preprocessed ColabFold homodimer prediction](TODO). 
+2. Compare this prediction with the [preprocessed ColabFold homodimer prediction](https://colab.research.google.com/drive/1XjruIlJemTiVLeOQnipCMZ-GW4YMENch?usp=sharing). 
    Identify regions of lower confidence in each model and compare the global scores.
 
 :::{.callout-answer}
@@ -318,6 +318,7 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
     ```
 
    - What do you observe about the positioning of the two DNA-binding domains relative to the DNA?
+   - It may help to import UniProt annotations (ID: B3V8B7) and colour the DBDs to identify them more easily.
 
 :::{.callout-answer}
 
@@ -328,16 +329,38 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
 
    This indicates that the model is **uncertain about the relative positioning of the two DBDs**.
 
+![PAE matrix with ligand-binding domain (LBD) highlighted in red and DNA-binding domain (DBD) highlighted in yellow. Note the high cross-PAE for the two DBD domains, indicating **uncertainty in their relative positioning**.](images/er_full_complex_no_dna_pae.png){width=50% fig-align="center"}
+
 2. When the **DNA sequence is included**, the prediction changes:
 
    - the two DBDs bind opposite halves of the DNA response element
    - the **cross-PAE between the DBDs becomes low**
    - the model is now confident about their relative orientation.
 
+![PAE matrix with ligand-binding domain (LBD) highlighted in red and DNA-binding domain (DBD) highlighted in yellow. Note the low cross-PAE for the two DBD domains, indicating **confidence in their relative positioning**.](images/er_full_complex_with_dna_pae.png){width=50% fig-align="center"}
+
 3. This shows that the **DBDs do not form a stable interface on their own**.  
    Instead, their positioning is stabilised when both domains bind the DNA sequence.
 
-4. Visualising the co-folded complex in ChimeraX shows that:
+3. We import UniProt annotations (ID: B3V8B7):
+
+    ```bash
+    open B3V8B7 from uniprot format uniprot
+    ```
+   
+   - From the annotation panel, we select "domain" → "Nuclear receptor", which highlights residues 294-370. 
+     Based on this, we assign distinct colours to the different parts of each chain for easier visualisation: 
+
+    ```bash
+    color /A steelblue
+    color /B royalblue
+    color /A:294-370 gold
+    color /B:294-370 coral
+    ```
+
+![](images/er_full_complex_coloured.png){width=50% fig-align="center"}
+
+From this analysis, we can see that:
 
    - the two DBDs insert recognition helices into the **major groove of the DNA**
    - each domain binds one half of the response element
@@ -348,8 +371,6 @@ the **ligand-binding domains drive dimerisation**, while the **DNA-binding domai
 
 The high PAE between the DBDs in the absence of DNA is not a modelling failure - it reflects a real biological property. 
 The domains only adopt a stable relative orientation when DNA is present, and including the DNA sequence in the prediction provides the constraint needed to resolve the complex.
-
-TODO: add some snapshots to illustrate these points
 :::
 :::
 
@@ -417,7 +438,7 @@ mm #2 to #1.1
 mm #3 to #1.2
 ```
 
-TODO: add snapshot of the alignment
+![](images/er_full_complex_split_alignment.png){width=50% fig-align="center"}
 
 Overall we can see a strong agreement between the predicted amphioxus domains and the experimentally determined human structures, indicating that AlphaFold3 successfully captured the geometry of both the ligand-binding and DNA-binding domains within the full receptor complex.
 

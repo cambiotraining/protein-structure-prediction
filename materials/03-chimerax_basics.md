@@ -28,7 +28,7 @@ open 1ere
 The structure appears in the main window.
 Use the mouse to **rotate**, **zoom**, and **pan**.
 
-{{< mol-rcsb 1ere >}}
+![](images/chimerax_open_1ere.png)
 
 ## Inspecting the structure
 
@@ -101,7 +101,7 @@ Selections use a **target specifier syntax** ([docs](https://www.cgl.ucsf.edu/ch
 
 - Select **model #1**:
 
-    ```text
+    ```bash
     select #1
     ```
 
@@ -347,6 +347,8 @@ Proteins can be represented visually in different ways.
    - Colour the `muts` selection blue.
    - Colour the ligand (EST) red.
 
+![Example representation of the 1ERE structure: protein secondary structure shown as cartoon; EST ligand shown in red with sphere-stype atoms; residues 538-546 highlighted in yellow with stick-style atoms; mutations of interest in blue with stick-style atoms.](images/chimerax_1ere_cartoon.png){width=50%}
+
 ## Surface representation
 
 You can also represent structures using surfaces, which can help visualise the shape of the molecule.
@@ -354,11 +356,13 @@ You can also represent structures using surfaces, which can help visualise the s
 Example: 
 
 ```bash
-surface protein color white transparency 65
+surface protein color white transparency 80
 ```
 
-This command creates a surface representation of the protein, coloured white with 65% transparency.
+This command creates a surface representation of the protein, coloured white with 80% transparency.
 We keep the cartoon representation, allowing us to view the secondary structure inside the surface.
+
+![](images/chimerax_1ere_surface.png){width=50% fig-align="center"}
 
 To hide the surface: 
 
@@ -388,6 +392,8 @@ This opens a **sequence annotation panel** showing features such as:
 Clicking a feature in the panel will highlight the corresponding residues in the structure.
 
 Combining structural and functional annotations helps identify **regions likely to be sensitive to mutation**.
+
+![ChimeraX snapshot of 1ERE structure with UniProt annotations panel shown on the right. In this example, we have selected "sequence variants", which become highlighted in green in the structure, as well as the sequence viewer (bottom-right)](images/chimerax_1ere_uniprot.png)
 
 ## Saving sessions and structures
 
@@ -476,7 +482,7 @@ Try to recreate the visualisation shown below, where:
 - The key protein residues for binding the ligand - Glu353, Arg394, His524, Leu525 - are highlighted in `gold` colour and their atoms are shown in ball style.
 - Zoom in specifically on these four residues using the `view` command.
 
-![](images/chimerax_1ere_exercise.png)
+![Ligand view of 1ERE structure.](images/chimerax_1ere_exercise.png)
 
 :::{.callout-answer}
 
