@@ -141,7 +141,7 @@ The most important outputs are:
 **Ranking information**
 
 - AlphaFold typically produces multiple models.
-- These models are ranked according to confidence metrics such as **pTM** or **ipTM** (for multimers).
+- These models are ranked according to global confidence metrics such as **average pLDDT** or **pTM** (**ipTM** for multimers).
 - The ranking is included in the file name.
 
 In practice, one usually examines the **top-ranked model first**, then compare it with alternative predictions.
