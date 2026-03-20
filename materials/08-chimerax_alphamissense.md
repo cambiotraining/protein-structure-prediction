@@ -107,7 +107,7 @@ Because each residue can mutate to many different amino acids, it is often usefu
 For example, we can compute the **average predicted mutation effect per residue**:
 
 ```bash
-mutationscores define avg fromScore amiss setAttribute true combine mean
+mutationscores define avg fromScore amiss setAttribute true combine mean mutationSet Q9HAB3
 ```
 
 This creates a new residue attribute called `avg`.
@@ -128,6 +128,17 @@ These regions often correspond to:
 - ligand-binding pockets
 - protein interaction interfaces
 - structurally critical elements of the fold
+
+:::{.callout-warning}
+#### Closing mutation scores
+
+When working with multiple AlphaMissense scores, it's important to either close ChimeraX or close the mutation scores explicitly to avoid confusion between different datasets.
+
+```bash
+mutationscores close
+```
+
+:::
 
 ## Exercises
 
@@ -166,7 +177,7 @@ What parts of the protein appear most sensitive to mutation?
    We compute the **average predicted mutation effect per residue**:
 
     ```bash
-    mutationscores define avg fromScore amiss setAttribute true combine mean
+    mutationscores define avg fromScore amiss setAttribute true combine mean mutationSet P03372
     ```
 
 4. Finally, we map these scores onto the protein structure:
