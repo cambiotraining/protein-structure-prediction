@@ -239,7 +239,7 @@ Load one of the AlphaFold predictions into a new ChimeraX session (the code belo
 close
 cd ~/Course_Materials/er_amphioxus/lbd_homodimer_af3
 open fold_er_amphioxus_lbd_homodimer_af3_model_0.cif
-alphafold pae #2 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_data_0.json
+alphafold pae #1 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_data_0.json
 ```
 
 **Tasks:**
@@ -251,7 +251,7 @@ alphafold pae #2 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_
 1. To analyse the predicted amphioxus dimer interface:
 
     ```bash
-    alphafold contacts #2/A to #2/B distance 5 palette paegreen
+    alphafold contacts #1/A to #1/B distance 5 palette paegreen
     ```
 
    - This adds _pseudobonds_ between the residues in chain A contacting residues in chain B within a distance threshold of ~5 Å.
