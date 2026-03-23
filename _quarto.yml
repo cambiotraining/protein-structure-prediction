@@ -13,7 +13,11 @@ project:
     - materials/*
     - "!materials/*/no_render"
 
-format: crit-format-html
+format: 
+  crit-format-html: 
+    syntax-definitions:
+      - chimerax.xml
+
 exercises:
   number: true
   hide-answers: false

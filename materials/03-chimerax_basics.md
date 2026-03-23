@@ -21,7 +21,7 @@ You can combine both for flexible and efficient structure visualisation.
 To open a PDB file from the command line, use `open`. 
 For example, to load the ligand-binding domain of the human Estrogen Receptor (PDB: 1ERE):
 
-```bash
+```chimerax
 open 1ere
 ```
 
@@ -34,7 +34,7 @@ Use the mouse to **rotate**, **zoom**, and **pan**.
 
 Use the `info` command to obtain information about the loaded models:
 
-```bash
+```chimerax
 info
 ```
 
@@ -51,7 +51,7 @@ info
 
 To get details about chains:
 
-```bash
+```chimerax
 info polymers
 ```
 
@@ -60,7 +60,7 @@ For 1ERE, each chain has three segments (305–330, 337–461, 465–548), repea
 
 To view **metadata** such as ligands:
 
-```bash
+```chimerax
 log metadata
 ```
 
@@ -77,7 +77,7 @@ For example, this shows the presence of residues named `EST`, corresponding to t
 
 To list chains and their UniProt references:
 
-```bash
+```chimerax
 log chains
 ```
 
@@ -101,43 +101,43 @@ Selections use a **target specifier syntax** ([docs](https://www.cgl.ucsf.edu/ch
 
 - Select **model #1**:
 
-    ```bash
+    ```chimerax
     select #1
     ```
 
 - Select **chain A**:
 
-    ```bash
+    ```chimerax
     select /A
     ```
 
 - Select **residue 500 in chain A**:
 
-    ```bash
+    ```chimerax
     select /A:500
     ```
 
 - Select **alpha carbon of residue 305**:
 
-    ```bash
+    ```chimerax
     select /A:305@CA
     ```
 
 - Select **residues 400–500 in chain A**:
 
-    ```bash
+    ```chimerax
     select /A:400-500
     ```
 
 - Clear selection:
 
-    ```bash
+    ```chimerax
     select clear
     ```
 
 - Select all:
 
-    ```bash
+    ```chimerax
     select all
     ```
 
@@ -148,14 +148,14 @@ Examples:
 
 - Select all residues in chain A **except** for residues 400 to 500:
 
-    ```bash
+    ```chimerax
     select /A
     select subtract /A:400-500
     ```
 
 - Add back residues 400 to 410:
 
-    ```bash
+    ```chimerax
     select add /A:400-410
     ```
 
@@ -168,13 +168,13 @@ Examples:
 
 - Select residues 305–330 in either chain A or chain F:
 
-    ```bash
+    ```chimerax
     select /A:305-330 | /F:305-330
     ```
 
 - Select all serine (SER) residues in a range:
 
-    ```bash
+    ```chimerax
     select /A:305-330 & :SER
     ```
 
@@ -198,13 +198,13 @@ We've already seen how we can select all serine residues by their name using `:S
 Ligands are usually also named.
 For example, in our structure, the ligand (estradiol) is annotated with the keyword `EST`, so we can select it with:
 
-```bash
+```chimerax
 select :EST
 ```
 
 Alternatively, we could use the generic keyword: 
 
-```bash
+```chimerax
 select ligand
 ```
 
@@ -214,7 +214,7 @@ The latter would select every ligand in the loaded structures, so if there was m
 
 Zoom to a selection with `view`:
 
-```bash
+```chimerax
 select /A:305@CA
 view sel
 ```
@@ -222,7 +222,7 @@ view sel
 Set the centre of rotation on a certain item with `cofr`. 
 For example, set the centre of rotation on the ligand: 
 
-```bash
+```chimerax
 cofr :EST
 ```
 
@@ -232,7 +232,7 @@ You can use the `delete` command to remove parts of your struture from view.
 In our example, the 1ERE structure contains 6 repeated chains (A-F).
 To only keep chain A and delete the rest:
 
-```bash
+```chimerax
 select #1/A
 delete atoms ~sel
 ```
@@ -242,7 +242,7 @@ delete atoms ~sel
 
 The same could have been achieved with:
 
-```bash
+```chimerax
 delete #1/B-F
 ```
 
@@ -252,14 +252,14 @@ Selections can be saved for reuse.
 
 For example, we save a selection of residues that are commonly mutated in cancers ([Fuqua, Gu & Rechoum, 2015](https://doi.org/10.1007/s10549-014-2847-4)):
 
-```bash
+```chimerax
 select /A:536,537,538
 name frozen muts /A:536,537,538
 ```
 
 Now you can refer to `muts`:
 
-```bash
+```chimerax
 # zoom-in on this selection
 view muts
 
@@ -277,7 +277,7 @@ color muts red
 
 Open a sequence window to visualise and select residues:
 
-```bash
+```chimerax
 sequence chain /A
 ```
 
@@ -300,21 +300,21 @@ Proteins can be represented visually in different ways.
 
 - **Cartoon representation** highlights secondary structure:
 
-    ```bash
+    ```chimerax
     hide atoms
     show cartoon
     ```
 
 - **Atomic representation** shows all atoms:
 
-    ```bash
+    ```chimerax
     hide cartoon
     show atoms
     ```
 
 - **Alternate atomic styles** can be used:
 
-    ```bash
+    ```chimerax
     hide cartoon
     show atoms
     style stick
@@ -324,7 +324,7 @@ Proteins can be represented visually in different ways.
 
 - **Mix representations** can be used. For example, cartoon for protein, spheres for ligand:
 
-    ```bash
+    ```chimerax
     hide atoms
     show cartoon
     show :EST
@@ -333,7 +333,7 @@ Proteins can be represented visually in different ways.
 
 - **Colouring example:**
 
-    ```bash
+    ```chimerax
     color protein grey
     color :538-546 yellow
     show :538-546 atoms
@@ -355,7 +355,7 @@ You can also represent structures using surfaces, which can help visualise the s
 
 Example: 
 
-```bash
+```chimerax
 surface protein color white transparency 80
 ```
 
@@ -366,7 +366,7 @@ We keep the cartoon representation, allowing us to view the secondary structure 
 
 To hide the surface: 
 
-```bash
+```chimerax
 surface hide
 ```
 
@@ -378,7 +378,7 @@ ChimeraX can retrieve UniProt annotations directly.
 For ESR1, the corresponding UniProt entry is **P03372**. 
 We can open its annotations with:
 
-```bash
+```chimerax
 open P03372 from uniprot format uniprot
 ```
 
@@ -399,7 +399,7 @@ Combining structural and functional annotations helps identify **regions likely 
 
 **Save a ChimeraX session** by changing to the destination directory, and use the `save` command: 
 
-```bash
+```chimerax
 cd ~/Course_Materials/
 save 1ERE_annotated.cxs
 ```
@@ -407,14 +407,14 @@ save 1ERE_annotated.cxs
 `.cxs` is a ChimeraX-specific format. 
 To reopen the session: 
 
-```bash
+```chimerax
 cd ~/Course_Materials/
 open 1ERE_annotated.cxs
 ```
 
 The `save` command can also be used to **save protein structures in standard formats**:
 
-```bash
+```chimerax
 save 1ERE_annotated.pdb
 save 1ERE_annotated.cif
 ```
@@ -428,7 +428,7 @@ This allows using ChimeraX to convert between struture formats: open a `.pdb` fi
 
 Start a new session with the 1ERE structure (Human estrogen receptor):
 
-```bash
+```chimerax
 close
 open 1ere
 ```
@@ -443,20 +443,20 @@ Write the `select` commands to achieve the following:
 
 1. We can use the _OR_ (`|`) operator to select the residues in either of those chains: 
 
-    ```bash
+    ```chimerax
     select /A | /B
     ```
 
 2. We can use the `select all` command to select everything, and then subtract chain E:
 
-    ```bash
+    ```chimerax
     select all
     select subtract /E
     ```
 
 3. To select atoms we can use the `@` selector after the residue number:
 
-    ```bash
+    ```chimerax
     select /C:315-350 & @CA
     view sel
     ```
@@ -469,7 +469,7 @@ Write the `select` commands to achieve the following:
 
 Start a new session with chain A of 1ERE (Human estrogen receptor):
 
-```bash
+```chimerax
 close
 open 1ere
 delete #1/B-F
@@ -488,7 +488,7 @@ Try to recreate the visualisation shown below, where:
 
 Here are the steps to recreate this visualisation: 
 
-```bash
+```chimerax
 hide atoms
 show cartoon
 color protein royalblue
@@ -510,7 +510,7 @@ view :353,394,524,525
 
 Starting from this view of chain A of 1ERE:
 
-```bash
+```chimerax
 close
 open 1ere
 delete #1/B-F
@@ -534,26 +534,26 @@ color :EST red
 
 1. We can import the UniProt annotations with:
 
-    ```bash
+    ```chimerax
     open P03372 from uniprot format uniprot
     ```
     
 2. The ligand-binding residues are annotated in the sequence annotation panel as "Binding site".
    In the log window we can see this corresponds to:
    
-    ```bash
+    ```chimerax
     select /A:353,394,524
     ```
 
 3. We can save this selection as `binding_site`:
 
-    ```bash
+    ```chimerax
     name frozen binding_site /A:353,394,524
     ```
 
 4. Finally, we can highlight these residues with a different colour and style:
 
-    ```bash
+    ```chimerax
     color binding_site gold
     show binding_site atoms
     style binding_site ball
@@ -562,7 +562,7 @@ color :EST red
 5. By clicking through the variants listed under the **"sequence variant"** feature type, we can identify that residue 394 (Arg394) is annotated as a variant site.
    We can select this residue and highlight it in a different colour:
 
-    ```bash
+    ```chimerax
     select /A:394
     color sel cyan
     ```
@@ -581,7 +581,7 @@ Try to recreate this view of the murine AA amyloid fibril (PDB: **6DSO**):
 
 This gets us close:
 
-```bash
+```chimerax
 close 
 open 6DSO
 hide atoms
@@ -608,7 +608,7 @@ You can use `log chains` to find out which chains correspond to the protein and 
 
 This gets us close to the visualisation:
 
-```bash
+```chimerax
 close
 open 1AOI
 surface protein
@@ -646,7 +646,7 @@ It might be hard to recreate exactly the same view, but here are some guidelines
 
 We start by opening the structure and hiding the atoms, then showing the surface representation of the protein with a transparency of 60%, and showing the CA atoms coloured cyan:
 
-```bash
+```chimerax
 close
 open 1SU4
 hide cartoon
@@ -658,14 +658,14 @@ colour :CA cyan
 
 We import metadata from UniProt, using the UniProt ID P04191, which we can find in the PDB entry for 1SU4:
 
-```bash
+```chimerax
 open P04191 from uniprot format uniprot
 ```
 
 We select each of the features indicated, and colour them accordingly. 
 Here, we give the exact residues, which we copied from the log window, as we clicked on each of the UniProt annotations.
 
-```bash
+```chimerax
 select /A:70-89,274-295,778-787,852-897,950-964
 colour sel #1b9e77
 select /A:1-48,111-253,314-757,809-828,918-930,986-994

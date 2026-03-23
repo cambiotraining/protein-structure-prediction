@@ -108,7 +108,7 @@ These are both very similar, but run 2 has slightly higher confidence scores, su
 
 4. We can open the model in ChimeraX with the following commands:
 
-    ```bash
+    ```chimerax
     close
     cd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run1_af2/
     open whiB6_monomer_run1_af2_f46cc_unrelaxed_rank_001_alphafold2_ptm_model_4_seed_000.pdb
@@ -132,7 +132,7 @@ We will now compare the best-ranked models from each method by aligning them in 
 
 Run the following code in ChimeraX, which will open and align these models:
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/whiB6_mtb/
 open whiB6_monomer_run1_af2/whiB6_monomer_run1_af2_f46cc_unrelaxed_rank_001_alphafold2_ptm_model_4_seed_000.pdb
@@ -161,7 +161,7 @@ mm #2 to #1
 
 3. We can confirm that the regions with high pLDDT score are very consistent across the two models:
 
-    ```bash
+    ```chimerax
     hide cartoon
     cartoon :31-108
     ```
@@ -184,7 +184,7 @@ In the second run of the AlphaFold2 predictions, we generated multiple models us
 
 Here is the code to open multiple sequences and align them to each other with MatchMaker:
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run2_af2/
 open *unrelaxed*model_4*.pdb
@@ -210,7 +210,7 @@ Questions:
 
 2. We can adapt the code to compare the top-ranked models from each of the five AlphaFold2 models (with seed 000):
 
-    ```bash
+    ```chimerax
     close
     cd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run2_af2/
     open *unrelaxed*seed_000.pdb
@@ -253,7 +253,7 @@ These proteins were used in the CASP15 competition to test multimer prediction a
 
 - We load the structures into ChimeraX with the following code: 
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/whiB6_mtb/
 open 8D5V

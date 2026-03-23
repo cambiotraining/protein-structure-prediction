@@ -11,7 +11,7 @@ Enustun et al. 2023 describe the formation of a homodimer by this protein.
 Use AlphaFold3 to create a prediction for this homodimer. Assess its quality based on global (pTM, ipTM) and local (plDDT, PAE) scores.
 Visually compare your prediction with the experimental structure on PDB 7UYX. Pay particular attention to the β sheets where confidence is lower - does the prediction match the experimental structure?
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/gp2_bacteriophage/
 open 7UYX

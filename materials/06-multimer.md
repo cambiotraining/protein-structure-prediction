@@ -235,7 +235,7 @@ We will examine the **interface residues** in more detail using the PAE matrix f
 
 Load one of the AlphaFold predictions into a new ChimeraX session (the code below loads the AlphaFold3 prediction):
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/er_amphioxus/lbd_homodimer_af3
 open fold_er_amphioxus_lbd_homodimer_af3_model_0.cif
@@ -250,7 +250,7 @@ alphafold pae #1 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_
 
 1. To analyse the predicted amphioxus dimer interface:
 
-    ```bash
+    ```chimerax
     alphafold contacts #1/A to #1/B distance 5 palette paegreen
     ```
 
@@ -307,7 +307,7 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
 
 4. Load the co-folded complex in ChimeraX to inspect the predicted structure.
 
-    ```bash
+    ```chimerax
     close
     cd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/
     open fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif
@@ -344,14 +344,14 @@ This illustrates how co-folding with binding partners can resolve otherwise ambi
 
 3. We import UniProt annotations (ID: B3V8B7):
 
-    ```bash
+    ```chimerax
     open B3V8B7 from uniprot format uniprot
     ```
    
    - From the annotation panel, we select "domain" → "Nuclear receptor", which highlights residues 294-370. 
      Based on this, we assign distinct colours to the different parts of each chain for easier visualisation: 
 
-    ```bash
+    ```chimerax
     color /A steelblue
     color /B royalblue
     color /A:294-370 gold
@@ -379,7 +379,7 @@ The domains only adopt a stable relative orientation when DNA is present, and in
 
 Open the AlphaFold3 prediction of the full complex:
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/
 open fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif
@@ -392,7 +392,7 @@ style nucleic sphere
 You will now compare the structure prediction of the LBD and DBD domains with the known human structures, to assess how good the prediction of the full complex was. 
 To make this comparison easier, we split our full complex model into sub-models for each domain: 
 
-```bash
+```chimerax
 split #1 atoms #1/A-B:441-682 atoms #1/A-B:294-370 atoms #1/C-D
 colour byidentity
 cartoon hide #1.4
@@ -409,7 +409,7 @@ Looking at the output of `info models` you will see that we now have three sub-m
 
 1. Use the commands below to import the human ligand-binding dimer (PDB: 1ERE, chains A and B), and then align it with model `#1.1` (the LBD domain).
 
-    ```bash
+    ```chimerax
     open 1ERE
     delete #2/C-F
     hide #2 atoms
@@ -419,7 +419,7 @@ Looking at the output of `info models` you will see that we now have three sub-m
 
 2. Use the commands below to import the human DNA-binding dimer (PDB: 1HCQ), and then align it with model `#1.2` (the DBD domain).
 
-    ```bash
+    ```chimerax
     open 1HCQ
     delete #3/C-H
     hide #3 atoms
@@ -433,7 +433,7 @@ What is your conclusion about the ability of AlphaFold3 to predict the full comp
 
 We align each of the human structures to our models: 
 
-```bash
+```chimerax
 mm #2 to #1.1
 mm #3 to #1.2
 ```

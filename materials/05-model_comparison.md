@@ -45,7 +45,7 @@ This makes it a good example for exploring how predicted structures can be evalu
 
 First, we load the AlphaFold prediction from AlphaFoldDB:
 
-```bash
+```chimerax
 close
 alphafold fetch Q9HAB3 version 6
 hide atoms
@@ -153,7 +153,7 @@ Once we have identified a homologous structure, we can perform a structural alig
 As an example, consider one of the top FoldSeek hits for SLC52A2: **6OB6**.
 We can import this structure into the session:
 
-```bash
+```chimerax
 open 6ob6
 label delete
 hide atoms
@@ -161,7 +161,7 @@ hide atoms
 
 Before aligning structures, it is helpful to check the models and chains present in the session:
 
-```bash
+```chimerax
 info chains
 ```
 
@@ -181,7 +181,7 @@ We are now ready to perform a structural alignment.
 
 ChimeraX provides the **MatchMaker (`mm`)** command for structural alignment.
 
-```bash
+```chimerax
 mm #1 to #2 showAlignment true
 ```
 
@@ -194,7 +194,7 @@ Structural alignment works by finding the best superposition of corresponding re
 
 Because the alignment only involves **chain B**, we hide the other chain to simplify the view:
 
-```bash
+```chimerax
 cartoon hide #2/A
 ```
 
@@ -212,7 +212,7 @@ Small RMSD values indicate strong agreement between structures.
 
 We can colour the predicted model according to this attribute (we hide the experimental structure to make the colouring easier to see):
 
-```bash
+```chimerax
 color #1 white
 color byattribute r:seq_rmsd #1 target csab palette RdYlBu key true
 cartoon hide #2
@@ -258,7 +258,7 @@ We will now align and compare this model with the prediction available in AlphaF
 
 Run the following code in ChimeraX to open and align the two models:
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/er_amphioxus/full_monomer_af3
 open fold_er_amphioxus_full_monomer_af3_model_0.cif
@@ -287,7 +287,7 @@ mm #2 to #1
 
    - First align the DNA-binding domain:
 
-   ```bash
+   ```chimerax
    hide cartoon
    cartoon :294-370
    mm #2:294-370 to #1:294-370
@@ -295,7 +295,7 @@ mm #2 to #1
 
    - Then align the ligand-binding domain:
 
-   ```bash
+   ```chimerax
    hide cartoon
    cartoon :441-682
    mm #2:441-682 to #1:441-682
@@ -319,7 +319,7 @@ We can use this ensemble of models to evaluate how consistent the predicted stru
 
 Run the following commands in ChimeraX to open the models and align them:
 
-```bash
+```chimerax
 close
 cd ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run2/
 open *unrelaxed*.pdb
@@ -350,13 +350,13 @@ To make our comparisons visually easier, we could colour the structures in diffe
 
 - Give each structure its own colour (the default, when importing multiple structures):
 
-    ```bash
+    ```chimerax
     color bymodel
     ```
 
 - Use a sequential colour palette from the N-terminus to the C-terminus:
 
-    ```bash
+    ```chimerax
     rainbow
     ```
 :::
@@ -370,7 +370,7 @@ Finally, we will compare our _de novo_ prediction of the LBD region using AlphaF
 The PDB entry contains three assemblies of the receptor as a homodimer (i.e. a total of six chains). 
 For simplicity, we will keep only one chain for the comparison:
 
-```bash
+```chimerax
 close
 open 1ERE
 delete /B-F
@@ -380,7 +380,7 @@ show cartoon
 
 Next, open the AlphaFold3 prediction of the amphioxus ligand-binding domain:
 
-```bash
+```chimerax
 cd ~/Course_Materials/er_amphioxus/lbd_monomer_af3/
 open fold_er_amphioxus_lbd_monomer_af3_model_0.cif
 ```
@@ -396,7 +396,7 @@ open fold_er_amphioxus_lbd_monomer_af3_model_0.cif
 
 1. We align the structures using the MatchMaker command and colour the prediction by RMSD relative to the experimental structure:
 
-    ```bash
+    ```chimerax
     mm #2 to #1 showalignment true
     color byattribute r:seq_rmsd #2 target csab palette RdYlBu key true
     ```
@@ -405,7 +405,7 @@ open fold_er_amphioxus_lbd_monomer_af3_model_0.cif
 
 2. We display the ligand in stick representation:
 
-    ```bash
+    ```chimerax
     show ligand
     style ligand stick
     color ligand gold

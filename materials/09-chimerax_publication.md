@@ -34,7 +34,7 @@ This visualisation combines several features to highlight the interaction betwee
 
 Below are the commands used to generate the figure:
 
-```bash
+```chimerax
 close
 open 4J26
 delete /A,I
@@ -56,13 +56,13 @@ We begin by loading the structure and simplifying the model.
 
 The crystal structure contains **two receptor-peptide complexes**, so we remove chains A and I to keep only one complex.
 
-```bash
+```chimerax
 delete /A,I
 ```
 
 Next we adjust the global visual settings.
 
-```bash
+```chimerax
 set bgcolor white
 label delete
 light simple
@@ -80,7 +80,7 @@ Silhouettes are particularly useful because they help the structure stand out cl
 
 We then highlight the relevant structural components.
 
-```bash
+```chimerax
 show /J atoms
 color /B steelblue
 color /J goldenrod
@@ -98,7 +98,7 @@ Using distinct colours makes it easier to identify the different molecular compo
 
 Finally, we display **transparent molecular surfaces** for both chains:
 
-```bash
+```chimerax
 surface /B transparency 85
 surface /J transparency 85
 ```
@@ -127,13 +127,13 @@ The general workflow for creating a movie is:
 
 We can create a rocking animation of the estrogen receptor using:
 
-```bash
+```chimerax
 rock
 ```
 
 To stop the motion:
 
-```bash
+```chimerax
 stop
 ```
 
@@ -143,7 +143,7 @@ It is helpful to record **complete motion cycles**, so that the movie loops smoo
 According to the ChimeraX documentation, the default rocking motion completes one cycle in **136 frames**.
 We therefore record one full cycle using:
 
-```bash
+```chimerax
 movie record
 rock
 wait 136
@@ -152,7 +152,7 @@ stop
 
 Finally, we encode the movie as an MP4 file:
 
-```bash
+```chimerax
 movie encode 4j26_rock.mp4 framerate 60
 ```
 
@@ -171,7 +171,7 @@ First we define a set of views:
 - View 2: coactivator peptide
 - View 3: ligand binding site
 
-```bash
+```chimerax
 view protein
 view name 1
 view /J
@@ -192,7 +192,7 @@ controls how long the transition takes.
 
 For example:
 
-```bash
+```chimerax
 view 1
 movie record
 view 2 60
@@ -222,7 +222,7 @@ Functional annotations can also be incorporated into visualisations.
 For example, we can retrieve UniProt information for the estrogen receptor.
 The UniProt identifier for the receptor is **P03372**:
 
-```bash
+```chimerax
 open P03372 from uniprot format uniprot
 ```
 
@@ -232,7 +232,7 @@ Selecting a feature highlights the corresponding residues in the structure.
 For example, one of the mutations annotated in UniProt is described as: "K → R completely inactive in positive regulation of DNA-binding transcription factor activity".
 Once selected, the residue can be highlighted in the structure:
 
-```bash
+```chimerax
 select /B:314
 show sel atoms
 style sel ball
@@ -256,7 +256,7 @@ This is particularly useful when comparing:
 The `tile` command automatically arranges open models into a grid layout.
 For example:
 
-```bash
+```chimerax
 tile column 4 spacingfactor 0.8
 ```
 
@@ -283,7 +283,7 @@ Save it as a mp4 file.
 
 Here are the commands to create the movie:
 
-```bash
+```chimerax
 roll
 movie record
 wait 360
@@ -302,7 +302,7 @@ If you wanted a slower-rotating movie, you could use a lower framerate (e.g. 30 
 
 Going back to our video transitioning between different views:
 
-```bash
+```chimerax
 view 1
 movie record
 view 2 60
@@ -326,14 +326,14 @@ To achieve this, we add a `rock` command after view 2 and view 3, ensuring to in
 The default `rock` framerate is 136, so we set `wait` to that same number of frames. 
 We therefore include the following code after view 2 and view 3:
 
-```bash
+```chimerax
 rock
 wait 136
 ```
 
 Here is the commented code in full:
 
-```bash
+```chimerax
 # Start the movie with view 1
 view 1
 movie record
@@ -393,7 +393,7 @@ Try to recreate this view of the Oestrogen Receptor complexed with different lig
 
 We start by opening the structures of interest:
 
-```bash
+```chimerax
 close
 open 1GWR
 open 5W9C
@@ -403,7 +403,7 @@ open 7R62
 
 We then select chain A and the ligand for each structure, and delete the rest of the structure:
 
-```bash
+```chimerax
 select #1/A | #1/C | #1/A:EST | #2/A | #2/A:OHT | #3/A | #3/A:29S | #4/A | #4/A:3YJ
 delete ~sel
 select clear
@@ -413,13 +413,13 @@ We have opted to use the OR `|` operator to select multiple chains and ligands a
 
 We then align the structures to each other to ensure similar orientations:
 
-```bash
+```chimerax
 mm #2-4 to #1
 ```
 
 We tile the views using the `tile` command, and colour the structures using `silver`, similar to the original publication:
 
-```bash
+```chimerax
 tile column 4 spacingfactor 0.8
 colour protein silver
 hide protein atoms
@@ -427,7 +427,7 @@ hide protein atoms
 
 We represent the ligands as spheres, and colour them by element:
 
-```bash
+```chimerax
 show ligand atoms
 style ligand sphere
 colour ligand & C green
@@ -437,7 +437,7 @@ colour ligand & N blue
 
 We show the coregulator peptide in cyan:
 
-```bash
+```chimerax
 hide #1/C atoms
 cartoon #1/C
 colour #1/C cyan
@@ -446,7 +446,7 @@ colour #1/C cyan
 To identify the helix positions, we can use the sequence viewer, which highlights the secondary structure of each residue (helices shown as yellow boxes).
 Helix 12 is the last helix of each structure, and these are its positions: 
 
-```bash
+```chimerax
 colour #1/A:537-549 firebrick
 colour #1/A:532-536 darkorange
 colour #2/A:536-545 firebrick
@@ -459,7 +459,7 @@ colour #4/A:528-535 darkorange
 
 Optionally, we can hide the missing residue labels, which are stored as sub-models (see `info models`):
 
-```bash
+```chimerax
 hide #1.1.1 #2.1.1 #3.1.1 #4.1.1
 ```
 
@@ -475,7 +475,7 @@ NOTE: leaving this here as a note
 
 Converting a MP4 to GIF with ffmpeg:
 
-```bash
+```chimerax
 # this gives higher quality but larger file size
 ffmpeg \
   -i 4j26_rock.mp4 \

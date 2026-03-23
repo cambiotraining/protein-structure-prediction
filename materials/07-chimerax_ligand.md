@@ -41,7 +41,7 @@ The same tools we use here also apply to:
 
 We begin by loading the structure and keeping a single chain for clarity.
 
-```bash
+```chimerax
 close
 open 1ERE
 delete #1/B-F
@@ -49,7 +49,7 @@ delete #1/B-F
 
 Next we create a visual representation that highlights the ligand.
 
-```bash
+```chimerax
 style protein ball
 hide atoms
 show cartoon
@@ -80,7 +80,7 @@ Hydrogen bonds often determine:
 
 ChimeraX can detect hydrogen bonds automatically using the `hbonds` command.
 
-```bash
+```chimerax
 hbonds :EST reveal true log true
 ```
 
@@ -97,7 +97,7 @@ Ligands are often held in place by **non-specific contacts**, such as van der Wa
 
 These interactions can be detected using the `contacts` command.
 
-```bash
+```chimerax
 contacts :EST reveal true log true
 ```
 
@@ -109,7 +109,7 @@ Together, hydrogen bonds and other contacts provide a useful picture of how the 
 
 To better visualise the binding pocket, we can display the **molecular surface** of the ligand.
 
-```bash
+```chimerax
 style :EST stick
 show :EST surfaces
 surface :EST color white transparency 65
@@ -130,7 +130,7 @@ ChimeraX allows **distance-based selections** using the `<` operator.
 
 The following command shows residues **within 5 Å** of the ligand:
 
-```bash
+```chimerax
 hide protein cartoon
 hide protein atoms
 show :EST :<5
@@ -155,7 +155,7 @@ In this exercise we will attempt to colour the protein atoms involved in the int
 
 Start your session using the following code, which will show the ligand and the residues within 5 Å of the ligand, as well as the hydrogen bonds and contacts between the ligand and the protein.
 
-```bash
+```chimerax
 close
 open 1ERE
 delete #1/B-F
@@ -191,7 +191,7 @@ Work on your selection incrementally, making use of the `select subtract` comman
 
 We can achieve this in several incremental steps:
 
-```bash
+```chimerax
 select pbondatoms
 select subtract pbonds
 select subtract :EST
@@ -205,7 +205,7 @@ colour sel gold
 
 Then we can repeat the same steps for hydrogen bonds: 
 
-```bash
+```chimerax
 select hbondatoms
 select subtract hbonds
 select subtract :EST
@@ -226,7 +226,7 @@ Reading the [documentation for the `size` command](https://www.cgl.ucsf.edu/chim
 
 We can use the `pseudobondRadius` attribute to change the thickness of the pseudobonds, making sure to apply this only to the hydrogen bonds, using the `hbonds` selector keyword:
 
-```bash
+```chimerax
 size hbonds pseudobondRadius 0.1
 ```
 

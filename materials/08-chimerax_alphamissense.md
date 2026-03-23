@@ -35,7 +35,7 @@ As a reminder, this is a **membrane transporter for vitamin B2 (riboflavin)**, a
 
 We begin by loading the predicted structure from the AlphaFold Database:
 
-```bash
+```chimerax
 alphafold fetch Q9HAB3 version 6
 ```
 
@@ -46,7 +46,7 @@ This ensures that we retrieve the correct version of the prediction, but you sho
 
 We can also load the corresponding PAE matrix:
 
-```bash
+```chimerax
 alphafold pae #1 palette paegreen uniprotId Q9HAB3 version 6
 ```
 
@@ -55,7 +55,7 @@ alphafold pae #1 palette paegreen uniprotId Q9HAB3 version 6
 Structural information is often easier to interpret alongside **functional annotations**.
 ChimeraX can retrieve UniProt annotations directly:
 
-```bash
+```chimerax
 open Q9HAB3 from uniprot format uniprot
 ```
 
@@ -80,7 +80,7 @@ For each possible mutation, the model assigns a **score between 0 and 1**:
 
 These scores can be loaded directly in ChimeraX.
 
-```bash
+```chimerax
 open Q9HAB3 from alpha_missense format amiss
 ```
 
@@ -88,7 +88,7 @@ The scores are loaded and a histogram showing the **distribution of mutation imp
 
 We can add a label to each residue displaying the mutation impact score for every possible mutation:
 
-```bash
+```chimerax
 mutationscores label #1 amiss height 3 palette bluered
 ```
 
@@ -97,7 +97,7 @@ However, it doesn't give a good overall view of the mutational sensitivity acros
 
 We can remove the labels with:
 
-```bash
+```chimerax
 label delete
 ```
 
@@ -106,14 +106,14 @@ label delete
 Because each residue can mutate to many different amino acids, it is often useful to summarise these predictions.
 For example, we can compute the **average predicted mutation effect per residue**:
 
-```bash
+```chimerax
 mutationscores define avg fromScore amiss setAttribute true combine mean mutationSet Q9HAB3
 ```
 
 This creates a new residue attribute called `avg`.
 We can then map these scores onto the structure:
 
-```bash
+```chimerax
 color byattribute r:avg palette bluered key true range 0,1
 cartoon byattribute r:avg
 ```
@@ -134,7 +134,7 @@ These regions often correspond to:
 
 When working with multiple AlphaMissense scores, it's important to either close ChimeraX or close the mutation scores explicitly to avoid confusion between different datasets.
 
-```bash
+```chimerax
 mutationscores close
 ```
 
@@ -160,7 +160,7 @@ What parts of the protein appear most sensitive to mutation?
 
 1. We first load the AlphaFold structure and its associated PAE matrix:
 
-    ```bash
+    ```chimerax
     close
     alphafold fetch P03372 version 6
     alphafold pae #1 palette paegreen uniprotId P03372 version 6
@@ -168,7 +168,7 @@ What parts of the protein appear most sensitive to mutation?
 
 2. Next we load the UniProt annotation and the AlphaMissense mutation scores:
 
-    ```bash
+    ```chimerax
     open P03372 from uniprot format uniprot
     open P03372 from alpha_missense format amiss
     ```
@@ -176,13 +176,13 @@ What parts of the protein appear most sensitive to mutation?
 3. Each residue has many possible amino acid substitutions.
    We compute the **average predicted mutation effect per residue**:
 
-    ```bash
+    ```chimerax
     mutationscores define avg fromScore amiss setAttribute true combine mean mutationSet P03372
     ```
 
 4. Finally, we map these scores onto the protein structure:
 
-    ```bash
+    ```chimerax
     color byattribute r:avg palette bluered key true
     cartoon byattribute r:avg
     ```

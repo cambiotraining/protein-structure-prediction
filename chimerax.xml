@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language name="chimerax"
+          version="1"
+          kateversion="5.0"
+          section="Scientific"
+          extensions="*.cxs;*.chimerax"
+          mimetype="text/x-chimerax"
+          priority="5">
+
+  <highlighting>
+
+    <list name="namedSelectors">
+      <!-- core -->
+      <item>sel</item>
+      <item>sel-residues</item>
+      <item>all</item>
+
+      <!-- biopolymer types -->
+      <item>protein</item>
+      <item>nucleic</item>
+      <item>nucleic-acid</item>
+
+      <!-- structural parts -->
+      <item>sidechain</item>
+      <item>sideonly</item>
+      <item>mainchain</item>
+      <item>backbone</item>
+      <item>min-backbone</item>
+      <item>ribose</item>
+
+      <!-- secondary structure -->
+      <item>helix</item>
+      <item>strand</item>
+      <item>coil</item>
+
+      <!-- chemical classes -->
+      <item>ligand</item>
+      <item>solvent</item>
+      <item>ions</item>
+      <item>main</item>
+
+      <!-- bonds / pseudobonds -->
+      <item>hbonds</item>
+      <item>pbonds</item>
+      <item>pbondatoms</item>
+
+      <!-- functional / structural groups -->
+      <item>amide</item>
+      <item>disulfide</item>
+      <item>aromatic-ring</item>
+      <item>carboxylate</item>
+
+      <!-- special cases -->
+      <item>template-mismatch</item>
+    </list>
+
+    <contexts>
+
+      <context name="Normal"
+               attribute="Normal Text"
+               lineEndContext="#stay">
+
+        <!-- comments -->
+        <RegExpr attribute="Comment"
+                 String="^\s*#.*$"/>
+
+        <RegExpr attribute="Comment"
+                 String=";\s*#.*$"/>
+
+        <!-- command at start of line -->
+        <RegExpr attribute="Command"
+                 String="^\s*[A-Za-z][A-Za-z0-9_-]*"/>
+
+        <!-- command after semicolon -->
+        <RegExpr attribute="Command"
+                 String=";\s*[A-Za-z][A-Za-z0-9_-]*"/>
+
+        <!-- model selector -->
+        <RegExpr attribute="Model"
+                 String="#~?[0-9]+([-,][0-9]+)*"/>
+
+        <!-- chain selector -->
+        <RegExpr attribute="Chain"
+                 String="/[A-Za-z]([-,][A-Za-z])*"/>
+
+        <!-- residue selector -->
+        <RegExpr attribute="Residue"
+                 String=":[A-Za-z0-9]+([-,][A-Za-z0-9]+)*"/>
+
+        <!-- atom selector -->
+        <RegExpr attribute="Atom"
+                 String="@[A-Za-z0-9]+([-,][A-Za-z0-9]+)*"/>
+
+        <!-- named selectors -->
+        <keyword attribute="Named Selector"
+                 context="#stay"
+                 String="namedSelectors"/>
+
+        <!-- logical operators -->
+        <RegExpr attribute="Operator"
+                 String="[|&amp;~,;]"/>
+
+      </context>
+
+    </contexts>
+    
+    <!-- full list of itemDatas: https://docs.kde.org/stable_kf6/en/kate/katepart/highlight.html -->
+    <!-- distinct colours provided by: dsNormal dsKeyword dsFunction dsOperator dsString dsImport dsDataType dsAttribute dsConstant dsComment -->
+    <itemDatas>
+
+      <itemData name="Normal Text"
+                defStyleNum="dsNormal"/>
+
+      <itemData name="Command"
+                defStyleNum="dsKeyword"
+                bold="true"/>
+
+      <itemData name="Model"
+                defStyleNum="dsImport"/>
+
+      <itemData name="Chain"
+                defStyleNum="dsFunction"/>
+
+      <itemData name="Residue"
+                defStyleNum="dsImport"/>
+
+      <itemData name="Atom"
+                defStyleNum="dsFunction"/>
+
+      <itemData name="Named Selector"
+                defStyleNum="dsImport"/>
+
+      <itemData name="Operator"
+                defStyleNum="dsOperator"/>
+
+      <itemData name="Comment"
+                defStyleNum="dsComment"
+                italic="true"/>
+
+    </itemDatas>
+
+  </highlighting>
+
+  <general>
+
+    <comments>
+      <comment name="singleLine" start="#"/>
+    </comments>
+
+    <keywords casesensitive="1"/>
+
+  </general>
+
+</language>

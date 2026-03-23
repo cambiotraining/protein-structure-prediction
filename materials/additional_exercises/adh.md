@@ -24,7 +24,7 @@ Your tasks are to:
 
 1. We import the predicted structure into ChimeraX:
 
-    ```bash
+    ```chimerax
     close
     cd ~/Course_Materials/TODO
     open B9LTJ0_af3/fold_B9LTJ0_af3_model_0.cif
@@ -39,7 +39,7 @@ Your tasks are to:
 
 3. We can open the chosen PDB structure in ChimeraX, and align the two structures to each other.
 
-    ```bash
+    ```chimerax
     open 4ilk
     delete #2/B
     hide :ZI :MN
@@ -51,7 +51,7 @@ With the alignment done, we generate several views of the protein to assess the 
 
 First, we consider the RMSD of the aligned residues, to see if the alignment quality is high in the region of interest:
 
-```bash
+```chimerax
 hide #2 cartoon
 colour #1 white
 colour byattribute r:seq_rmsd #1 target csab palette RdYlBu key true
@@ -63,7 +63,7 @@ This is a sign that the predicted structure around the NADH binding pocket is co
 
 In another view, we colour by the AlphaFold confidence score (B-factor attribute) to see if the model is confident in the region of interest:
 
-```bash
+```chimerax
 colour byattribute bfactor #1 palette alphafold key true
 ```
 
@@ -71,7 +71,7 @@ We can see that, in general, the model is confident in the region around the NAD
 
 Finally, we create a view with the protein surface shown to see if the NADH molecule fits in a pocket within the predicted structure: 
 
-```bash
+```chimerax
 surface hide
 surface #1 color white transparency 80
 show :NAI atoms
