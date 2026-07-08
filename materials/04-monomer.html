@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Monomer structure prediction</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../materials/05-model_comparison.html" rel="next">
+<link href="../materials/03-chimerax_basics.html" rel="prev">
+<link href="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university-of-cambridge-favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bb373a9d6c60814f0d90357058c9134b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/molstar-v3.13.0/molstar.js"></script>
+<link href="../site_libs/quarto-contrib/molstar-v3.13.0/molstar.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/molstar-v3.13.0/app-container.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo light-content">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Prediction and Analysis of Protein Structures</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/cambiotraining/protein-structure-prediction"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="CRIT GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/bioinfocambs.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="CRIT Bluesky"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://genomic.social/@BioInfoCambs"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="CRIT Mastodon"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bioinfotraining.bio.cam.ac.uk/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="mdi:web" style="font-size: 1.25em;" aria-label="Icon web from mdi Iconify.design set." title="CRIT Website"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    
+    <style>
+    #version-dropdown {
+      list-style: none;
+    }
+    </style>
+    
+
+  <li id="version-dropdown" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="menu-text">Version:</span> <span class="version-badge" aria-hidden="true">Latest</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-versions">
+      <li>
+        <a class="dropdown-item" href="/protein-structure-prediction/index.html">
+          <span class="dropdown-text">Latest</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Welcome</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data &amp; Setup</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to protein structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Protein structure databases</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/03-chimerax_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualising structures with ChimeraX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure prediction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/04-monomer.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/05-model_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/06-multimer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predicting protein complexes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/07-chimerax_ligand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysing protein-ligand interactions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/08-chimerax_alphamissense.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mapping mutation effects onto structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/09-chimerax_publication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Publication-quality visualisations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Additional exercises</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/additional_exercises/whib6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Transcriptional regulator WhiB6</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../versions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archived Versions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/further_reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Further Reading and Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#structure-prediction" id="toc-structure-prediction" class="nav-link active" data-scroll-target="#structure-prediction"><span class="header-section-number">4.1</span> Structure prediction</a></li>
+  <li><a href="#download-results" id="toc-download-results" class="nav-link" data-scroll-target="#download-results"><span class="header-section-number">4.2</span> Download results</a></li>
+  <li><a href="#model-scores" id="toc-model-scores" class="nav-link" data-scroll-target="#model-scores"><span class="header-section-number">4.3</span> Model scores</a>
+  <ul class="collapse">
+  <li><a href="#global-confidence-scores" id="toc-global-confidence-scores" class="nav-link" data-scroll-target="#global-confidence-scores"><span class="header-section-number">4.3.1</span> Global confidence scores</a></li>
+  <li><a href="#local-confidence-scores" id="toc-local-confidence-scores" class="nav-link" data-scroll-target="#local-confidence-scores"><span class="header-section-number">4.3.2</span> Local confidence scores</a></li>
+  </ul></li>
+  <li><a href="#chimerax" id="toc-chimerax" class="nav-link" data-scroll-target="#chimerax"><span class="header-section-number">4.4</span> ChimeraX</a>
+  <ul class="collapse">
+  <li><a href="#colouring-by-confidence-score" id="toc-colouring-by-confidence-score" class="nav-link" data-scroll-target="#colouring-by-confidence-score"><span class="header-section-number">4.4.1</span> Colouring by confidence score</a></li>
+  <li><a href="#viewing-the-pae-matrix" id="toc-viewing-the-pae-matrix" class="nav-link" data-scroll-target="#viewing-the-pae-matrix"><span class="header-section-number">4.4.2</span> Viewing the PAE matrix</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.5</span> Exercises</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.6</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Predict protein structures using <strong>ColabFold (AlphaFold2)</strong> and <strong>AlphaFold Server (AlphaFold3)</strong>.</li>
+<li>Choose appropriate prediction parameters for different biological questions.</li>
+<li>Interpret prediction outputs, including confidence scores and ranking metrics.</li>
+<li>Understand when monomer and multimer prediction are appropriate.</li>
+<li>Visualise and interpret predicted structures using ChimeraX.</li>
+</ul>
+</div>
+</div>
+<section id="structure-prediction" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="structure-prediction"><span class="header-section-number">4.1</span> Structure prediction</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="alphafold">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">AlphaFold Server (AlphaFold3)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">ColabFold (AlphaFold2)</a></li></ul>
+<div class="tab-content" data-group="alphafold">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>The <strong>AlphaFold Server</strong> provides a web interface for running structure predictions using AlphaFold3.</p>
+<p>Compared with AlphaFold2, the newer model can predict more complex systems, including:</p>
+<ul>
+<li>protein monomers</li>
+<li>protein multimers</li>
+<li>protein-DNA complexes</li>
+<li>protein-ligand complexes</li>
+</ul>
+<p>For a simple monomer prediction, the workflow is straightforward.</p>
+<ol type="1">
+<li>Paste the protein sequence.</li>
+<li>Choose the number of copies (for monomer prediction this is <strong>1</strong>).</li>
+<li>Submit the job and wait for the prediction to complete.</li>
+</ol>
+<p>The server will return the predicted models along with confidence metrics.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><strong>ColabFold</strong> provides a convenient way to run AlphaFold2 predictions using Google Colab notebooks.</p>
+<p>It uses a streamlined pipeline based on the original AlphaFold2 method but replaces the heavy sequence search step with the fast <strong>MMseqs2</strong> search algorithm. This makes predictions much faster and easier to run on standard hardware.</p>
+<p>ColabFold also provides several parameters that allow users to customise their predictions. These are detailed next.</p>
+<section id="parameter-num_relax" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-num_relax">Parameter: <code>num_relax</code></h4>
+<p>Controls how many predicted models undergo <strong>energy minimisation</strong> using the AMBER force field. Relaxation improves local geometry but does not change the overall fold.</p>
+<p>Typical settings:</p>
+<ul>
+<li><code>0</code> - no relaxation (fastest)</li>
+<li><code>1</code> - relax only the top model (good compromise)</li>
+<li><code>5</code> - relax all models (slowest)</li>
+</ul>
+</section>
+<section id="parameter-template_mode" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-template_mode">Parameter: <code>template_mode</code></h4>
+<p>Controls whether the model uses <strong>structural templates</strong>.</p>
+<p>Options:</p>
+<ul>
+<li><code>none</code> - no templates (pure de novo prediction). Fastest and ideal when no homologous structure exists.</li>
+<li><code>pdb100</code> - search PDB for structural templates. Improves accuracy if close homologues exist.</li>
+<li><code>custom</code> - user-provided templates</li>
+</ul>
+</section>
+<section id="parameter-msa_mode" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-msa_mode">Parameter: <code>msa_mode</code></h4>
+<p>Controls how homologous sequences are collected.</p>
+<p>Options:</p>
+<ul>
+<li><code>single_sequence</code> - only the input sequence (very fast; not recommended)</li>
+<li><code>mmseqs2_uniref</code> - search UniRef database (balance of speed and depth)</li>
+<li><code>mmseqs2_uniref_env</code> - include environmental sequences from metagenomic experiments (slower, but can improve accuracy)</li>
+<li><code>custom</code> - user-supplied alignment</li>
+</ul>
+<p>In most cases <code>mmseqs2_uniref_env</code> provides the best balance between speed and depth.</p>
+</section>
+<section id="parameter-model_type" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-model_type">Parameter: <code>model_type</code></h4>
+<p>Controls which AlphaFold model is used.</p>
+<p>The <strong>auto</strong> setting usually works best because it selects the appropriate model based on the input (monomer or multimer).</p>
+</section>
+<section id="parameter-num_recycles" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-num_recycles">Parameter: <code>num_recycles</code></h4>
+<p>Controls how many times the model refines its prediction. During each cycle the predicted structure is fed back into the network, which has been shown to improve model accuracy.</p>
+<p>Typical settings:</p>
+<ul>
+<li><code>0</code> - fastest, but not recommended</li>
+<li><code>3</code> - good balance between speed and accuracy</li>
+<li><code>6+</code> - higher accuracy for difficult folds</li>
+<li><code>auto</code> - run until convergence</li>
+</ul>
+</section>
+<section id="parameter-num_seeds" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-num_seeds">Parameter: <code>num_seeds</code></h4>
+<p>AlphaFold predictions include stochastic elements. Different <strong>random seeds</strong> can produce slightly different structures. Running multiple seeds increases the diversity of predictions.</p>
+<p>Typical settings:</p>
+<ul>
+<li><code>1</code> - sufficient for most proteins</li>
+<li><code>2+</code> - useful when exploring uncertain folds</li>
+</ul>
+</section>
+<section id="parameter-use_dropout" class="level4">
+<h4 class="anchored" data-anchor-id="parameter-use_dropout">Parameter: <code>use_dropout</code></h4>
+<p>Dropout introduces additional stochasticity into the neural network. This can generate more diverse predictions, particularly in:</p>
+<ul>
+<li>flexible regions</li>
+<li>uncertain interfaces</li>
+<li>multimer predictions</li>
+</ul>
+<p>It is often combined with <strong>multiple seeds</strong> to explore alternative conformations.</p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="download-results" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="download-results"><span class="header-section-number">4.2</span> Download results</h2>
+<p>After a run completes, the results can be downloaded for further analysis. The most important outputs are:</p>
+<p><strong>Predicted structures</strong></p>
+<ul>
+<li>Structure files in <strong>PDB or mmCIF format</strong>.</li>
+<li>Each file contains the predicted atomic coordinates.</li>
+</ul>
+<p><strong>Confidence scores</strong></p>
+<ul>
+<li><strong>pLDDT</strong> values stored per residue in the structure file.</li>
+<li>These values indicate the model’s confidence in each region.</li>
+</ul>
+<p><strong>PAE matrix</strong></p>
+<ul>
+<li>A matrix describing the predicted positional error between residue pairs.</li>
+<li>Often visualised as a heatmap.</li>
+<li>These are stored in files with extension <code>.json</code>.</li>
+</ul>
+<p><strong>Ranking information</strong></p>
+<ul>
+<li>AlphaFold typically produces multiple models.</li>
+<li>These models are ranked according to global confidence metrics such as <strong>average pLDDT</strong> or <strong>pTM</strong> (<strong>ipTM</strong> for multimers).</li>
+<li>The ranking is included in the file name.</li>
+</ul>
+<p>In practice, one usually examines the <strong>top-ranked model first</strong>, then compare it with alternative predictions.</p>
+</section>
+<section id="model-scores" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="model-scores"><span class="header-section-number">4.3</span> Model scores</h2>
+<p>AlphaFold predictions include several <strong>confidence scores</strong>. These scores help us estimate how reliable a predicted structure is.</p>
+<p>Broadly, these scores fall into two categories:</p>
+<ul>
+<li><strong>Global scores</strong> - measure confidence in the overall fold of the protein.</li>
+<li><strong>Local scores</strong> - measure confidence in specific regions of the structure.</li>
+</ul>
+<p>Both are useful, but they answer different questions. The following table summarises these scores, with details in the following sections:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 22%">
+<col style="width: 10%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>What it measures</th>
+<th>Range</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pLDDT</td>
+<td>Local per-residue confidence</td>
+<td>0-100</td>
+<td>High = accurate local geometry<br>Low = uncertain or disordered region</td>
+</tr>
+<tr class="even">
+<td>PAE</td>
+<td>Pairwise positional error</td>
+<td>angstroms (A)</td>
+<td>Low = confident domain relationships<br>High = uncertain domain orientation</td>
+</tr>
+<tr class="odd">
+<td>pTM</td>
+<td>Global fold accuracy</td>
+<td>0-1</td>
+<td>&gt;0.5 → overall fold likely correct<br>&lt;0.5 → unreliable model</td>
+</tr>
+</tbody>
+</table>
+<section id="global-confidence-scores" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="global-confidence-scores"><span class="header-section-number">4.3.1</span> Global confidence scores</h3>
+<p>Global scores describe the reliability of the <strong>overall protein fold</strong>.</p>
+<section id="ptm" class="level4">
+<h4 class="anchored" data-anchor-id="ptm">pTM</h4>
+<p>The <strong>predicted Template Modelling score (pTM)</strong> estimates how accurate the global structure is expected to be.</p>
+<p>The score ranges from <strong>0 to 1</strong>.</p>
+<p>Typical interpretation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>pTM</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt;0.7</td>
+<td>very reliable fold</td>
+</tr>
+<tr class="even">
+<td>0.5-0.7</td>
+<td>likely correct overall fold</td>
+</tr>
+<tr class="odd">
+<td>&lt;0.5</td>
+<td>unreliable prediction</td>
+</tr>
+</tbody>
+</table>
+<p>This score is particularly useful when comparing <strong>multiple predicted models</strong>.</p>
+</section>
+<section id="average-plddt" class="level4">
+<h4 class="anchored" data-anchor-id="average-plddt">Average pLDDT</h4>
+<p>Although pLDDT is calculated <strong>per residue</strong>, some tools (such as ColabFold) also report the <strong>average pLDDT</strong> across the entire structure. This value provides a quick summary of model quality.</p>
+<p>Typical interpretation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Avg pLDDT</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt;90</td>
+<td>very high confidence model</td>
+</tr>
+<tr class="even">
+<td>70-90</td>
+<td>good model</td>
+</tr>
+<tr class="odd">
+<td>50-70</td>
+<td>uncertain structure</td>
+</tr>
+<tr class="even">
+<td>&lt;50</td>
+<td>likely disordered or incorrect</td>
+</tr>
+</tbody>
+</table>
+<p>However, average values can hide local properties of the prediction. A model may have a high average pLDDT while still containing <strong>poorly predicted loops or flexible regions</strong>. Conversely, a model may have low average pLDDT while still containing <strong>confidently predicted domains</strong>.</p>
+</section>
+</section>
+<section id="local-confidence-scores" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="local-confidence-scores"><span class="header-section-number">4.3.2</span> Local confidence scores</h3>
+<p>Local scores describe confidence <strong>within specific regions of the structure</strong>. These scores help identify flexible loops, disordered regions, or uncertain domain orientations.</p>
+<section id="plddt" class="level4">
+<h4 class="anchored" data-anchor-id="plddt">pLDDT</h4>
+<p>The <strong>predicted Local Distance Difference Test (pLDDT)</strong> measures confidence <strong>for each residue</strong>.</p>
+<p>Scores range from <strong>0 to 100</strong>.</p>
+<p>Typical interpretation:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>pLDDT</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt;90</td>
+<td>very high confidence</td>
+</tr>
+<tr class="even">
+<td>70-90</td>
+<td>confident</td>
+</tr>
+<tr class="odd">
+<td>50-70</td>
+<td>low confidence</td>
+</tr>
+<tr class="even">
+<td>&lt;50</td>
+<td>likely disordered</td>
+</tr>
+</tbody>
+</table>
+<p>AlphaFold stores pLDDT values in the <strong>B-factor column</strong> of the structure file (<code>.pdb</code>/<code>.cif</code>). ChimeraX can colour residues using this information, as we will see below.</p>
+</section>
+<section id="pae" class="level4">
+<h4 class="anchored" data-anchor-id="pae">PAE</h4>
+<p>The <strong>Predicted Aligned Error (PAE)</strong> describes the expected positional error between <strong>pairs of residues</strong>. It is usually shown as a <strong>matrix heatmap</strong>.</p>
+<p>This score answers a different question:</p>
+<blockquote class="blockquote">
+<p>How confident is the model about the <em>relative positions</em> of different parts of the protein?</p>
+</blockquote>
+<p>Here, lower values are better, and typical patterns include:</p>
+<ul>
+<li><strong>Dark diagonal blocks</strong> → well-defined secondary structures or structural domains</li>
+<li><strong>Light off-diagonal regions</strong> → uncertain orientation between domains</li>
+</ul>
+<p>High PAE between domains often indicates that the domains fold correctly but their <strong>relative orientation is flexible or uncertain</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How are these scores calculated?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AlphaFold learns to estimate its own prediction confidence during training.</p>
+<p>During training:</p>
+<ol type="1">
+<li>The model learns to predict protein structures from sequence data.</li>
+<li>Additional components of the network learn to estimate the reliability of those predictions.</li>
+</ol>
+<p>The pLDDT, PAE, and pTM scores therefore reflect the model’s <strong>internal estimate of accuracy</strong>, based on patterns it learned from many experimentally solved protein structures.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="chimerax" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="chimerax"><span class="header-section-number">4.4</span> ChimeraX</h2>
+<p>The three-dimensional structures predicted by AlphaFold can be loaded into ChimeraX, along with their confidence scores.</p>
+<p>First, it is convenient to change the ChimeraX workding directory to where the data is located on the computer. On our training computers, this is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Course_Materials</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language-choice">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">AlphaFold Server (AlphaFold3)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">ColabFold (AlphaFold2)</a></li></ul>
+<div class="tab-content" data-group="language-choice">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>AlphaFold Server outputs the structure as a <code>.cif</code> file, with the following naming convention:</p>
+<ul>
+<li>The prefix <code>fold_</code></li>
+<li>The name used by the user upon job submission</li>
+<li>The model ranking - <code>model_[0-5]</code> - for the five models generated, in order of global confidence score (i.e.&nbsp;model 0 is the highest-confidence model)</li>
+</ul>
+<p>We use the <code>open</code> command to load the structure into ChimeraX:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> p53_human/p53_monomer_af3/fold_p53_monomer_af3_model_0.cif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>ColabFold outputs the structure as a <code>.pdb</code> file, with the following naming convention:</p>
+<ul>
+<li><p>The name used by the user upon job submission, followed by a job submission string</p></li>
+<li><p>An indicator of whether the model is unrelaxed or relaxed (if using <code>num_relax</code> option)</p></li>
+<li><p>The model ranking - <code>rank_[001-X]</code> - for the X models generated, in order of global confidence score (i.e.&nbsp;<code>rank_001</code> is the highest-confidence model)</p></li>
+<li><p>The model number - <code>_alphafold2_ptm_model_[1-5]</code> - corresponding to the five AlphaFold2 neural network models</p></li>
+<li><p>The random seed number - <code>seed_[000-X]</code></p></li>
+</ul>
+<p>We use the <code>open</code> command to load the structure into ChimeraX:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> p53_human/p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Once loaded, the structure appears in the main viewer.</p>
+<section id="colouring-by-confidence-score" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="colouring-by-confidence-score"><span class="header-section-number">4.4.1</span> Colouring by confidence score</h3>
+<p>AlphaFold stores <strong>pLDDT values</strong> in the <strong>B-factor column</strong> of the structure file. The B-factor field normally stores atomic temperature factors in experimental structures. AlphaFold repurposes this field to store confidence values.</p>
+<p>To colour residues by confidence:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colour</span> bfactor palette alphafold key true</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="images/chimerax_p53_monomer_coloured.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/chimerax_p53_monomer_coloured.png" class="img-fluid" style="width:50.0%"></a></p>
+<p>This applies the standard AlphaFold colour scheme:</p>
+<ul>
+<li><strong>Blue</strong> - very high confidence</li>
+<li><strong>Cyan</strong> - confident</li>
+<li><strong>Yellow</strong> - low confidence</li>
+<li><strong>Orange/red</strong> - very low confidence</li>
+</ul>
+<p>Regions coloured yellow or red often correspond to:</p>
+<ul>
+<li>flexible loops</li>
+<li>disordered regions</li>
+<li>poorly constrained predictions</li>
+</ul>
+<p>The <code>key true</code> option opens a menu to set a legend, but can be left out if you prefer.</p>
+</section>
+<section id="viewing-the-pae-matrix" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="viewing-the-pae-matrix"><span class="header-section-number">4.4.2</span> Viewing the PAE matrix</h3>
+<p>The <strong>Predicted Aligned Error (PAE)</strong> describes the expected positional error between pairs of residues. Lower values indicate higher confidence in the relative positions of those residues.</p>
+<p>The PAE matrix is stored in a text-based format called <code>.json</code>, following a naming convention matching the corresponding structure file.<br>
+To load the PAE matrix in ChimeraX:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language-choice">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">AlphaFold Server (AlphaFold3)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">ColabFold (AlphaFold2)</a></li></ul>
+<div class="tab-content" data-group="language-choice">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">alphafold</span> pae <span class="co">#1 palette paegreen file p53_human/p53_monomer_af3/fold_p53_monomer_af3_full_data_0.json</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">alphafold</span> pae <span class="co">#1 palette paegreen file p53_human/p53_monomer_af2/p53_monomer_af2_7c637_scores_rank_001_alphafold2_ptm_model_1_seed_000.json</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>ChimeraX will display the matrix as a heatmap. You can interactively select blocks on the heatmap, which will get highlighted in the structure.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_p53_monomer_pae.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/chimerax_p53_monomer_pae.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+<p>You can also ask ChimeraX to <strong>automatically identify potential structural domains</strong> based on the PAE matrix. Either by clicking the “Color PAE Domains” in the PAE menu, or by running the following command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">alphafold</span> pae <span class="co">#1 colorDomains true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This command analyses the PAE matrix and groups residues into <strong>coherent domains</strong> - regions where the model predicts low relative positional error. ChimeraX then colours each domain with a different colour in the structure.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_p53_monomer_domains.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/chimerax_p53_monomer_domains.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+<p>This can be very useful when analysing large proteins, especially when domain boundaries are not known in advance. In many cases the automatically identified domains correspond closely to <strong>independently folded structural units</strong>.</p>
+<p>ChimeraX also stores the domain assignments as an attribute (<code>pae_domain</code>). You can use this attribute to select or recolour individual domains later if needed.</p>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.5</span> Exercises</h2>
+<p>You are studying the evolution of the <strong>estrogen receptor (ER)</strong>, a nuclear hormone receptor that regulates gene expression in response to estrogen binding. This is a well-studied protein, with important roles in the development of sexual characteristics and in diseases such as breast cancer.</p>
+<p>In humans, two genes encode estrogen receptors: <em>ESR1</em> and <em>ESR2</em>. These proteins contain several well-characterised domains, including a DNA-binding domain (DBD) that recognises specific DNA sequences known as estrogen response elements (EREs), and a ligand-binding domain (LBD) that binds estrogen and other ligands.</p>
+<p>ER proteins function as dimers and regulate transcription by binding DNA and recruiting transcriptional machinery.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://ars.els-cdn.com/content/image/1-s2.0-S1876162319300112-f03-04-9780128155615_lrg.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Domain organisation of the estrogen receptor. Image source: Fig. 5 in Fuentes &amp; Silveyra 2019"><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1876162319300112-f03-04-9780128155615_lrg.jpg" class="img-fluid figure-img" alt="Domain organisation of the estrogen receptor. Image source: Fig. 5 in Fuentes &amp; Silveyra 2019"></a></p>
+<figcaption>Domain organisation of the estrogen receptor. Image source: Fig. 5 in <a href="https://doi.org/10.1016/bs.apcsb.2019.01.001">Fuentes &amp; Silveyra 2019</a></figcaption>
+</figure>
+</div>
+<p>The structure of the human ERα ligand-binding domain has been resolved experimentally (for example PDB 1ERE). In this exercise series, you will compare this experimentally determined structure with predicted structures from an evolutionarily distant species.</p>
+<p>Based on <a href="https://doi.org/10.1016/j.jsbmb.2014.10.020">Baker et al.&nbsp;(2015)</a>, the most basal lineage known to contain estrogen receptor proteins is the cephalochordate amphioxus (genus <em>Branchiostoma</em>), an invertebrate chordate that diverged before vertebrates. Studying the ER from amphioxus provides an opportunity to explore how conserved the structure of this protein is across deep evolutionary time. For example, the ligand binding domain is only around 35% identical at the sequence level compared to human.</p>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/4/47/Branchiostoma_lanceolatum.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Branchiostoma_lanceolatum.jpg" class="img-fluid"></a></p>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 1 - Sequence retrieval
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>Open <a href="https://www.uniprot.org/uniprotkb/B3V8B7/entry" target="_blank">UniProt entry <strong>B3V8B7</strong></a>, which contains the known information for a ER protein in the species <em>Branchiostoma floridae</em>.</p>
+<p>Questions:</p>
+<ol type="1">
+<li><p>Examine the AlphaFoldDB structure prediction. What is your assessment of the quality of this prediction?</p>
+<ul>
+<li>Click the link to the AlphaFoldDB entry, where you can also examine the PAE matrix.</li>
+</ul></li>
+<li><p>Can you find the sequence for the ligand-binding domain (LBD) and the DNA-binding domain (DBD)?</p></li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>Examining the <a href="https://alphafold.ebi.ac.uk/entry/B3V8B7">AlphaFoldDB entry for B3V8B7</a>, we can observe that:</p>
+<ul>
+<li>The overall confidence of the model is relatively low, with an average pLDDT = 54.25.</li>
+<li>However, two regions have substantially higher confidence (pLDDT &gt; 70), suggesting the presence of well-structured domains.</li>
+<li>These regions likely correspond to the DNA-binding domain (DBD) and the ligand-binding domain (LBD).</li>
+<li>The PAE matrix shows low error within these regions but high error between them, indicating that the internal structure of each domain is predicted with confidence, while the relative orientation of the domains is uncertain.</li>
+<li>Regions with low pLDDT likely correspond to flexible or intrinsically disordered regions.</li>
+</ul></li>
+</ol>
+    <div id="app-B3V8B7" class="molstar-app"></div>
+    <script type="text/javascript">
+    molstar.Viewer.create("app-B3V8B7", {"emdbProvider":"rcsb","layoutIsExpanded":false,"layoutShowControls":false,"layoutShowLeftPanel":true,"layoutShowLog":false,"layoutShowRemoteState":false,"layoutShowSequence":false,"pdbProvider":"rcsb","viewportShowAnimation":true,"viewportShowExpand":true,"viewportShowSelectionMode":false}).then(viewer => {
+    viewer.loadAlphaFoldDb(afdb="B3V8B7")    });
+    </script>
+    
+<ol start="2" type="1">
+<li><p>On the UniProt page, under <strong>“Family &amp; Domains”</strong>, we can find several annotations:</p>
+<ul>
+<li>Disordered regions, which are consistent with the low pLDDT regions observed in the AlphaFold prediction.</li>
+<li>A nuclear receptor DNA-binding domain located at residues <strong>294-370</strong>.</li>
+<li>A ligand-binding domain (LBD) located at residues <strong>441-682</strong>.</li>
+</ul>
+<p>Returning to the AlphaFoldDB entry, highlighting these residue intervals confirms that they correspond to regions with higher pLDDT scores.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 2 - Structure prediction with AlphaFold3 (AlphaFold Server)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>The predicted protein structure on AlphaFoldDB was generated using AlphaFold2. We will investigate whether the prediction improves using AlphaFold3.</p>
+<p>Submit the ER protein sequence from <em>Branchiostoma floridae</em> to the <a href="https://alphafoldserver.com" target="_blank">AlphaFold Server (AlphaFold3)</a> to predict its structure.</p>
+<ul>
+<li><a href="https://rest.uniprot.org/uniprotkb/B3V8B7.fasta" target="_blank">Link to sequence</a></li>
+</ul>
+<p><strong>Questions:</strong></p>
+<ol type="1">
+<li>What is your assessment of the confidence of the model?</li>
+<li>How does this prediction compare with the AlphaFoldDB (AlphaFold2) model?</li>
+<li>What strategy would you use for further structural analysis of this protein?</li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>The prediction has a pTM = 0.38, indicating low overall confidence in the global arrangement of the protein. However, several regions have high pLDDT scores, suggesting that individual domains - particularly the DNA-binding domain and ligand-binding domain - are predicted with good local confidence.</p></li>
+<li><p>Visual comparison suggests that the AlphaFold3 prediction is broadly similar to the AlphaFold2 model from AlphaFoldDB. Both models show well-defined domains connected by low-confidence regions. The overall confidence remains low because large parts of the protein appear to be flexible or intrinsically disordered.</p></li>
+<li><p>A sensible next step would be to focus on the structured domains rather than the full-length protein. For example, the DNA-binding domain and ligand-binding domain could be analysed separately or compared with experimentally determined structures of homologous proteins.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 3 - Structure prediction with AlphaFold2 (ColabFold)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>ColabFold is a user-friendly implementation of AlphaFold2 that runs on Google Colab. You can access it at <a href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb" target="_blank">this Colab notebook</a>.</p>
+<p>As running predictions with the free ColabFold can take some time, for this exercise, we will explore pre-processed results from previous runs:</p>
+<ul>
+<li><a href="https://colab.research.google.com/drive/1yWi3xDWQ7Vk7Uoz1mRBFTnuZ3NFQtl8J?usp=sharing">Run 1</a> - used default settings</li>
+<li><a href="https://colab.research.google.com/drive/1hSzm1NeXSlsXCEyyqAmnQNjrFR5lCj9T?usp=sharing">Run 2</a> - changed <code>num_relax</code>, <code>template_mode</code>, <code>num_recycles</code> and <code>num_seeds</code></li>
+</ul>
+<p>These predictions focused on the LBD domain of the ER from <em>Branchiostoma floridae</em>, which is annotated as residues 441-682 on UniProt B3V8B7. To ensure the full domain was included, a few flanking residues were included in the prediction (residues 420-705):</p>
+<pre><code>NSFDSDGDSSTGRELRTASHQRLKALIDALDVKEGEHRGEENHPTGQQA
+GNWQEISNPELIESVSSLVDRELTGIICWGKKIPGYSKLSLNDQVLLME
+STWLDLLILDLVWCSIRHKGEKLLLSGGVLVNRNTISNRRNNSSGDDME
+VLEMCDQILSIATKFYEFDLQRREYLCLKAITLVHGSLKGLESDTQVRQ
+LQDDLTDALMDVCSERHALGSRRPAKMLLLLSHLRQVSARASSHLGAVR
+NGLKVPLYDILLDILTDQVSEGQRDQQAGHHEVASSPEKER</code></pre>
+<p><strong>Questions:</strong></p>
+<ol type="1">
+<li>Identify the parameter values that changed between the two runs.</li>
+<li>Based on the quality scores for both predictions (pLDDT, PAE and pTM), which do you think gives best results?</li>
+<li>Compare the graphs with <strong>“Predicted LDDT per position”</strong> and <strong>“Sequence coverage”</strong> to assess why some regions have low pLDDT.</li>
+<li>Open the top-ranked model from run 1 in ChimeraX and explore the confidence scores and PAE matrix.</li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>Run 1 used default settings, while run 2 used the following:</p>
+<ul>
+<li><code>num_relax = 1</code> → relax only the top-ranked model</li>
+<li><code>template_mode = pdb100</code> → uses the PDB100 database to find structural templates based on sequence similarity</li>
+<li><code>num_recycles = 6</code> → increase the number of recycling iterations, which can help with model accuracy</li>
+<li><code>num_seeds = 4</code> → to generate a few models from different random seeds, and choose the one with highest quality</li>
+</ul></li>
+<li><p>The top-ranking predictions of each run had:</p>
+<ul>
+<li>Run 1 (<code>rank_001_alphafold2_ptm_model_2_seed_000</code>): pLDDT = 73.6; pTM = 0.75</li>
+<li>Run 2 (<code>rank_001_alphafold2_ptm_model_2_seed_002</code>): pLDDT = 74.3; pTM = 0.756</li>
+</ul></li>
+</ol>
+<p>These are both very similar, but run 2 has slightly higher confidence scores, suggesting it may be the better prediction.</p>
+<ol start="3" type="1">
+<li><p>The <strong>“Sequence coverage”</strong> plot shows the multiple sequence alignment between our protein and other proteins in the database. There are several observations we can make:</p>
+<ul>
+<li>In general, regions where the alignment coverage is higher, also correspond to regions with higher pLDDT. This makes sense, as the model is more confident where it found more homologous sequences in the database (i.e., more similar to the training data used in the deep learning model).</li>
+<li>The terminal regions of the sequence we used have very low coverage. We decided to include flanking regions to the LBD annotated on UniProt to ensure the full domain was included in our analysis. This plot suggests that these flanking regions are less well conserved in evolutionary terms.</li>
+<li>Even within the LBD region there is a “dip” in the alignment coverage at around residue 130, with a corresponding dip in pLDDT to around 60. Looking at the 3D structure, this corresponds to a hinge between two helices, which seems to have lower alignment coverage and also lower pLDDT.</li>
+<li>The alignment coverage on the N-terminal side of this “dip” is also higher than the coverage on the C-terminal side, which also suggests different sequence conservation along the LBD sequence.</li>
+</ul></li>
+<li><p>We can open the model in ChimeraX with the following commands:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">close</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run1/</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">open</span> er_amphioxus_lbd_monomer_af2_run1_a80a1_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">colour</span> byattribute bfactor palette alphafold</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">alphafold</span> pae <span class="co">#1 palette paegreen file er_amphioxus_full_monomer_af2_run1_a80a1_scores_rank_001_alphafold2_ptm_model_2_seed_000.json</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>We initiate a fresh session using <code>close</code>.</li>
+<li>We navigate to the folder where the results are stored using <code>cd</code>.</li>
+<li>We open the top-ranked model (<code>.pdb</code> format) using <code>open</code>.</li>
+<li>We colour the structure by pLDDT score using <code>colour byattribute bfactor palette alphafold</code>.</li>
+<li>We open the PAE matrix using <code>alphafold pae</code> and colour it with a green palette.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.6</span> Summary</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key Points
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Predicted models must be evaluated critically, even when produced by advanced methods.</li>
+<li>Structure prediction tools such as AlphaFold provide confidence metrics that should always be examined when interpreting predicted models.</li>
+<li>Global scores (such as pTM) reflect confidence in the overall structure, while local scores (pLDDT) reflect confidence in specific regions.</li>
+<li>Large proteins with flexible or intrinsically disordered regions often have lower global confidence scores.</li>
+<li>AlphaFold confidence scores (pLDDT) help identify regions of a protein that are likely to be well structured versus flexible or disordered.</li>
+<li>The Predicted Aligned Error (PAE) matrix indicates how confidently AlphaFold predicts the relative positioning of different regions of a protein.</li>
+<li>Multidomain proteins often contain well-predicted domains connected by flexible regions with lower confidence.
+<ul>
+<li>Example: In the ER case study, the DNA-binding and ligand-binding domains appear as high-confidence regions, while other parts of the protein show low confidence consistent with flexible regions.</li>
+</ul></li>
+<li>Predicting individual domains can sometimes yield more reliable models than predicting the entire protein.</li>
+</ul>
+<p><strong>Foundational AlphaFold papers</strong></p>
+<ul>
+<li><p>Jumper et al.&nbsp;(2021) Highly accurate protein structure prediction with AlphaFold. <a href="https://doi.org/10.1038/s41586-021-03819-2">https://doi.org/10.1038/s41586-021-03819-2</a></p></li>
+<li><p>Abramson et al.&nbsp;(2024) Accurate structure prediction of biomolecular interactions with AlphaFold3. <a href="https://doi.org/10.1038/s41586-024-07487-w">https://doi.org/10.1038/s41586-024-07487-w</a></p></li>
+</ul>
+<p><strong>Accessible explainers</strong></p>
+<ul>
+<li><p>Illustrated AlphaFold <a href="https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/">https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/</a></p></li>
+<li><p>AlphaFold2 is here: what’s behind the structure prediction miracle? <a href="https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/">https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/</a></p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../materials/03-chimerax_basics.html" class="pagination-link" aria-label="Visualising structures with ChimeraX">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualising structures with ChimeraX</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../materials/05-model_comparison.html" class="pagination-link" aria-label="Comparing protein structures">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> <img src="https://creativecommons.org/images/deed/cc_icon_black_x2.png" class="img-fluid" width="25"> Cambridge Research Informatics Training</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

@@ -1,0 +1,1106 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Prediction and Analysis of Protein Structures",
+    "section": "",
+    "text": "Prediction and Analysis of Protein Structures",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Welcome",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "Prediction and Analysis of Protein Structures",
+    "section": "Overview",
+    "text": "Overview\nAdvances in machine learning have transformed structural biology, making accurate protein structure predictions widely accessible. This course introduces practical approaches for exploring and analysing protein structures using modern tools such as AlphaFold and ChimeraX. You will learn how to retrieve structural models from biological databases, visualise protein structures, and analyse key features such as domains, ligand-binding sites, and protein-protein interfaces.\n\n\n\n\n\n\nTipLearning Objectives\n\n\n\n\nUnderstand the basic principles behind protein folding and de novo protein structure prediction.\nSelect and justify which software to use for predicting 3D structures.\nUse several web-based tools for structural prediction and analysis.\nEvaluate, compare and select high quality 3D structural protein model(s).\nPerform structural and functional analysis with proteins and their ligands in ChimeraX.\n\n\n\n\nTarget Audience\nResearchers interested in generating, interpreting and exploring protein structures.\n\n\nPrerequisites\nUnderstanding of the basics of protein structure is expected.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Welcome",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "index.html#citation-authors",
+    "href": "index.html#citation-authors",
+    "title": "Prediction and Analysis of Protein Structures",
+    "section": "Citation & Authors",
+    "text": "Citation & Authors\nPlease cite these materials if:\n\nYou adapted or used any of them in your own teaching.\nThese materials were useful for your research work. For example, you can cite us in the methods section of your paper: “We carried our analyses based on the recommendations in YourReferenceHere”.\n\n\nYou can cite these materials as:\n\nSalehe, B., Jackson, M., Zane, I., Zhu, Y., Tavares, H. (2025). Course Development Guidelines. https://cambiotraining.github.io/protein-structure-prediction\n\nOr in BibTeX format:\n@misc{YourReferenceHere,\n  author = {Salehe, Bajuna and Jackson, Matthew and Zane, Isabelle and Zhu, Yu and Tavares, Hugo},\n  month = {4},\n  title = {Course Development Guidelines},\n  url = {https://cambiotraining.github.io/protein-structure-prediction},\n  year = {2025}\n}\nAbout the authors:\nBajuna Salehe  \nAffiliation: Cambridge Centre for Research Informatics Training Roles: conceptualisation; primary author; data curation; software\n\nMatthew Jackson  \nAffiliation: MRC Toxicology Unit, University of Cambridge Roles: conceptualisation; primary author; software\n\nIsabelle Zane  \nAffiliation: Wellcome Sanger Institute Roles: conceptualisation; primary author; data curation; software\n\nYu Zhu  \nAffiliation: Department of Pharmacology, University of Cambridge Roles: conceptualisation; primary author; data curation; software\n\nHugo Tavares  \nAffiliation: Cambridge Centre for Research Informatics Training Roles: editor",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Welcome",
+      "Overview"
+    ]
+  },
+  {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Data\nThe data used in these materials is provided as a zip file. Download and unzip the folder to your Desktop to follow along with the materials.\nDownload",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Welcome",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "setup.html#software",
+    "href": "setup.html#software",
+    "title": "Data & Setup",
+    "section": "Software",
+    "text": "Software\n\nGoogle account\nUsing AlphaFold Server requires a Google account. You can use either a personal or institutional Google account.\n\nOpen AlphaFold Server and login using your Google account.\n\n\n\nChimeraX\nChimeraX is available on all major operating systems. Note that this software is only free for for academic, government, nonprofit, and personal use. Consult the ChimeraX page for other uses.\n\nDownload the installer for your operating system from the ChimeraX download page",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Welcome",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html",
+    "href": "materials/01-intro.html",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "",
+    "text": "1.1 Overview\nProteins do most of the work in a cell. They build structures, catalyse reactions, transmit signals, and control gene expression. To do these jobs, proteins must adopt precise three-dimensional shapes.\nA protein’s structure determines its function. Change the shape, and the function often changes too.\nThis simple idea drives a large area of research: predicting protein structure from its sequence.\nIn these materials we will explore how modern computational methods predict protein structures and complexes. We will also examine how researchers analyse and interpret these models.\nBefore we begin, we need a few key ideas.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#protein-folding-and-levels-of-structure",
+    "href": "materials/01-intro.html#protein-folding-and-levels-of-structure",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.2 Protein folding and levels of structure",
+    "text": "1.2 Protein folding and levels of structure\nProteins are chains of amino acids. The order of those amino acids forms the primary structure.\nCells build this chain on the ribosome. At first it looks like a loose thread, but the chain does not stay that way for long, as it eventually folds.\nFolding happens because amino acids interact with each other and with water: some attract, some repel, some form bonds. These interactions pull the chain into a stable shape.\nWe usually describe protein structure at four levels.\n\n1.2.1 Primary structure\nThe primary structure is simply the amino acid sequence. Example:\nMet-Ala-Leu-Gly-Lys...\nThis sequence contains all the information needed to fold the protein.\n\n\n1.2.2 Secondary structure\nShort stretches of the chain fold into regular patterns called secondary structures.\nThe two most common are:\n\nalpha helices - spiral structures stabilised by hydrogen bonds\nbeta sheets - extended strands that pair to form sheets\n\nThese elements form the scaffolding of many proteins.\n\n\n1.2.3 Tertiary structure\nThe tertiary structure describes the full three-dimensional fold of a single protein chain.\nAt this level we see:\n\nhow helices and sheets pack together\nwhere pockets and binding sites appear\nhow the protein interacts with ligands or other molecules\n\nThis is the level most often shown in molecular graphics programs such as ChimeraX.\n\n\n1.2.4 Quaternary structure\nMany proteins work as complexes of several chains. The arrangement of these chains forms the quaternary structure.\nExamples include:\n\nenzyme complexes\nantibody assemblies\ntranscription factor dimers\nmembrane channels\n\nIn these materials we will often examine these assemblies. They reveal how proteins cooperate to perform biological functions.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#why-predict-protein-structures",
+    "href": "materials/01-intro.html#why-predict-protein-structures",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.3 Why predict protein structures?",
+    "text": "1.3 Why predict protein structures?\nBiologists can determine protein structures experimentally. The most common methods include:\n\nX-ray crystallography\nNMR spectroscopy\ncryo-electron microscopy\n\nThese techniques produce detailed structures, but they require specialised equipment and time. As a result, we know the sequences of hundreds of millions of proteins, but we have solved structures for only a small fraction of them.\nThis gap creates a clear problem: We know the letters of the sequence, but we do not know the shape.\nStructure prediction aims to close that gap. Accurate structure models help researchers:\n\nunderstand how proteins work\nidentify binding sites for drugs or ligands\ninterpret disease mutations\nstudy protein evolution\ndesign new proteins and enzymes\n\nIn short, structure helps us turn sequence data into biological insight.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#a-long-standing-challenge",
+    "href": "materials/01-intro.html#a-long-standing-challenge",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.4 A long-standing challenge",
+    "text": "1.4 A long-standing challenge\nPredicting protein structure from sequence has challenged scientists for decades. The core problem seems simple:\n\nGiven an amino acid sequence, predict the structure it will fold into.\n\nIn practice, the problem is extremely hard. A protein chain can adopt an enormous number of possible shapes. Each shape corresponds to a different arrangement of atoms, however, only a few of these shapes are stable.\nPredicting the correct fold means finding the lowest-energy structure among a vast number of possibilities.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#early-computational-approaches",
+    "href": "materials/01-intro.html#early-computational-approaches",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.5 Early computational approaches",
+    "text": "1.5 Early computational approaches\nEarly methods relied on two main ideas.\n\n1.5.1 Physics-based models\nSome approaches attempted to simulate the physics of folding. They calculated forces between atoms and searched for the lowest-energy structure.\nIn theory this approach should work. In practice it demands enormous computing power. Even today, simulating full protein folding remains difficult.\n\n\n1.5.2 Comparative modelling\nAnother approach used homology.\nProteins that share similar sequences often share similar structures. If researchers already solved the structure of a related protein, they could model the new one by comparison.\nThis method works well when a close structural relative exists. But it struggles with proteins that lack known homologues.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#the-casp-experiments",
+    "href": "materials/01-intro.html#the-casp-experiments",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.6 The CASP experiments",
+    "text": "1.6 The CASP experiments\nTo measure progress, the community created a regular blind test called CASP (Critical Assessment of Structure Prediction). In CASP:\n\nExperimental groups determine new protein structures but keep them secret.\nPrediction groups attempt to model those proteins from sequence alone.\nOrganisers compare the predictions with the experimental structures.\n\nCASP provides an objective way to measure how well prediction methods perform. For many years, progress was steady but slow.\nThen the field changed.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#deep-learning-and-alphafold",
+    "href": "materials/01-intro.html#deep-learning-and-alphafold",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.7 Deep learning and AlphaFold",
+    "text": "1.7 Deep learning and AlphaFold\nIn recent years, machine learning methods have improved many areas of science. Protein structure prediction is one example.\nDeep learning models analyse large datasets of known protein structures and sequences. From these data they learn patterns that relate sequence to structure.\nOne system in particular drew wide attention: AlphaFold, developed by DeepMind.\nAlphaFold uses deep neural networks to predict:\n\ndistances between residues\nangles within the protein backbone\noverall structural geometry\n\nIt combines these predictions into a final three-dimensional model.\nIn CASP14 (2020), AlphaFold achieved a level of accuracy close to many experimental structures. This result marked a major advance in the field.\nSince then, researchers have applied AlphaFold and related tools to predict structures across entire proteomes. Large public resources now exist, including the AlphaFold Protein Structure Database, which contains predicted structures for millions of proteins.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#the-current-state-of-the-field",
+    "href": "materials/01-intro.html#the-current-state-of-the-field",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.8 The current state of the field",
+    "text": "1.8 The current state of the field\nToday, structure prediction plays a central role in molecular biology. Researchers routinely use predicted models to:\n\nexplore protein function\nanalyse mutation effects\ndesign experiments\nstudy protein complexes\n\nTools continue to improve. New systems can predict:\n\nprotein multimers\nprotein–DNA interactions\nprotein–ligand complexes\n\nThese capabilities allow us to model increasingly realistic biological systems.\nHowever, challenges still remain, as prediction methods still struggle with:\n\nhighly flexible or disordered regions\nlarge multi-component assemblies\ntransient interactions\nsubtle conformational changes\n\nResearchers must also learn how to interpret prediction confidence and recognise when a model may be unreliable.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/01-intro.html#what-you-will-learn",
+    "href": "materials/01-intro.html#what-you-will-learn",
+    "title": "1  Introduction to protein structure prediction",
+    "section": "1.9 What you will learn",
+    "text": "1.9 What you will learn\nThese materials focus on practical analysis of predicted protein structures.\nYou will learn how to:\n\nsearch structural databases such as UniProt and AlphaFoldDB\npredict protein structures using modern tools\ncompare predicted and experimental structures\nanalyse complexes and interfaces\ninterpret prediction confidence scores\nvisualise and analyse structures in ChimeraX",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to protein structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html",
+    "href": "materials/02-databases.html",
+    "title": "2  Protein structure databases",
+    "section": "",
+    "text": "2.1 Overview\nModern structural biology generates a huge amount of data. Researchers solve thousands of new protein structures each year. Computational tools now add millions more predicted structures.\nThese data only become useful if we can store, organise, and retrieve them efficiently. For this reason, several public databases collect information about protein sequences, structures, and domains.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#why-databases-matter",
+    "href": "materials/02-databases.html#why-databases-matter",
+    "title": "2  Protein structure databases",
+    "section": "2.2 Why databases matter",
+    "text": "2.2 Why databases matter\nA single protein structure contains a large amount of information. For example, a typical structural file includes:\n\nthe amino acid sequence\nthe 3D coordinates of every atom\nchain organisation\nligands and cofactors\nexperimental details\nreferences to the scientific literature\n\nWithout databases, each research group would store these data in its own format. That would make sharing and analysis very difficult.\nInstead, structural biology relies on standardised repositories. These resources allow researchers to:\n\ndeposit newly solved structures\nsearch existing structures\nretrieve data in standard formats\nconnect structures to sequence and functional annotations\n\nSeveral databases now form the core infrastructure of structural bioinformatics.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#core-databases",
+    "href": "materials/02-databases.html#core-databases",
+    "title": "2  Protein structure databases",
+    "section": "2.3 Core databases",
+    "text": "2.3 Core databases\n\n2.3.1 UniProt\nUniProt is the central database for protein sequence information. Each protein entry in UniProt includes:\n\nthe amino acid sequence\nprotein name and function\norganism\ndomain annotations\ncross-references to other databases\nknown variants and mutations\n\nUniProt serves as the hub that links many biological resources together. For example, a UniProt entry may link to:\n\nexperimental structures in the Protein Data Bank\npredicted models in AlphaFoldDB\ndomain annotations from InterPro\nstructural classifications such as CATH\n\nWhen working with proteins, UniProt often provides the best starting point.\nA typical workflow begins by:\n\nSearching for a protein in UniProt.\nInspecting its annotations.\nFollowing links to structural databases.\n\n\n\n2.3.2 The Protein Data Bank (PDB)\nThe Protein Data Bank (PDB) stores experimentally determined macromolecular structures.\nResearchers deposit structures into the PDB after solving them using methods such as X-ray crystallography, NMR spectroscopy or cryo-electron microscopy. Each entry contains:\n\natomic coordinates\nexperimental metadata\nstructural annotations\ninformation about ligands and cofactors\n\nThe PDB currently contains hundreds of thousands of structures. These include proteins, nucleic acids, and large molecular complexes.\nEach entry receives a unique four-character identifier. Examples include:\n\n1A52 - estrogen receptor ligand-binding domain\n1HCQ - estrogen receptor DNA-binding domain bound to DNA\n\nResearchers commonly refer to structures by these codes.\n\n\n2.3.3 AlphaFoldDB\nExperimental structures remain limited compared with the number of known protein sequences. This gap motivated large-scale prediction efforts.\nAlphaFoldDB provides predicted structures generated using AlphaFold. The database contains models for:\n\nentire proteomes\nmillions of proteins across many organisms\n\nEach AlphaFoldDB entry links directly to a UniProt identifier. These predicted models include useful information such as prediction confidence scores, which will be discussed later.\nPredicted structures can often guide experiments, particularly when no experimental structure exists. However, they remain computational models, not experimental observations. Researchers must always interpret them with care.\n\n\n2.3.4 InterPro\nProteins often contain domains - conserved structural units that perform specific functions. InterPro collects domain annotations from many specialised databases (e.g. PFAM and CATH), integrating them into one place.\nInterPro helps researchers identify:\n\nconserved domains\nfunctional motifs\nprotein families\n\nFor example, a transcription factor might contain:\n\na DNA-binding domain\na ligand-binding domain\nregulatory regions\n\n\n\n2.3.5 CATH\nCATH classifies proteins based on three-dimensional structure. CATH groups proteins into hierarchical categories:\n\nClass - overall secondary structure composition\nArchitecture - general spatial arrangement\nTopology - fold connectivity\nHomologous superfamily - proteins with shared ancestry\n\nThis classification helps researchers study:\n\nstructural evolution\nrecurring protein folds\nrelationships between distant proteins\n\nIn other words, CATH helps answer the question: Which proteins share similar structures, even if their sequences differ?",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#choosing-the-right-database",
+    "href": "materials/02-databases.html#choosing-the-right-database",
+    "title": "2  Protein structure databases",
+    "section": "2.4 Choosing the right database",
+    "text": "2.4 Choosing the right database\nEach database answers different questions.\nA useful rule of thumb:\n\n\n\nTask\nBest database\n\n\n\n\nFind basic protein information\nUniProt\n\n\nRetrieve experimental structures\nPDB\n\n\nExplore predicted structures\nAlphaFoldDB\n\n\nIdentify domains and motifs\nInterPro\n\n\nStudy structural classification\nCATH\n\n\n\nIn practice, researchers often move between several databases during analysis.\nFor example:\n\nStart with UniProt to find the protein sequence.\nCheck PDB for experimental structures.\nUse AlphaFoldDB if no structure exists.\nExamine InterPro to identify domains.\nUse CATH to look for structural relationships.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#file-formats",
+    "href": "materials/02-databases.html#file-formats",
+    "title": "2  Protein structure databases",
+    "section": "2.5 File formats",
+    "text": "2.5 File formats\nOnce we find a structure, we usually download it as a coordinate file.\nTwo formats dominate structural biology:\n\nPDB format\nPDBx/mmCIF format\n\nBoth store the same core information. They differ mainly in structure and flexibility.\n\n2.5.1 The PDB format\nThe original PDB format dates back to the 1970s. It uses fixed-width text lines to describe atoms and metadata.\nA typical line looks like this:\nATOM   1523  CA  LEU A 203      12.456  18.233   9.612\nThis contains several pieces of information:\n\nrecord type (ATOM)\natom number\natom name\nresidue name\nchain identifier\nresidue number\nx, y, z coordinates\n\nThese coordinates define the atom’s position in three-dimensional space.\nSoftware such as ChimeraX reads these coordinates and reconstructs the molecular structure.\n\n\n2.5.2 The PDBx/mmCIF format\nAs structures became larger and more complex, the original PDB format showed its limits. The PDBx/mmCIF format replaced it as the official standard.\nmmCIF files store the same information but use a more flexible table-like structure. They can represent:\n\nvery large complexes\nextensive metadata\ndetailed experimental information\n\nMost modern PDB entries now appear primarily in mmCIF format. Fortunately, most molecular visualisation tools can read both formats.\nSometimes there is a need to convert structures between formats, for example for compatibility with different software tools. Many programs support conversion, including ChimeraX, which we will introduce in the next section.\nIn practice, the mmCIF format has become the preferred standard, while PDB files remain common for legacy workflows.\n\n\n2.5.3 Key components of structural files\nRegardless of format, structural files contain several important types of information.\n\nAtomic coordinates: These lines define the position of every atom in the structure. Visualisation software uses these coordinates to build the 3D model.\nChain and residue information: Structures often contain multiple chains. For example: protein chains, DNA strands, ligands, cofactors. Chain identifiers allow software to separate these components.\nSecondary structure annotations: Many files include annotations that describe secondary structures such as helices and beta strands. These annotations help visualisation tools display the protein in cartoon form.\nMetadata: Structural files also store experimental information. This includes the method used to solve the structure, the resolution, authors and publication details.\n\n\n\n2.5.4 The FASTA format\nFASTA is a simple text format for storing protein or nucleotide sequences. Each entry has two parts:\n\nHeader line - starts with &gt; and usually contains an identifier and brief description.\nSequence lines - the sequence itself, written in standard one-letter codes.\n\nExample:\n&gt;sp|P9WF37|WHIB6_MYCTU Probable transcriptional regulator WhiB6 OS=Mycobacterium tuberculosis\nMRYAFAAEATTCNAFWRNVDMTVTALYEVPLGVCTQDPDRWTTTPDDEAKTLCRACPRRW\nLCARDAVESAGAEGLWAGVVIPESGRARAFALGQLRSLAERNGYPVRDHRVSAQSA\nFASTA is widely used because it is human-readable, compact, and compatible with most bioinformatics tools. UniProt allows you to download protein sequences directly in FASTA format for further analysis.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#exercises",
+    "href": "materials/02-databases.html#exercises",
+    "title": "2  Protein structure databases",
+    "section": "2.6 Exercises",
+    "text": "2.6 Exercises\n\n\n\n\n\n\nExerciseExercise 1 - Exploring the PDB\n\n\n\n\n\n\n\nGo to the RCSB PDB portal\nSearch for “vitamin D receptor”, or directly by the PDB ID: “1DB1”\n\nNote: use the CSM toggle when you also want to include high-accuracy AlphaFold2 models (not experimentally determined)\n\n\nQuestions:\n\nWhat expression system and method was used to determine this structure?\nDoes this protein have any known domains?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nLooking at the PDB entry for 1DB1, we can see:\n\nFrom the Structure Summary tab: The structure was determined using X-ray crystallography, and the expression system used was Escherichia coli.\nFrom the Annotations tab: We can see the “Vitamin D nuclear receptor” domain is annotated for this protein.\n\nWe could find further details for the protein, namely specific binding sites from UniProt entry P11473, which is linked from the “Structure Summary” tab of the PDB entry.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/02-databases.html#summary",
+    "href": "materials/02-databases.html#summary",
+    "title": "2  Protein structure databases",
+    "section": "2.7 Summary",
+    "text": "2.7 Summary\n\n\n\n\n\n\nTipKey Points\n\n\n\n\nStructural biology relies on a network of databases that store and organise protein information.\nSome of the main resources include:\n\nUniProt - protein sequence and functional annotation https://www.uniprot.org/\nPDB - experimentally determined structures https://www.rcsb.org/\nAlphaFoldDB - predicted protein structures https://alphafold.ebi.ac.uk/\nInterPro - domain and motif annotations https://www.ebi.ac.uk/interpro/\nCATH - structural classification of protein folds https://cathdb.github.io/\n\nTwo main file formats are used to store protein structures:\n\nPDB - the original file format definition to store three-dimensional structures, which is still used by many applications.\nPDBx/mmCIF - a modern format that is now widely adopted, allowing storing larger structures and more complex metadata.\n\nProtein sequences are stored in FASTA format.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Protein structure databases</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html",
+    "href": "materials/03-chimerax_basics.html",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "",
+    "text": "3.1 Overview\nChimeraX provides a graphical user interface (GUI) and a command line interface (CLI). You can combine both for flexible and efficient structure visualisation.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#opening-a-structure",
+    "href": "materials/03-chimerax_basics.html#opening-a-structure",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.2 Opening a structure",
+    "text": "3.2 Opening a structure\nTo open a PDB file from the command line, use open. For example, to load the ligand-binding domain of the human Estrogen Receptor (PDB: 1ERE):\nopen 1ere\nThe structure appears in the main window. Use the mouse to rotate, zoom, and pan.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#inspecting-the-structure",
+    "href": "materials/03-chimerax_basics.html#inspecting-the-structure",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.3 Inspecting the structure",
+    "text": "3.3 Inspecting the structure\nUse the info command to obtain information about the loaded models:\ninfo\n2 models\n#1, 1ere, shown\n11376 atoms, 11472 bonds, 1530 residues, 6 chains (A,B,C,D,E,F)\n12 missing structure\n#1.1, missing structure, shown, 12 pseudobonds\n\nModel #1: main structure (11376 atoms, 11472 bonds, 1530 residues, 6 chains).\nModel #1.1: missing residues (represented as pseudobonds).\n\nTo get details about chains:\ninfo polymers\nChimeraX lists residue ranges for each chain. For 1ERE, each chain has three segments (305–330, 337–461, 465–548), repeated because this PDB entry consists of three assemblies of a homodimer (so, 3 x 2 = 6 chains).\nTo view metadata such as ligands:\nlog metadata\n\n\n\n\n\n\n\n\nMetadata for 1ere#1\n\n\n\n\nTitle\nHuman estrogen receptor ligand-binding domain In complex with 17Β-estradiol\n\n\nCitation\nBrzozowski, A.M., Pike, A.C., Dauter, Z., Hubbard, R.E., Bonn, T., Engstrom, O., Ohman, L., Greene, G.L., Gustafsson, J.A., Carlquist, M. (1997). Molecular basis of agonism and antagonism in the oestrogen receptor. Nature, 389, 753-758. PMID: 9338790. DOI: 10.1038/39645\n\n\nNon-standard residue\nEST — estradiol\n\n\nGene source\nHomo sapiens (human)\n\n\nExperimental method\nX-ray diffraction\n\n\nResolution\n3.1Å\n\n\n\nFor example, this shows the presence of residues named EST, corresponding to the Estradiol ligand included with this structure.\nTo list chains and their UniProt references:\nlog chains\n\n\n\nChain\nDescription\nUniProt\n\n\n\n\nA–F\nEstrogen Receptor\nESR1_HUMAN 301–553",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#selecting-items",
+    "href": "materials/03-chimerax_basics.html#selecting-items",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.4 Selecting items",
+    "text": "3.4 Selecting items\nSelections are central in ChimeraX, and can be used to highlight, manipulate, or modify specific parts. Selections are highlighted in the viewer and can be modified or combined.\nSelections use a target specifier syntax (docs), including:\n\n# → model number\n/ → chain ID (uppercase letters)\n: → residue numbers\n@ → atom names\n\nExamples:\n\nSelect model #1:\nselect #1\nSelect chain A:\nselect /A\nSelect residue 500 in chain A:\nselect /A:500\nSelect alpha carbon of residue 305:\nselect /A:305@CA\nSelect residues 400–500 in chain A:\nselect /A:400-500\nClear selection:\nselect clear\nSelect all:\nselect all\n\n\n3.4.1 Combining and modifying selections\nSelections can be built incrementally with select add and select subtract. Examples:\n\nSelect all residues in chain A except for residues 400 to 500:\nselect /A\nselect subtract /A:400-500\nAdd back residues 400 to 410:\nselect add /A:400-410\n\nSelections can be combined using logical operators:\n\n& (AND)\n| (OR)\n\nExamples:\n\nSelect residues 305–330 in either chain A or chain F:\nselect /A:305-330 | /F:305-330\nSelect all serine (SER) residues in a range:\nselect /A:305-330 & :SER\n\nIn the last example, note how we used the aminoacid name (SER) instead of the residue number to select all serine residues in that range.\n\n\n3.4.2 Select keywords\nThere are convenience keywords that can be used to select common groups of atoms:\n\n\n\nKeyword\nWhat it selects\n\n\n\n\nprotein\nall protein atoms\n\n\nnucleic\nall DNA/RNA atoms\n\n\nligand\nnon-polymer atoms (small molecules, ions)\n\n\nsolvent\nwater molecules\n\n\nsel\ncurrently selected elements\n\n\n\nResidues are also annotated with names. We’ve already seen how we can select all serine residues by their name using :SER.\nLigands are usually also named. For example, in our structure, the ligand (estradiol) is annotated with the keyword EST, so we can select it with:\nselect :EST\nAlternatively, we could use the generic keyword:\nselect ligand\nThe latter would select every ligand in the loaded structures, so if there was more than one ligand, all of them would be selected this way.\n\nZooming and rotation\nZoom to a selection with view:\nselect /A:305@CA\nview sel\nSet the centre of rotation on a certain item with cofr. For example, set the centre of rotation on the ligand:\ncofr :EST",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#delete-objects",
+    "href": "materials/03-chimerax_basics.html#delete-objects",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.5 Delete objects",
+    "text": "3.5 Delete objects\nYou can use the delete command to remove parts of your struture from view. In our example, the 1ERE structure contains 6 repeated chains (A-F). To only keep chain A and delete the rest:\nselect #1/A\ndelete atoms ~sel\n\nFirst select chain A (/A) from the main model (#1).\nThen delete everything that is not selected: ~sel (the ~ symbol negates the selection).\n\nThe same could have been achieved with:\ndelete #1/B-F",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#naming-and-saving-selections",
+    "href": "materials/03-chimerax_basics.html#naming-and-saving-selections",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.6 Naming and saving selections",
+    "text": "3.6 Naming and saving selections\nSelections can be saved for reuse.\nFor example, we save a selection of residues that are commonly mutated in cancers (Fuqua, Gu & Rechoum, 2015):\nselect /A:536,537,538\nname frozen muts /A:536,537,538\nNow you can refer to muts:\n# zoom-in on this selection\nview muts\n\n# select these residues\nselect muts\n\n# select everything except these residues\nselect ~muts\n\n# colour these residues red\ncolor muts red",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#sequence-viewer",
+    "href": "materials/03-chimerax_basics.html#sequence-viewer",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.7 Sequence viewer",
+    "text": "3.7 Sequence viewer\nOpen a sequence window to visualise and select residues:\nsequence chain /A\n\n\nClick residues in the sequence to select them in 3D.\nSelected residues are highlighted in green.\nSecondary structure is colour-coded: α-helix (yellow), β-strand (blue).\nMissing residues appear in black boxes.\nResidue numbers correspond to the UniProt numbering.\nSelected residues are highlighted in green.\nSecondary structure is colour-coded: β-strand in blue and α-helix in yellow.\nMissing residues appear in black boxes. These often correspond to disordered regions or flexible termini that could not be resolved in the protein structure.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#structural-representations",
+    "href": "materials/03-chimerax_basics.html#structural-representations",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.8 Structural representations",
+    "text": "3.8 Structural representations\nProteins can be represented visually in different ways.\n\nCartoon representation highlights secondary structure:\nhide atoms\nshow cartoon\nAtomic representation shows all atoms:\nhide cartoon\nshow atoms\nAlternate atomic styles can be used:\nhide cartoon\nshow atoms\nstyle stick\nstyle sphere\nstyle ball\nMix representations can be used. For example, cartoon for protein, spheres for ligand:\nhide atoms\nshow cartoon\nshow :EST\nstyle :EST sphere\nColouring example:\ncolor protein grey\ncolor :538-546 yellow\nshow :538-546 atoms\nstyle :538-546 stick\ncolor muts blue\ncolor :EST red\n\nColour the protein grey.\nColour residues 538-546 yellow, and show their atoms using a stick style.\nColour the muts selection blue.\nColour the ligand (EST) red.\n\n\n\n\n\nExample representation of the 1ERE structure: protein secondary structure shown as cartoon; EST ligand shown in red with sphere-stype atoms; residues 538-546 highlighted in yellow with stick-style atoms; mutations of interest in blue with stick-style atoms.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#surface-representation",
+    "href": "materials/03-chimerax_basics.html#surface-representation",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.9 Surface representation",
+    "text": "3.9 Surface representation\nYou can also represent structures using surfaces, which can help visualise the shape of the molecule.\nExample:\nsurface protein color white transparency 80\nThis command creates a surface representation of the protein, coloured white with 80% transparency. We keep the cartoon representation, allowing us to view the secondary structure inside the surface.\n\n\n\n\n\nTo hide the surface:\nsurface hide",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#adding-uniprot-annotations",
+    "href": "materials/03-chimerax_basics.html#adding-uniprot-annotations",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.10 Adding UniProt annotations",
+    "text": "3.10 Adding UniProt annotations\nStructural information is often easier to interpret alongside functional annotations. ChimeraX can retrieve UniProt annotations directly.\nFor ESR1, the corresponding UniProt entry is P03372. We can open its annotations with:\nopen P03372 from uniprot format uniprot\nThis opens a sequence annotation panel showing features such as:\n\nfunctional domains\ntransmembrane regions\nexperimentally observed variants\nbinding sites\n\nClicking a feature in the panel will highlight the corresponding residues in the structure.\nCombining structural and functional annotations helps identify regions likely to be sensitive to mutation.\n\n\n\nChimeraX snapshot of 1ERE structure with UniProt annotations panel shown on the right. In this example, we have selected “sequence variants”, which become highlighted in green in the structure, as well as the sequence viewer (bottom-right)",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#saving-sessions-and-structures",
+    "href": "materials/03-chimerax_basics.html#saving-sessions-and-structures",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.11 Saving sessions and structures",
+    "text": "3.11 Saving sessions and structures\nSave a ChimeraX session by changing to the destination directory, and use the save command:\ncd ~/Course_Materials/\nsave 1ERE_annotated.cxs\n.cxs is a ChimeraX-specific format. To reopen the session:\ncd ~/Course_Materials/\nopen 1ERE_annotated.cxs\nThe save command can also be used to save protein structures in standard formats:\nsave 1ERE_annotated.pdb\nsave 1ERE_annotated.cif\nThis allows using ChimeraX to convert between struture formats: open a .pdb file and save as .cif, or vice-versa.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#exercises",
+    "href": "materials/03-chimerax_basics.html#exercises",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.12 Exercises",
+    "text": "3.12 Exercises\n\n\n\n\n\n\nExerciseExercise 1 - Selection commands\n\n\n\n\n\n\nStart a new session with the 1ERE structure (Human estrogen receptor):\nclose\nopen 1ere\nWrite the select commands to achieve the following:\n\nSelect all residues from either chain A or chain B.\nSelect everything except chain E.\nSelect all the CA atoms (alpha carbon) on residues 315-350 of chain C.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nWe can use the OR (|) operator to select the residues in either of those chains:\nselect /A | /B\nWe can use the select all command to select everything, and then subtract chain E:\nselect all\nselect subtract /E\nTo select atoms we can use the @ selector after the residue number:\nselect /C:315-350 & @CA\nview sel\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Styles and colouring\n\n\n\n\n\n\nStart a new session with chain A of 1ERE (Human estrogen receptor):\nclose\nopen 1ere\ndelete #1/B-F\nTry to recreate the visualisation shown below, where:\n\nThe protein is shown in cartoon representation using royalblue colour.\nThe ligand (EST) is shown in sphere style using grey colour for carbon atoms and magenta for oxygen atoms.\nThe key protein residues for binding the ligand - Glu353, Arg394, His524, Leu525 - are highlighted in gold colour and their atoms are shown in ball style.\nZoom in specifically on these four residues using the view command.\n\n\n\n\nLigand view of 1ERE structure.\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nHere are the steps to recreate this visualisation:\nhide atoms\nshow cartoon\ncolor protein royalblue\nshow :EST atoms\nstyle :EST sphere\ncolor :EST & C grey\ncolor :EST & O magenta\nshow :353,394,524,525 atoms\nstyle :353,394,524,525 ball\ncolor :353,394,524,525 gold\nview :353,394,524,525\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Using UniProt annotations\n\n\n\n\n\n\nStarting from this view of chain A of 1ERE:\nclose\nopen 1ere\ndelete #1/B-F\nhide atoms\nshow cartoon\nshow :EST atoms\nstyle :EST sphere\ncolor :EST red\nTasks:\n\nImport the UniProt annotations for ESR1 (P03372).\nIdentify which residues are annotated as ligand-binding residues.\nSave this selection as binding_site, for later reuse.\nHighlight these residues using a different colour, with atoms shown in ball style.\nCan you identify a sequence variant that coincides with a ligand-binding residue? Highlight it in a different colour.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nWe can import the UniProt annotations with:\nopen P03372 from uniprot format uniprot\nThe ligand-binding residues are annotated in the sequence annotation panel as “Binding site”. In the log window we can see this corresponds to:\nselect /A:353,394,524\nWe can save this selection as binding_site:\nname frozen binding_site /A:353,394,524\nFinally, we can highlight these residues with a different colour and style:\ncolor binding_site gold\nshow binding_site atoms\nstyle binding_site ball\nBy clicking through the variants listed under the “sequence variant” feature type, we can identify that residue 394 (Arg394) is annotated as a variant site. We can select this residue and highlight it in a different colour:\nselect /A:394\ncolor sel cyan\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 4 - Cartoon view and colour by chain\n\n\n\n\n\n\nTry to recreate this view of the murine AA amyloid fibril (PDB: 6DSO):\n\n\n\nMus musculus AA amyloid fibril.\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nThis gets us close:\nclose \nopen 6DSO\nhide atoms\nshow cartoon\ncolor bychain\nThe default colour palette doesn’t exactly match the colours shown in the image, but we could change the colours of each chain manually if desired.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 5 - Surface representation\n\n\n\n\n\n\nTry and recreate this RCSB-PDB molecule of month view (PDB: 1AOI):\n\n\n\nComplex between the Xenopus’ nucleosome (purple) with DNA (orange) wrapped around it. Image source: RCSB PDB Molecule of the Month: Nucleosome\n\n\nMake sure to colour each DNA chain slightly differently. You can use log chains to find out which chains correspond to the protein and which are the DNA.\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nThis gets us close to the visualisation:\nclose\nopen 1AOI\nsurface protein\nsurface nucleic\ncolour protein plum\ncolour /I tomato\ncolour /J coral\nWe used log chains to find out that chains I and J correspond to the DNA, and coloured them differently using the colour command.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 6 - Surfaces and annotations\n\n\n\n\n\n\nTry to create a similar view to the following RBSB-PDB molecule of the month (PDB: 1SU4).\n\n\n\nATP-driven calcium pump in the sarcoplasmic reticulum membrane that restores low cytosolic calcium to enable muscle relaxation. Image source: RCSB PDB Molecule of the Month: Calcium Pump\n\n\nIt might be hard to recreate exactly the same view, but here are some guidelines for what you could try:\n\nHide the atoms\nDraw a surface representation of the protein using a transparency of 60%\nShow the calcium ion and colour it cyan\n\nUse log metadata to see how the Calcium molecule is called\n\nImport metadata from UniProt (you might have to go to PDB to find the UniProt ID). This should allow you to select:\n\nActive site: Show as atoms and colour red\nTopological domain lumenal: Colour #1b9e77\ntopological domain cytoplasmic: Colour #7570b3\ntransmembrane region: Colour #d95f02\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe start by opening the structure and hiding the atoms, then showing the surface representation of the protein with a transparency of 60%, and showing the CA atoms coloured cyan:\nclose\nopen 1SU4\nhide cartoon\nhide atoms\nsurface protein transparency 60\nshow :CA\ncolour :CA cyan\nWe import metadata from UniProt, using the UniProt ID P04191, which we can find in the PDB entry for 1SU4:\nopen P04191 from uniprot format uniprot\nWe select each of the features indicated, and colour them accordingly. Here, we give the exact residues, which we copied from the log window, as we clicked on each of the UniProt annotations.\nselect /A:70-89,274-295,778-787,852-897,950-964\ncolour sel #1b9e77\nselect /A:1-48,111-253,314-757,809-828,918-930,986-994\ncolour sel #7570b3\nselect /A:49-69,90-110,254-273,296-313,758-777,788-808,829-851,898-917,931-949,965-985\ncolour sel #d95f02\nselect /A:351\nshow sel atoms\nstyle sel sphere\ncolour sel red\nselect clear\nThis should give you the following view:",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/03-chimerax_basics.html#summary",
+    "href": "materials/03-chimerax_basics.html#summary",
+    "title": "3  Visualising structures with ChimeraX",
+    "section": "3.13 Summary",
+    "text": "3.13 Summary\n\n\n\n\n\n\nTipKey points\n\n\n\nAt first, ChimeraX may look like a graphics program, however its real power comes from its range of commands and flexible selection syntax.\n\nChimeraX combines a graphical interface and command line interface.\nStructures are loaded with the open command. ChimeraX can fetch structures directly from the PDB using their identifier.\nStructural information can be inspected using info commands. These commands reveal models, chains, residues, ligands, and experimental metadata.\nChimeraX uses a concise syntax to specify models (#), chains (/), residues (:), and atoms (@).\nSelections can be modified and combined. Commands such as add, subtract, &, and | allow complex selections.\nStructures can be displayed in different representations:\n\nCartoon views emphasise secondary structure\nAtom-based views show detailed interactions\nSurface views reveal overall shape and interfaces\n\nSaving selections allows you to refer to important residues or regions later.\nChimeraX sessions can be saved and reopened. This allows you to preserve visualisations and annotations for later work.\n\nChimeraX documentation\n\nChimeraX User Guide https://www.cgl.ucsf.edu/chimerax/docs/user/index.html\nChimeraX Tutorials https://www.cgl.ucsf.edu/chimerax/tutorials.html",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Introduction",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Visualising structures with ChimeraX</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html",
+    "href": "materials/04-monomer.html",
+    "title": "4  Monomer structure prediction",
+    "section": "",
+    "text": "4.1 Structure prediction",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#structure-prediction",
+    "href": "materials/04-monomer.html#structure-prediction",
+    "title": "4  Monomer structure prediction",
+    "section": "",
+    "text": "AlphaFold Server (AlphaFold3)ColabFold (AlphaFold2)\n\n\nThe AlphaFold Server provides a web interface for running structure predictions using AlphaFold3.\nCompared with AlphaFold2, the newer model can predict more complex systems, including:\n\nprotein monomers\nprotein multimers\nprotein-DNA complexes\nprotein-ligand complexes\n\nFor a simple monomer prediction, the workflow is straightforward.\n\nPaste the protein sequence.\nChoose the number of copies (for monomer prediction this is 1).\nSubmit the job and wait for the prediction to complete.\n\nThe server will return the predicted models along with confidence metrics.\n\n\nColabFold provides a convenient way to run AlphaFold2 predictions using Google Colab notebooks.\nIt uses a streamlined pipeline based on the original AlphaFold2 method but replaces the heavy sequence search step with the fast MMseqs2 search algorithm. This makes predictions much faster and easier to run on standard hardware.\nColabFold also provides several parameters that allow users to customise their predictions. These are detailed next.\n\nParameter: num_relax\nControls how many predicted models undergo energy minimisation using the AMBER force field. Relaxation improves local geometry but does not change the overall fold.\nTypical settings:\n\n0 - no relaxation (fastest)\n1 - relax only the top model (good compromise)\n5 - relax all models (slowest)\n\n\n\nParameter: template_mode\nControls whether the model uses structural templates.\nOptions:\n\nnone - no templates (pure de novo prediction). Fastest and ideal when no homologous structure exists.\npdb100 - search PDB for structural templates. Improves accuracy if close homologues exist.\ncustom - user-provided templates\n\n\n\nParameter: msa_mode\nControls how homologous sequences are collected.\nOptions:\n\nsingle_sequence - only the input sequence (very fast; not recommended)\nmmseqs2_uniref - search UniRef database (balance of speed and depth)\nmmseqs2_uniref_env - include environmental sequences from metagenomic experiments (slower, but can improve accuracy)\ncustom - user-supplied alignment\n\nIn most cases mmseqs2_uniref_env provides the best balance between speed and depth.\n\n\nParameter: model_type\nControls which AlphaFold model is used.\nThe auto setting usually works best because it selects the appropriate model based on the input (monomer or multimer).\n\n\nParameter: num_recycles\nControls how many times the model refines its prediction. During each cycle the predicted structure is fed back into the network, which has been shown to improve model accuracy.\nTypical settings:\n\n0 - fastest, but not recommended\n3 - good balance between speed and accuracy\n6+ - higher accuracy for difficult folds\nauto - run until convergence\n\n\n\nParameter: num_seeds\nAlphaFold predictions include stochastic elements. Different random seeds can produce slightly different structures. Running multiple seeds increases the diversity of predictions.\nTypical settings:\n\n1 - sufficient for most proteins\n2+ - useful when exploring uncertain folds\n\n\n\nParameter: use_dropout\nDropout introduces additional stochasticity into the neural network. This can generate more diverse predictions, particularly in:\n\nflexible regions\nuncertain interfaces\nmultimer predictions\n\nIt is often combined with multiple seeds to explore alternative conformations.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#download-results",
+    "href": "materials/04-monomer.html#download-results",
+    "title": "4  Monomer structure prediction",
+    "section": "4.2 Download results",
+    "text": "4.2 Download results\nAfter a run completes, the results can be downloaded for further analysis. The most important outputs are:\nPredicted structures\n\nStructure files in PDB or mmCIF format.\nEach file contains the predicted atomic coordinates.\n\nConfidence scores\n\npLDDT values stored per residue in the structure file.\nThese values indicate the model’s confidence in each region.\n\nPAE matrix\n\nA matrix describing the predicted positional error between residue pairs.\nOften visualised as a heatmap.\nThese are stored in files with extension .json.\n\nRanking information\n\nAlphaFold typically produces multiple models.\nThese models are ranked according to global confidence metrics such as average pLDDT or pTM (ipTM for multimers).\nThe ranking is included in the file name.\n\nIn practice, one usually examines the top-ranked model first, then compare it with alternative predictions.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#model-scores",
+    "href": "materials/04-monomer.html#model-scores",
+    "title": "4  Monomer structure prediction",
+    "section": "4.3 Model scores",
+    "text": "4.3 Model scores\nAlphaFold predictions include several confidence scores. These scores help us estimate how reliable a predicted structure is.\nBroadly, these scores fall into two categories:\n\nGlobal scores - measure confidence in the overall fold of the protein.\nLocal scores - measure confidence in specific regions of the structure.\n\nBoth are useful, but they answer different questions. The following table summarises these scores, with details in the following sections:\n\n\n\n\n\n\n\n\n\nMetric\nWhat it measures\nRange\nInterpretation\n\n\n\n\npLDDT\nLocal per-residue confidence\n0-100\nHigh = accurate local geometryLow = uncertain or disordered region\n\n\nPAE\nPairwise positional error\nangstroms (A)\nLow = confident domain relationshipsHigh = uncertain domain orientation\n\n\npTM\nGlobal fold accuracy\n0-1\n&gt;0.5 → overall fold likely correct&lt;0.5 → unreliable model\n\n\n\n\n4.3.1 Global confidence scores\nGlobal scores describe the reliability of the overall protein fold.\n\npTM\nThe predicted Template Modelling score (pTM) estimates how accurate the global structure is expected to be.\nThe score ranges from 0 to 1.\nTypical interpretation:\n\n\n\npTM\nInterpretation\n\n\n\n\n&gt;0.7\nvery reliable fold\n\n\n0.5-0.7\nlikely correct overall fold\n\n\n&lt;0.5\nunreliable prediction\n\n\n\nThis score is particularly useful when comparing multiple predicted models.\n\n\nAverage pLDDT\nAlthough pLDDT is calculated per residue, some tools (such as ColabFold) also report the average pLDDT across the entire structure. This value provides a quick summary of model quality.\nTypical interpretation:\n\n\n\nAvg pLDDT\nInterpretation\n\n\n\n\n&gt;90\nvery high confidence model\n\n\n70-90\ngood model\n\n\n50-70\nuncertain structure\n\n\n&lt;50\nlikely disordered or incorrect\n\n\n\nHowever, average values can hide local properties of the prediction. A model may have a high average pLDDT while still containing poorly predicted loops or flexible regions. Conversely, a model may have low average pLDDT while still containing confidently predicted domains.\n\n\n\n4.3.2 Local confidence scores\nLocal scores describe confidence within specific regions of the structure. These scores help identify flexible loops, disordered regions, or uncertain domain orientations.\n\npLDDT\nThe predicted Local Distance Difference Test (pLDDT) measures confidence for each residue.\nScores range from 0 to 100.\nTypical interpretation:\n\n\n\npLDDT\nConfidence\n\n\n\n\n&gt;90\nvery high confidence\n\n\n70-90\nconfident\n\n\n50-70\nlow confidence\n\n\n&lt;50\nlikely disordered\n\n\n\nAlphaFold stores pLDDT values in the B-factor column of the structure file (.pdb/.cif). ChimeraX can colour residues using this information, as we will see below.\n\n\nPAE\nThe Predicted Aligned Error (PAE) describes the expected positional error between pairs of residues. It is usually shown as a matrix heatmap.\nThis score answers a different question:\n\nHow confident is the model about the relative positions of different parts of the protein?\n\nHere, lower values are better, and typical patterns include:\n\nDark diagonal blocks → well-defined secondary structures or structural domains\nLight off-diagonal regions → uncertain orientation between domains\n\nHigh PAE between domains often indicates that the domains fold correctly but their relative orientation is flexible or uncertain.\n\n\n\n\n\n\nNoteHow are these scores calculated?\n\n\n\nAlphaFold learns to estimate its own prediction confidence during training.\nDuring training:\n\nThe model learns to predict protein structures from sequence data.\nAdditional components of the network learn to estimate the reliability of those predictions.\n\nThe pLDDT, PAE, and pTM scores therefore reflect the model’s internal estimate of accuracy, based on patterns it learned from many experimentally solved protein structures.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#chimerax",
+    "href": "materials/04-monomer.html#chimerax",
+    "title": "4  Monomer structure prediction",
+    "section": "4.4 ChimeraX",
+    "text": "4.4 ChimeraX\nThe three-dimensional structures predicted by AlphaFold can be loaded into ChimeraX, along with their confidence scores.\nFirst, it is convenient to change the ChimeraX workding directory to where the data is located on the computer. On our training computers, this is:\ncd ~/Course_Materials\n\nAlphaFold Server (AlphaFold3)ColabFold (AlphaFold2)\n\n\nAlphaFold Server outputs the structure as a .cif file, with the following naming convention:\n\nThe prefix fold_\nThe name used by the user upon job submission\nThe model ranking - model_[0-5] - for the five models generated, in order of global confidence score (i.e. model 0 is the highest-confidence model)\n\nWe use the open command to load the structure into ChimeraX:\nopen p53_human/p53_monomer_af3/fold_p53_monomer_af3_model_0.cif\n\n\nColabFold outputs the structure as a .pdb file, with the following naming convention:\n\nThe name used by the user upon job submission, followed by a job submission string\nAn indicator of whether the model is unrelaxed or relaxed (if using num_relax option)\nThe model ranking - rank_[001-X] - for the X models generated, in order of global confidence score (i.e. rank_001 is the highest-confidence model)\nThe model number - _alphafold2_ptm_model_[1-5] - corresponding to the five AlphaFold2 neural network models\nThe random seed number - seed_[000-X]\n\nWe use the open command to load the structure into ChimeraX:\nopen p53_human/p53_monomer_af2/p53_monomer_af2_7c637_unrelaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb\n\n\n\nOnce loaded, the structure appears in the main viewer.\n\n4.4.1 Colouring by confidence score\nAlphaFold stores pLDDT values in the B-factor column of the structure file. The B-factor field normally stores atomic temperature factors in experimental structures. AlphaFold repurposes this field to store confidence values.\nTo colour residues by confidence:\ncolour bfactor palette alphafold key true\n\nThis applies the standard AlphaFold colour scheme:\n\nBlue - very high confidence\nCyan - confident\nYellow - low confidence\nOrange/red - very low confidence\n\nRegions coloured yellow or red often correspond to:\n\nflexible loops\ndisordered regions\npoorly constrained predictions\n\nThe key true option opens a menu to set a legend, but can be left out if you prefer.\n\n\n4.4.2 Viewing the PAE matrix\nThe Predicted Aligned Error (PAE) describes the expected positional error between pairs of residues. Lower values indicate higher confidence in the relative positions of those residues.\nThe PAE matrix is stored in a text-based format called .json, following a naming convention matching the corresponding structure file.\nTo load the PAE matrix in ChimeraX:\n\nAlphaFold Server (AlphaFold3)ColabFold (AlphaFold2)\n\n\nalphafold pae #1 palette paegreen file p53_human/p53_monomer_af3/fold_p53_monomer_af3_full_data_0.json\n\n\nalphafold pae #1 palette paegreen file p53_human/p53_monomer_af2/p53_monomer_af2_7c637_scores_rank_001_alphafold2_ptm_model_1_seed_000.json\n\n\n\nChimeraX will display the matrix as a heatmap. You can interactively select blocks on the heatmap, which will get highlighted in the structure.\n\n\n\n\n\nYou can also ask ChimeraX to automatically identify potential structural domains based on the PAE matrix. Either by clicking the “Color PAE Domains” in the PAE menu, or by running the following command:\nalphafold pae #1 colorDomains true\nThis command analyses the PAE matrix and groups residues into coherent domains - regions where the model predicts low relative positional error. ChimeraX then colours each domain with a different colour in the structure.\n\n\n\n\n\nThis can be very useful when analysing large proteins, especially when domain boundaries are not known in advance. In many cases the automatically identified domains correspond closely to independently folded structural units.\nChimeraX also stores the domain assignments as an attribute (pae_domain). You can use this attribute to select or recolour individual domains later if needed.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#exercises",
+    "href": "materials/04-monomer.html#exercises",
+    "title": "4  Monomer structure prediction",
+    "section": "4.5 Exercises",
+    "text": "4.5 Exercises\nYou are studying the evolution of the estrogen receptor (ER), a nuclear hormone receptor that regulates gene expression in response to estrogen binding. This is a well-studied protein, with important roles in the development of sexual characteristics and in diseases such as breast cancer.\nIn humans, two genes encode estrogen receptors: ESR1 and ESR2. These proteins contain several well-characterised domains, including a DNA-binding domain (DBD) that recognises specific DNA sequences known as estrogen response elements (EREs), and a ligand-binding domain (LBD) that binds estrogen and other ligands.\nER proteins function as dimers and regulate transcription by binding DNA and recruiting transcriptional machinery.\n\n\n\nDomain organisation of the estrogen receptor. Image source: Fig. 5 in Fuentes & Silveyra 2019\n\n\nThe structure of the human ERα ligand-binding domain has been resolved experimentally (for example PDB 1ERE). In this exercise series, you will compare this experimentally determined structure with predicted structures from an evolutionarily distant species.\nBased on Baker et al. (2015), the most basal lineage known to contain estrogen receptor proteins is the cephalochordate amphioxus (genus Branchiostoma), an invertebrate chordate that diverged before vertebrates. Studying the ER from amphioxus provides an opportunity to explore how conserved the structure of this protein is across deep evolutionary time. For example, the ligand binding domain is only around 35% identical at the sequence level compared to human.\n\n\n\n\n\n\n\nExerciseExercise 1 - Sequence retrieval\n\n\n\n\n\n\nOpen UniProt entry B3V8B7, which contains the known information for a ER protein in the species Branchiostoma floridae.\nQuestions:\n\nExamine the AlphaFoldDB structure prediction. What is your assessment of the quality of this prediction?\n\nClick the link to the AlphaFoldDB entry, where you can also examine the PAE matrix.\n\nCan you find the sequence for the ligand-binding domain (LBD) and the DNA-binding domain (DBD)?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nExamining the AlphaFoldDB entry for B3V8B7, we can observe that:\n\nThe overall confidence of the model is relatively low, with an average pLDDT = 54.25.\nHowever, two regions have substantially higher confidence (pLDDT &gt; 70), suggesting the presence of well-structured domains.\nThese regions likely correspond to the DNA-binding domain (DBD) and the ligand-binding domain (LBD).\nThe PAE matrix shows low error within these regions but high error between them, indicating that the internal structure of each domain is predicted with confidence, while the relative orientation of the domains is uncertain.\nRegions with low pLDDT likely correspond to flexible or intrinsically disordered regions.\n\n\n    \n    \n    \n\nOn the UniProt page, under “Family & Domains”, we can find several annotations:\n\nDisordered regions, which are consistent with the low pLDDT regions observed in the AlphaFold prediction.\nA nuclear receptor DNA-binding domain located at residues 294-370.\nA ligand-binding domain (LBD) located at residues 441-682.\n\nReturning to the AlphaFoldDB entry, highlighting these residue intervals confirms that they correspond to regions with higher pLDDT scores.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Structure prediction with AlphaFold3 (AlphaFold Server)\n\n\n\n\n\n\nThe predicted protein structure on AlphaFoldDB was generated using AlphaFold2. We will investigate whether the prediction improves using AlphaFold3.\nSubmit the ER protein sequence from Branchiostoma floridae to the AlphaFold Server (AlphaFold3) to predict its structure.\n\nLink to sequence\n\nQuestions:\n\nWhat is your assessment of the confidence of the model?\nHow does this prediction compare with the AlphaFoldDB (AlphaFold2) model?\nWhat strategy would you use for further structural analysis of this protein?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nThe prediction has a pTM = 0.38, indicating low overall confidence in the global arrangement of the protein. However, several regions have high pLDDT scores, suggesting that individual domains - particularly the DNA-binding domain and ligand-binding domain - are predicted with good local confidence.\nVisual comparison suggests that the AlphaFold3 prediction is broadly similar to the AlphaFold2 model from AlphaFoldDB. Both models show well-defined domains connected by low-confidence regions. The overall confidence remains low because large parts of the protein appear to be flexible or intrinsically disordered.\nA sensible next step would be to focus on the structured domains rather than the full-length protein. For example, the DNA-binding domain and ligand-binding domain could be analysed separately or compared with experimentally determined structures of homologous proteins.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Structure prediction with AlphaFold2 (ColabFold)\n\n\n\n\n\n\nColabFold is a user-friendly implementation of AlphaFold2 that runs on Google Colab. You can access it at this Colab notebook.\nAs running predictions with the free ColabFold can take some time, for this exercise, we will explore pre-processed results from previous runs:\n\nRun 1 - used default settings\nRun 2 - changed num_relax, template_mode, num_recycles and num_seeds\n\nThese predictions focused on the LBD domain of the ER from Branchiostoma floridae, which is annotated as residues 441-682 on UniProt B3V8B7. To ensure the full domain was included, a few flanking residues were included in the prediction (residues 420-705):\nNSFDSDGDSSTGRELRTASHQRLKALIDALDVKEGEHRGEENHPTGQQA\nGNWQEISNPELIESVSSLVDRELTGIICWGKKIPGYSKLSLNDQVLLME\nSTWLDLLILDLVWCSIRHKGEKLLLSGGVLVNRNTISNRRNNSSGDDME\nVLEMCDQILSIATKFYEFDLQRREYLCLKAITLVHGSLKGLESDTQVRQ\nLQDDLTDALMDVCSERHALGSRRPAKMLLLLSHLRQVSARASSHLGAVR\nNGLKVPLYDILLDILTDQVSEGQRDQQAGHHEVASSPEKER\nQuestions:\n\nIdentify the parameter values that changed between the two runs.\nBased on the quality scores for both predictions (pLDDT, PAE and pTM), which do you think gives best results?\nCompare the graphs with “Predicted LDDT per position” and “Sequence coverage” to assess why some regions have low pLDDT.\nOpen the top-ranked model from run 1 in ChimeraX and explore the confidence scores and PAE matrix.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nRun 1 used default settings, while run 2 used the following:\n\nnum_relax = 1 → relax only the top-ranked model\ntemplate_mode = pdb100 → uses the PDB100 database to find structural templates based on sequence similarity\nnum_recycles = 6 → increase the number of recycling iterations, which can help with model accuracy\nnum_seeds = 4 → to generate a few models from different random seeds, and choose the one with highest quality\n\nThe top-ranking predictions of each run had:\n\nRun 1 (rank_001_alphafold2_ptm_model_2_seed_000): pLDDT = 73.6; pTM = 0.75\nRun 2 (rank_001_alphafold2_ptm_model_2_seed_002): pLDDT = 74.3; pTM = 0.756\n\n\nThese are both very similar, but run 2 has slightly higher confidence scores, suggesting it may be the better prediction.\n\nThe “Sequence coverage” plot shows the multiple sequence alignment between our protein and other proteins in the database. There are several observations we can make:\n\nIn general, regions where the alignment coverage is higher, also correspond to regions with higher pLDDT. This makes sense, as the model is more confident where it found more homologous sequences in the database (i.e., more similar to the training data used in the deep learning model).\nThe terminal regions of the sequence we used have very low coverage. We decided to include flanking regions to the LBD annotated on UniProt to ensure the full domain was included in our analysis. This plot suggests that these flanking regions are less well conserved in evolutionary terms.\nEven within the LBD region there is a “dip” in the alignment coverage at around residue 130, with a corresponding dip in pLDDT to around 60. Looking at the 3D structure, this corresponds to a hinge between two helices, which seems to have lower alignment coverage and also lower pLDDT.\nThe alignment coverage on the N-terminal side of this “dip” is also higher than the coverage on the C-terminal side, which also suggests different sequence conservation along the LBD sequence.\n\nWe can open the model in ChimeraX with the following commands:\nclose\ncd ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run1/\nopen er_amphioxus_lbd_monomer_af2_run1_a80a1_unrelaxed_rank_001_alphafold2_ptm_model_2_seed_000.pdb\ncolour byattribute bfactor palette alphafold\nalphafold pae #1 palette paegreen file er_amphioxus_full_monomer_af2_run1_a80a1_scores_rank_001_alphafold2_ptm_model_2_seed_000.json\n\nWe initiate a fresh session using close.\nWe navigate to the folder where the results are stored using cd.\nWe open the top-ranked model (.pdb format) using open.\nWe colour the structure by pLDDT score using colour byattribute bfactor palette alphafold.\nWe open the PAE matrix using alphafold pae and colour it with a green palette.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/04-monomer.html#summary",
+    "href": "materials/04-monomer.html#summary",
+    "title": "4  Monomer structure prediction",
+    "section": "4.6 Summary",
+    "text": "4.6 Summary\n\n\n\n\n\n\nTipKey Points\n\n\n\n\nPredicted models must be evaluated critically, even when produced by advanced methods.\nStructure prediction tools such as AlphaFold provide confidence metrics that should always be examined when interpreting predicted models.\nGlobal scores (such as pTM) reflect confidence in the overall structure, while local scores (pLDDT) reflect confidence in specific regions.\nLarge proteins with flexible or intrinsically disordered regions often have lower global confidence scores.\nAlphaFold confidence scores (pLDDT) help identify regions of a protein that are likely to be well structured versus flexible or disordered.\nThe Predicted Aligned Error (PAE) matrix indicates how confidently AlphaFold predicts the relative positioning of different regions of a protein.\nMultidomain proteins often contain well-predicted domains connected by flexible regions with lower confidence.\n\nExample: In the ER case study, the DNA-binding and ligand-binding domains appear as high-confidence regions, while other parts of the protein show low confidence consistent with flexible regions.\n\nPredicting individual domains can sometimes yield more reliable models than predicting the entire protein.\n\nFoundational AlphaFold papers\n\nJumper et al. (2021) Highly accurate protein structure prediction with AlphaFold. https://doi.org/10.1038/s41586-021-03819-2\nAbramson et al. (2024) Accurate structure prediction of biomolecular interactions with AlphaFold3. https://doi.org/10.1038/s41586-024-07487-w\n\nAccessible explainers\n\nIllustrated AlphaFold https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/\nAlphaFold2 is here: what’s behind the structure prediction miracle? https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Monomer structure prediction</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html",
+    "href": "materials/05-model_comparison.html",
+    "title": "5  Comparing protein structures",
+    "section": "",
+    "text": "5.1 Overview\nPredicting a protein structure is only the first step. We must also ask an important question:\nHow reliable is this model?\nOne useful approach is structural comparison. By aligning a predicted structure with other models or experimentally solved structures, we can:\nIn this section we will explore several common comparison scenarios:",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#overview",
+    "href": "materials/05-model_comparison.html#overview",
+    "title": "5  Comparing protein structures",
+    "section": "",
+    "text": "evaluate whether the predicted fold is plausible\nidentify conserved structural regions\ndetect flexible or uncertain parts of the protein\n\n\n\ncompare a predicted structure with homologous experimental structures\ncompare predictions from different AlphaFold versions\ncompare multiple predictions of the same protein\ninterpret structural differences using RMSD colouring",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#example-protein-slc52a2",
+    "href": "materials/05-model_comparison.html#example-protein-slc52a2",
+    "title": "5  Comparing protein structures",
+    "section": "5.2 Example protein: SLC52A2",
+    "text": "5.2 Example protein: SLC52A2\nWe will begin with a human protein called SLC52A2 (UniProt ID: Q9HAB3).\nSLC52A2 is a membrane transporter for vitamin B2 (riboflavin). Mutations in this protein can cause a childhood-onset neurological disorder called Brown-Vialetto-Van Laere syndrome.\nMany of these mutations reduce protein expression, or riboflavin transport activity. At present, no experimentally determined structure exists for the human protein. This makes it a good example for exploring how predicted structures can be evaluated using structural comparisons.\nFirst, we load the AlphaFold prediction from AlphaFoldDB:\nclose\nalphafold fetch Q9HAB3 version 6\nhide atoms\ncolor #1 salmon",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#searching-for-homologous-structures",
+    "href": "materials/05-model_comparison.html#searching-for-homologous-structures",
+    "title": "5  Comparing protein structures",
+    "section": "5.3 Searching for homologous structures",
+    "text": "5.3 Searching for homologous structures\nEven when a protein has no solved structure, related proteins may have been crystallised. If a homologous structure exists, we can align it to our model and examine how well the folds match.\nTwo web-based tools for comparing protein structures are:\n\nDALI - high-sensitivity method of structure alignment (Holm et al. 2023)\nFoldSeek - rapid structure search at proteome scale (van Kempen et al. 2024)\n\nBoth of these tools allow searching structural databases using the three-dimensional fold rather than sequence similarity alone.\n\n5.3.1 FoldSeek\nFoldSeek can be accessed:\n\nThrough the FoldSeek web server\nDirectly within ChimeraX: Tools &gt; Structure Comparison &gt; FoldSeek\n\nAfter submiting a PDB file, FoldSeek will return a ranked list of similar structures against several of its databases. For experimentally-resolved structures, the most relevant database is the PDB100.\nThe results table includes:\n\nTarget: The PDB ID of each hit, with a suffix indicating the assembly and specific chain. E.g. 6ob6-assembly1_A refers to chain A of the first assembly in PDB entry 6OB6.\nDescription: A short description of the hit, often including the protein name.\nScientific name: The species from which the structure was derived.\nProb: The probability that the hit is a true structural homologue.\nSeq. Id.: The identity between the aligned sequences of the hit and the query.\nE-Value: The expectation value for the hit, indicating the significance of the match. Lower E-values indicate more significant matches.\nPosition in query: A schematic representation of the range of residues in the query structure that align with the hit.\nAlignment: Clicking this button will display the sequence alignment between the query and the hit, along with a superposition of the two structures.\n\nThe top hits often include structures with similar folds, even if their sequences are very different. For example, one of the top hits for SLC52A2 the Human equilibrative nucleoside transporter-1 (PDB 6OB6), which shares only ~12% sequence identity with SLC52A2.\nThe structural alignment provides two scores:\n\nTM-score: A measure of structural similarity that is independent of protein length. Scores above 0.5 generally indicate similar folds.\nRMSD: The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.\n\n\n\n\n\n\n\nNoteRedundancy-filtered PDB lists\n\n\n\nYou may often see references to “PDB25”, “PDB50”, “PDB90” or “PDB100” in the results of database searching tools such as FoldSeek and DALI.\nThese refer to different versions of the Protein Data Bank (PDB) that have been filtered to remove redundant structures based on sequence similarity.\n\nPDB25 - contains only one representative structure for each cluster of sequences with &gt;25% identity. This is a highly non-redundant set, useful for identifying distant homologues.\nPDB50 - contains one representative for each cluster of sequences with &gt;50% identity. This is a moderately non-redundant set, useful for general searches.\nPDB90 - contains one representative for each cluster of sequences with &gt;90% identity. This is a less redundant set, useful for finding closely related structures.\nPDB100 - contains all structures in the PDB, only removing chains that are 100% identical. This is the most comprehensive set, but may include many similar structures.\n\n\n\n\n\n5.3.2 DALI\nDALI can be accessed from the DALI web server. Click on “PDB Search” and upload your structure file to search for similar folds in the PDB.\nThe results will often be similar to FoldSeek, although the ranking of hits may differ due to differences in the underlying algorithms.\nOne the job completes, you can choose to view the results from against different redundancy-filtered versions of the PDB (see information box above). DALI provides three target lists: PDB25, PDB50 and PDB90. Lower numbers remove more redundancy and highlight more distant structural relationships. You can also view the results against the full PDB, which may include more redundant structures.\nThe results table includes:\n\nChain: The PDB ID and chain of the hit structure. E.g. 6OB6-A refers to chain A of PDB entry 6OB6.\nZ: A Z-score indicating the significance of the structural match. Higher Z-scores indicate more significant matches, with scores above 2 generally considered significant.\nrmsd: The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.\nlali: The number of aligned residues between the query and the hit.\nnres: The total number of residues in the hit structure.\n%id: The percentage of identical residues in the aligned region between the query and the hit.\nPDB: A link to the PDB structure.\nDescription: A brief description of the hit structure.\n\nYou can select a hit and click:\n\nStructural Alignment to view the sequence alignment\n3D Superposition to view the 3D alignment of the two structures\n\n\n\n\n\n\n\nWarningDALI server security and stability\n\n\n\nThe DALI server currently only supports HTTP (rather than HTTPS), which may cause security warnings in modern browsers. Although unlikely, data transferred over HTTP could potentially be intercepted by third parties. If you encounter security warnings, you can usually proceed, however, be cautious if you are working with sensitive data.\nWe have also sometimes found the DALI server to be unstable, with long wait times or failed jobs. You may experience a “Connection has timed out” error after submitting a job. We have found that refreshing the results page after a while will often reveal the results.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#structural-alignment-with-matchmaker",
+    "href": "materials/05-model_comparison.html#structural-alignment-with-matchmaker",
+    "title": "5  Comparing protein structures",
+    "section": "5.4 Structural alignment with MatchMaker",
+    "text": "5.4 Structural alignment with MatchMaker\nOnce we have identified a homologous structure, we can perform a structural alignment in ChimeraX to compare the folds in more detail.\nAs an example, consider one of the top FoldSeek hits for SLC52A2: 6OB6. We can import this structure into the session:\nopen 6ob6\nlabel delete\nhide atoms\nBefore aligning structures, it is helpful to check the models and chains present in the session:\ninfo chains\nchain id #1/A chain_id A\nchain id #2/A chain_id A\nchain id #2/B chain_id B\nHere we see that:\n\nthe AlphaFold model is stored in model #1\nthe PDB structure is stored in model #2\nthe experimental structure contains two chains (A and B)\n\nWe are now ready to perform a structural alignment.\nChimeraX provides the MatchMaker (mm) command for structural alignment.\nmm #1 to #2 showAlignment true\nThis command:\n\naligns model #1 (the predicted structure) to model #2 (the experimental structure)\ndisplays the sequence alignment in the Sequence Viewer\n\nStructural alignment works by finding the best superposition of corresponding residues between two structures.\nBecause the alignment only involves chain B, we hide the other chain to simplify the view:\ncartoon hide #2/A\nThis allows us to focus on the comparison between the predicted model and the experimental structure.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#visualising-structural-differences",
+    "href": "materials/05-model_comparison.html#visualising-structural-differences",
+    "title": "5  Comparing protein structures",
+    "section": "5.5 Visualising structural differences",
+    "text": "5.5 Visualising structural differences\nAfter the alignment, ChimeraX calculates several useful attributes, including per-residue RMSD values. The attribute seq_rmsd stores the RMSD for each aligned residue.\nRMSD measures how far corresponding atoms are apart after structural superposition. Small RMSD values indicate strong agreement between structures.\nWe can colour the predicted model according to this attribute (we hide the experimental structure to make the colouring easier to see):\ncolor #1 white\ncolor byattribute r:seq_rmsd #1 target csab palette RdYlBu key true\ncartoon hide #2\nThis produces a colour gradient showing structural agreement:\n\nRed - smaller deviation, strong structural agreement\nYellow - intermediate values\nBlue - larger structural differences\n\n\n\n\n\n\nOne important thing to note is the choice of colour scale breaks. Above, the breaks between colours are automatically set by ChimeraX based on the distribution of RMSD values. This can sometimes lead to a colour scheme that is dominated by a few outliers with very high RMSD values, making it difficult to see the variation in the rest of the structure. It may also give the impression that most of the structure has very high agreement, when in fact several of the residues have intermediate or even high RMSD values.\nAn alternative approach is to set the colour breaks manually, using the graphical user interface “Tools → Structure Analysis → Render/Select by Attribute”:\n\nChoose: “Attributes of residues”\nChoose: “Attribute: seq_rmsd”\nAdjust colouring thresholds using the sliding bars on the histogram of RMSD values\n\nThe image below shows the same alignment with:\n\nLower threshold (red) set to 0 Å, indicating perfect agreement\nMidpoint (yellow) set to 5 Å, which would indicate some deviation from the reference structure\nUpper threshold (blue) set to 10 Å, meaning that anything above that value will be coloured blue",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#exercises",
+    "href": "materials/05-model_comparison.html#exercises",
+    "title": "5  Comparing protein structures",
+    "section": "5.6 Exercises",
+    "text": "5.6 Exercises\nReminder: In this exercise series you are investigating the structure of the amphioxus estrogen receptor and comparing it with experimentally determined human ER structures.\n\n\n\n\n\n\nExerciseExercise 1 - Comparing two model predictions\n\n\n\n\n\n\nIn the monomer prediction exercises, we predicted the structure of the full amphioxus ER protein using AlphaFold3. We will now align and compare this model with the prediction available in AlphaFoldDB, which was generated using AlphaFold2.\nRun the following code in ChimeraX to open and align the two models:\nclose\ncd ~/Course_Materials/er_amphioxus/full_monomer_af3\nopen fold_er_amphioxus_full_monomer_af3_model_0.cif\nalphafold fetch B3V8B7 version 6\ncolor #2 steelblue\nmm #2 to #1\nQuestions:\n\nWhat do you observe about the alignment of the two models?\n\nConsider both the agreement within individual domains and the relative orientation of the domains.\nFocus in particular on the DNA-binding (294-370) and ligand-binding (441-682) domains.\n\nGiven the issues you see when aligning the entire protein, can you think of a different way to approach this comparison?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nAligning the entire protein produces a suboptimal alignment. The ligand-binding domain aligns well between the two models, but the DNA-binding domain does not.\nThis occurs because the two models predict slightly different orientations for the domains relative to each other. The flexible linker between the domains introduces uncertainty in their relative positioning, which makes a global alignment of the entire protein less reliable.\nA better approach is to align each domain separately.\n\nFirst align the DNA-binding domain:\n\nhide cartoon\ncartoon :294-370\nmm #2:294-370 to #1:294-370\n\nThen align the ligand-binding domain:\n\nhide cartoon\ncartoon :441-682\nmm #2:441-682 to #1:441-682\nWhen aligning the domains separately, the DNA-binding domain shows very strong agreement between the two models. The ligand-binding domain also aligns well overall, although there are small differences near the start of the domain, where the AlphaFold3 model predicts a slightly longer alpha-helix than the AlphaFold2 model.\nThis demonstrates that while the internal structure of each domain is predicted consistently, the relative orientation of domains in flexible multidomain proteins may vary between models.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Comparing multiple models\n\n\n\n\n\n\nIn the monomer prediction exercises, we predicted the structure of the ligand-binding domain (LBD) of the ER protein using ColabFold (AlphaFold2).\nIn the second run of the AlphaFold2 predictions, we used four random seeds for each of the five AlphaFold2 neural network models, resulting in a total of 20 structure predictions.\nWe can use this ensemble of models to evaluate how consistent the predicted structure is for this domain.\nRun the following commands in ChimeraX to open the models and align them:\nclose\ncd ~/Course_Materials/er_amphioxus/lbd_monomer_af2_run2/\nopen *unrelaxed*.pdb\nmm #2-20 to #1\n\nclose starts a new ChimeraX session.\ncd moves to the directory containing the prediction outputs.\nopen loads all structure files matching the pattern *unrelaxed*.pdb (the * is known as a “wildcard” and matches any characters in the file names).\nmm (MatchMaker) sequentially aligns models #2-20 to model #1, which is used as the reference structure.\n\nQuestions:\n\nWhat can you conclude about the consistency of the predicted structures across the different models and random seeds?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nAfter aligning all 20 models, we observe that:\n\nThe core of the ligand-binding domain shows very strong structural agreement across all models.\nThe main variation occurs near the N-terminus and C-terminus, which correspond to regions flanking the annotated LBD domain.\nThese terminal regions appear more flexible and are predicted less consistently.\n\nOverall, the strong agreement in the core of the domain suggests that the predicted fold of the LBD is robust and not sensitive to the choice of AlphaFold model or random seed. Variation at the termini is common in structure predictions and often reflects flexible regions of the protein.\n\nTo make our comparisons visually easier, we could colour the structures in different ways:\n\nGive each structure its own colour (the default, when importing multiple structures):\ncolor bymodel\nUse a sequential colour palette from the N-terminus to the C-terminus:\nrainbow\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Comparing predictions with resolved structures\n\n\n\n\n\n\nFinally, we will compare our de novo prediction of the LBD region using AlphaFold3 with an experimentally determined human structure that includes the estradiol ligand (PDB: 1ERE).\nThe PDB entry contains three assemblies of the receptor as a homodimer (i.e. a total of six chains). For simplicity, we will keep only one chain for the comparison:\nclose\nopen 1ERE\ndelete /B-F\nhide atoms\nshow cartoon\nNext, open the AlphaFold3 prediction of the amphioxus ligand-binding domain:\ncd ~/Course_Materials/er_amphioxus/lbd_monomer_af3/\nopen fold_er_amphioxus_lbd_monomer_af3_model_0.cif\nQuestions:\n\nAlign the two structures using the PDB structure as the reference. Colour the amphioxus prediction by RMSD.\nDisplay the ligand atoms in stick style, colour them gold, and add a ligand surface with 50% transparency.\nWhat can you conclude about the alignment of the amphioxus prediction, particularly around the ligand-binding region?\n\nHint: hiding the reference PDB model may help you see the coloured RMSD values.\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nWe align the structures using the MatchMaker command and colour the prediction by RMSD relative to the experimental structure:\nmm #2 to #1 showalignment true\ncolor byattribute r:seq_rmsd #2 target csab palette RdYlBu key true\nThis colours residues in the predicted structure according to their structural deviation from the reference.\nWe display the ligand in stick representation:\nshow ligand\nstyle ligand stick\ncolor ligand gold\nsurface ligand color gold transparency 50\nAfter hiding the cartoon representation of the reference structure (hide #1 cartoon), we can more easily see the RMSD colouring on the amphioxus prediction.\nWe can see that residues forming the ligand-binding pocket show low RMSD values, indicating strong structural agreement with the experimentally determined human structure. This suggests that the architecture of the ligand-binding pocket is highly conserved, even between distantly related species such as amphioxus and humans.\n\n\n\n\n\n\nThis analysis illustrates how key functional regions of proteins can remain structurally conserved over long evolutionary timescales.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 4 - Search for homologous structures\n\n\n\n\n\n\nWe have focused our comparisons of the amphioxus ER with experimentally determined human structures. However, it is possible that more closely related structures exist in the PDB, for example from other invertebrates.\n\nSearch for homologous structures using FoldSeek, either through the web server or directly in ChimeraX.\nSearch using the Dali server as an alternative approach.\nCompare the top hits between the two search methods. Do they identify the same structures? Are there any differences in the ranking of hits?\nAlign the top hits to your amphioxus prediction and evaluate the structural agreement, particularly in the ligand-binding domain.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/05-model_comparison.html#summary",
+    "href": "materials/05-model_comparison.html#summary",
+    "title": "5  Comparing protein structures",
+    "section": "5.7 Summary",
+    "text": "5.7 Summary\n\n\n\n\n\n\nTipKey points\n\n\n\n\nStructural comparison tools (e.g. FoldSeek, DALI, or structural alignment methods) can identify related proteins even when sequence similarity is low.\nConserved protein domains often maintain similar three-dimensional folds across large evolutionary distances.\nStructural alignment allows comparison of predicted models with experimentally determined structures.\nRMSD-based colouring can highlight regions of strong agreement or divergence between structures.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Comparing protein structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html",
+    "href": "materials/06-multimer.html",
+    "title": "6  Predicting protein complexes",
+    "section": "",
+    "text": "6.1 Overview\nMany proteins do not act alone. Instead they form complexes with:\nThese interactions often determine the biological function of the protein. For example:\nPredicting the structure of a single monomer can reveal the fold of a protein. However, to understand function we often need to predict how molecules interact.\nAlphaFold can now model such complexes directly. This process is often called multimer prediction or co-folding.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#overview",
+    "href": "materials/06-multimer.html#overview",
+    "title": "6  Predicting protein complexes",
+    "section": "",
+    "text": "other proteins\nDNA or RNA\nsmall molecules or ligands\n\n\n\nenzymes may assemble into multimeric complexes\ntranscription factors bind DNA\nreceptors dimerise when activated",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#how-alphafold-predicts-complexes",
+    "href": "materials/06-multimer.html#how-alphafold-predicts-complexes",
+    "title": "6  Predicting protein complexes",
+    "section": "6.2 How AlphaFold predicts complexes",
+    "text": "6.2 How AlphaFold predicts complexes\nWhen predicting a complex, AlphaFold receives multiple sequences as input. These may represent:\n\nseveral copies of the same protein (homomers)\ndifferent proteins (heteromers)\nproteins together with nucleic acids or ligands (AlphaFold3 only)\n\nThe model then attempts to predict:\n\nthe fold of each chain\nthe relative positioning of the chains\nthe interaction interface between them\n\nThis means AlphaFold must solve two related problems:\n\nFolding - predicting the structure of each individual chain\nDocking - predicting how the chains assemble together\n\nThe same confidence metrics used for monomers still apply (e.g. pLDDT and PAE), but multimer predictions also introduce additional interface-specific metrics.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#multimer-confidence-scores",
+    "href": "materials/06-multimer.html#multimer-confidence-scores",
+    "title": "6  Predicting protein complexes",
+    "section": "6.3 Multimer confidence scores",
+    "text": "6.3 Multimer confidence scores\nWhen evaluating multimer predictions, it is important to distinguish between:\n\nconfidence in the fold of each chain\nconfidence in the interaction between chains\n\nSeveral scores help us assess this.\n\n6.3.1 pLDDT\nAs for monomers, pLDDT reports local confidence in the structure of each residue. High pLDDT values indicate that the model is confident in the local geometry of the fold.\nHowever, high pLDDT does not guarantee that the interface is correct.\n\n\n6.3.2 PAE\nThe Predicted Aligned Error (PAE) matrix becomes particularly useful in multimer predictions. The matrix can be divided into blocks:\n\ndiagonal blocks describe confidence within each chain\noff-diagonal blocks describe confidence between chains\n\nLow PAE values between chains suggest that the relative positioning of the chains is well defined. High cross-PAE indicates that the model is uncertain about the interface.\n\n\n6.3.3 pTM and ipTM\nMultimer predictions also report global confidence metrics:\n\npTM (predicted TM-score) - estimates the accuracy of the overall fold of the complex\nipTM (interface predicted TM-score) - estimates the accuracy of the interface between chains\n\nTypical interpretations are:\n\n\n\nScore\nInterpretation\n\n\n\n\npTM &gt; 0.5\noverall fold likely correct\n\n\nipTM &gt; 0.7\ninterface likely reliable\n\n\nipTM &lt; 0.5\ninterface uncertain\n\n\n\nThese scores should always be interpreted together with the PAE matrix and structural inspection.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#structure-prediction-in-practice",
+    "href": "materials/06-multimer.html#structure-prediction-in-practice",
+    "title": "6  Predicting protein complexes",
+    "section": "6.4 Structure prediction in practice",
+    "text": "6.4 Structure prediction in practice\n\nAlphaFold Server (AlphaFold3)ColabFold (AlphaFold2)\n\n\nTo perform a multimer prediction using the AlphaFold Server web interface:\n\nSubmit the sequences of all chains involved in the complex.\nSpecify the copy number for each chain if the complex contains multiple identical subunits.\nIf nucleic acids are present, include them as additional sequences.\n\nFor example:\n\nA homodimer requires the setting 2 copies for the protein in the input.\nA heterodimer requires adding two separate protein entities\nA protein-DNA complex requires adding the protein sequence(s) as well as the DNA sequence.\n\nWhen adding DNA, create a DNA entity and then click the ⋮ button to add a reverse complement copy\n\n\nAlphaFold3 automatically performs co-folding of all components.\nAfter the prediction completes, the results include:\n\npredicted structure files\nglobal scores (pTM and ipTM)\nper-residue confidence (pLDDT)\nPAE matrices\n\nThese outputs can be explored directly on the server or downloaded for visualisation in ChimeraX.\n\n\nColabFold also supports multimer prediction using AlphaFold2.\nThe same parameters discussed in the monomer section apply here, but an additional parameter becomes important when modelling complexes.\n\nParameter: pair_mode\nThis parameter controls how ColabFold pairs sequences across multiple chains.\nAlphaFold relies heavily on multiple sequence alignments (MSAs). For complexes, these alignments may contain information about coevolving residues between interacting proteins.\nThe pair_mode parameter determines how this information is used.\n\nunpaired: Each chain receives its own independent MSA. Fast, but ignores possible correlations between interacting chains.\npaired: Sequences are paired by species, allowing the model to detect coevolution between residues of different chains. This can improve interface prediction but often results in sparse alignments.\nunpaired_paired: Combines both strategies.\n\nfull MSAs for learning the fold of each chain\npaired sequences when available to infer interactions.\n\n\nThis is usually the recommended option, as it balances folding accuracy with interface prediction.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#evaluating-predicted-interfaces",
+    "href": "materials/06-multimer.html#evaluating-predicted-interfaces",
+    "title": "6  Predicting protein complexes",
+    "section": "6.5 Evaluating predicted interfaces",
+    "text": "6.5 Evaluating predicted interfaces\nEvaluating whether the predicted interface is biologically plausible can be done with several checks:\n\nInspect the PAE matrix - low cross-PAE suggests confident interfaces\nExamine ipTM scores - higher scores indicate more reliable interfaces\nVisualise contacts between chains - interface residues should form realistic interactions\nConsider biological context - does the predicted interface match what is known about the protein?\n\nImportantly, AlphaFold sometimes produces interfaces that are geometrically plausible but biologically irrelevant. Confidence scores and biological knowledge should therefore always be used together.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#exercises",
+    "href": "materials/06-multimer.html#exercises",
+    "title": "6  Predicting protein complexes",
+    "section": "6.6 Exercises",
+    "text": "6.6 Exercises\nReminder: In this exercise series you are investigating the structure of the amphioxus estrogen receptor and comparing it with experimentally determined human ER structures.\n\n\n\n\n\n\nExerciseExercise 1 - Multimer prediction\n\n\n\n\n\n\nThe estrogen receptor (ER) forms a homodimer upon ligand binding. This dimer then migrates to the nucleus, where it binds DNA at conserved ER-response elements (EREs).\nSo far, our predictions of the amphioxus ER focused on a single copy of the protein. Your task now is to perform and assess a homodimer prediction of the ligand-binding domain (LBD).\nUse the annotated LBD sequence from UniProt entry B3V8B7:\nRLKALIDALDVKEGEHRGEENHPTGQQAGNWQEISNPELIESVSSLVDRELTGIICWGKKIPGYSKLSLNDQVLLMESTWLDLLILDLVWCSIRHKGEKLLLSGGVLVNRNTISNRRNNSSGDDMEVLEMCDQILSIATKFYEFDLQRREYLCLKAITLVHGSLKGLESDTQVRQLQDDLTDALMDVCSERHALGSRRPAKMLLLLSHLRQVSARASSHLGAVRNGLKVPLYDILLDILTDQ\nTasks:\n\nSubmit the LBD sequence to the AlphaFold Server (AlphaFold3), making sure to set the number of copies to 2 to generate a homodimer prediction. Assess the quality using global (pTM, ipTM) and local (pLDDT, PAE) scores.\nCompare this prediction with the preprocessed ColabFold homodimer prediction. Identify regions of lower confidence in each model and compare the global scores.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nAlphaFold3 homodimer prediction:\n\npTM ≈ 0.80, indicating high confidence in the overall fold of the complex.\n\nipTM ≈ 0.79, indicating strong confidence in the predicted interaction between the two chains.\npLDDT scores are generally high across both chains; lower confidence is seen in flexible loops or hinge regions between helices.\nPAE matrix shows low predicted error along the diagonals of each chain, with higher error in terminal or hinge regions. These flexible regions do not appear to contribute to the interface.\n\nComparison with ColabFold:\n\nThe top-ranked model from ColabFold () had the following global scores:\n\naverage pLDDT = 84.9\npTM=0.895\nipTM=0.884\n\nThese are very similar (even slightly higher) to the global scores from AlphaFold3, suggesting both versions of AlphaFold are highly confident in this structure.\nSimilarly to the AlphaFold3 prediction, there is lower confidence in loop regions or terminal residues, reflecting intrinsic flexibility.\n\n\nEven when individual monomer folds are well-predicted, interface confidence can vary. pTM/ipTM and PAE scores help assess the reliability of predicted oligomers.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Assessing dimer interfaces with alphafold contacts\n\n\n\n\n\n\nWe will examine the interface residues in more detail using the PAE matrix from our prediction.\nLoad one of the AlphaFold predictions into a new ChimeraX session (the code below loads the AlphaFold3 prediction):\nclose\ncd ~/Course_Materials/er_amphioxus/lbd_homodimer_af3\nopen fold_er_amphioxus_lbd_homodimer_af3_model_0.cif\nalphafold pae #1 palette paegreen file fold_er_amphioxus_lbd_homodimer_af3_full_data_0.json\nTasks:\n\nUse the ChimeraX command alphafold contacts to highlight residues forming the putative interface in the amphioxus prediction.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nTo analyse the predicted amphioxus dimer interface:\nalphafold contacts #1/A to #1/B distance 5 palette paegreen\n\nThis adds pseudobonds between the residues in chain A contacting residues in chain B within a distance threshold of ~5 Å.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Co-folding the full receptor with DNA\n\n\n\n\n\n\nIn previous exercises we predicted individual domains of the estrogen receptor and examined their structures separately. However, in the cell the receptor functions as a multi-component complex.\nAfter binding ligand, two ER proteins form a homodimer. This dimer then binds specific DNA sequences called estrogen response elements (EREs) through the DNA-binding domains (DBDs).\nImportantly, the relative orientation of the two DBDs is stabilised by the DNA itself. Without DNA, the two domains may not adopt a well-defined position relative to each other.\nIn this exercise we explore how including DNA in a prediction can change the confidence of the structural model.\nWe will compare two predictions:\n\na dimer of the full ER protein\nthe same dimer co-folded with DNA\n\nThis illustrates how co-folding with binding partners can resolve otherwise ambiguous interactions.\nTasks:\n\nSubmit two copies of the full amphioxus ER sequence (link to sequence) to the AlphaFold Server (AlphaFold3) to predict the receptor dimer.\n\nExamine the PAE matrix, focusing on the interactions between the two DNA-binding domains.\nWhat does the cross-PAE suggest about the relative positioning of the two DBDs?\n\nNext, submit the same two ER sequences together with an estrogen response element (ERE) DNA sequence. Use the following sequence:\nCCAGGTCACAGTGACCTG\n\nHint: AlphaFold3 expects double-stranded DNA. You therefore need to include both this strand and its reverse complement as two DNA chains.\nAgain examine the PAE matrix, focusing on the interactions between the two DBDs.\n\nCompare the two predictions:\n\nHow does the confidence of the DBD–DBD interface change when DNA is included?\nWhat does this tell you about the role of DNA in stabilising the receptor complex?\n\nLoad the co-folded complex in ChimeraX to inspect the predicted structure.\nclose\ncd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/\nopen fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif\ncolor bychain\ncartoon hide nucleic\nnucleotides atoms\nstyle nucleic sphere\n\nWhat do you observe about the positioning of the two DNA-binding domains relative to the DNA?\nIt may help to import UniProt annotations (ID: B3V8B7) and colour the DBDs to identify them more easily.\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nWhen predicting the ER homodimer without DNA, the model shows:\n\ngood confidence for the ligand-binding domain dimer\nhigh cross-PAE between the two DNA-binding domains\n\nThis indicates that the model is uncertain about the relative positioning of the two DBDs.\n\n\n\n\n\n\n\n\nPAE matrix with ligand-binding domain (LBD) highlighted in red and DNA-binding domain (DBD) highlighted in yellow. Note the high cross-PAE for the two DBD domains, indicating uncertainty in their relative positioning.\n\n\n\nWhen the DNA sequence is included, the prediction changes:\n\nthe two DBDs bind opposite halves of the DNA response element\nthe cross-PAE between the DBDs becomes low\nthe model is now confident about their relative orientation.\n\n\n\n\n\n\n\n\n\nPAE matrix with ligand-binding domain (LBD) highlighted in red and DNA-binding domain (DBD) highlighted in yellow. Note the low cross-PAE for the two DBD domains, indicating confidence in their relative positioning.\n\n\n\nThis shows that the DBDs do not form a stable interface on their own.\nInstead, their positioning is stabilised when both domains bind the DNA sequence.\nWe import UniProt annotations (ID: B3V8B7):\nopen B3V8B7 from uniprot format uniprot\n\nFrom the annotation panel, we select “domain” → “Nuclear receptor”, which highlights residues 294-370. Based on this, we assign distinct colours to the different parts of each chain for easier visualisation:\n\ncolor /A steelblue\ncolor /B royalblue\ncolor /A:294-370 gold\ncolor /B:294-370 coral\n\n\n\n\n\n\nFrom this analysis, we can see that:\n\nthe two DBDs insert recognition helices into the major groove of the DNA\neach domain binds one half of the response element\nthe two domains make a small interface while bound to DNA.\n\nThis behaviour reflects the biological mechanism of nuclear receptors:\nthe ligand-binding domains drive dimerisation, while the DNA-binding domains are positioned by the DNA response element itself.\nThe high PAE between the DBDs in the absence of DNA is not a modelling failure - it reflects a real biological property. The domains only adopt a stable relative orientation when DNA is present, and including the DNA sequence in the prediction provides the constraint needed to resolve the complex.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 4 - Full receptor complex comparison with human structures\n\n\n\n\n\n\nOpen the AlphaFold3 prediction of the full complex:\nclose\ncd ~/Course_Materials/er_amphioxus/full_homodimer_dna_complex_af3/\nopen fold_er_amphioxus_full_homodimer_dna_complex_af3_model_0.cif\ncolor bychain\ncartoon hide nucleic\nnucleotides atoms\nstyle nucleic sphere\nYou will now compare the structure prediction of the LBD and DBD domains with the known human structures, to assess how good the prediction of the full complex was. To make this comparison easier, we split our full complex model into sub-models for each domain:\nsplit #1 atoms #1/A-B:441-682 atoms #1/A-B:294-370 atoms #1/C-D\ncolour byidentity\ncartoon hide #1.4\nLooking at the output of info models you will see that we now have three sub-models:\n\n#1.1 is the ligand-binding domain, annotated as residues 441-682 on UniProt\n#1.2 is the DNA-binding domain, annotated as residues 294-370 on UniProt\n#1.3 is the DNA chains\n#1.4 is rest of the structure (disorganised regions)\n\nTasks:\n\nUse the commands below to import the human ligand-binding dimer (PDB: 1ERE, chains A and B), and then align it with model #1.1 (the LBD domain).\nopen 1ERE\ndelete #2/C-F\nhide #2 atoms\ncartoon #2\ncolour #2 gold\nUse the commands below to import the human DNA-binding dimer (PDB: 1HCQ), and then align it with model #1.2 (the DBD domain).\nopen 1HCQ\ndelete #3/C-H\nhide #3 atoms\ncartoon #3\ncolour #3 gold\n\nWhat is your conclusion about the ability of AlphaFold3 to predict the full complex structure?\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe align each of the human structures to our models:\nmm #2 to #1.1\nmm #3 to #1.2\n\n\n\n\n\nOverall we can see a strong agreement between the predicted amphioxus domains and the experimentally determined human structures, indicating that AlphaFold3 successfully captured the geometry of both the ligand-binding and DNA-binding domains within the full receptor complex.\nSeveral observations can be made from this comparison:\n\nThe ligand-binding domain (LBD) of the amphioxus receptor aligns very closely with the human LBD dimer. This shows that the core helical architecture of the domain and its dimerisation interface are strongly conserved across evolution, despite substantial sequence divergence between these species (only ~30% sequence identity in this domain).\nThe DNA-binding domains (DBDs) also align well with the human ER structure bound to DNA. In particular, the recognition helices of each DBD are positioned in the DNA major groove in a manner very similar to the experimental structure.\nEarlier in the exercises we saw that predicting the ER dimer without DNA resulted in high cross-PAE between the DBDs, indicating uncertainty about their relative positioning. When DNA was included in the prediction, the DBDs adopted a well-defined orientation with low cross-PAE. This reflects the biological mechanism of nuclear receptors, where DNA binding helps stabilise the arrangement of the two DBDs.\n\nTaken together, these results show that AlphaFold3 is able to reconstruct the overall architecture of a multi-component complex by combining several sources of information: the intrinsic fold of each domain, the dimerisation interface of the LBD, and the structural constraints imposed by DNA binding.\nThis final comparison also illustrates a broader principle in structural bioinformatics: structural features that are critical for function are often conserved across large evolutionary distances, even when the underlying amino acid sequences differ substantially.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/06-multimer.html#summary",
+    "href": "materials/06-multimer.html#summary",
+    "title": "6  Predicting protein complexes",
+    "section": "6.7 Summary",
+    "text": "6.7 Summary\n\n\n\n\n\n\nTipKey Points\n\n\n\n\nMany proteins function as oligomers rather than as single monomers.\nStructure prediction methods can model protein-protein or protein-nucleic acid complexes.\nConsidering the biological assembly is often essential for understanding protein function.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure prediction",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Predicting protein complexes</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html",
+    "href": "materials/07-chimerax_ligand.html",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "",
+    "text": "7.1 Overview\nProteins often interact with small molecules. These molecules may be:\nThe region where a small molecule binds is called the binding pocket. Understanding this pocket is central to many areas of biology and medicine, including drug design.\nIn this section we will learn how to analyse protein-ligand interactions using ChimeraX.\nAs an example, we will continue working with the estrogen receptor structure (PDB: 1ERE). This structure contains the hormone estradiol, labelled EST in the PDB file.\nThe estrogen receptor is an important drug target. Many therapies for breast cancer act by blocking or modifying ligand binding in this pocket.\nThe same tools we use here also apply to:",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#overview",
+    "href": "materials/07-chimerax_ligand.html#overview",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "",
+    "text": "natural metabolites\nsignalling molecules\ncofactors\ndrugs designed to target a protein\n\n\n\n\n\n\n\nexperimentally determined structures\npredicted protein models\npredicted ligand docking results",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#preparing-the-structure",
+    "href": "materials/07-chimerax_ligand.html#preparing-the-structure",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.2 Preparing the structure",
+    "text": "7.2 Preparing the structure\nWe begin by loading the structure and keeping a single chain for clarity.\nclose\nopen 1ERE\ndelete #1/B-F\nNext we create a visual representation that highlights the ligand.\nstyle protein ball\nhide atoms\nshow cartoon\nshow :EST atoms\nstyle :EST sphere\ncolour :EST & C grey\ncolour :EST & O magenta\ncofr :EST\nThese commands:\n\nshow the protein as a cartoon, emphasising secondary structure\ndisplay the ligand as atoms\ncolour the ligand atoms by element\nset the centre of rotation (cofr) on the ligand for easier inspection\n\nThe result is a view of the receptor with the ligand clearly positioned in the binding pocket.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#hydrogen-bonds",
+    "href": "materials/07-chimerax_ligand.html#hydrogen-bonds",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.3 Hydrogen bonds",
+    "text": "7.3 Hydrogen bonds\nOne of the most important stabilising interactions between proteins and ligands is the hydrogen bond. Hydrogen bonds often determine:\n\nligand specificity\nbinding affinity\norientation of the ligand in the pocket\n\nChimeraX can detect hydrogen bonds automatically using the hbonds command.\nhbonds :EST reveal true log true\n\nreveal true displays hydrogen bonds as cyan dashed lines and reveals the corresponding atoms involved in the interaction\nlog true reports the interaction details in the log window\n\nThe output lists the atoms involved and the distances between them. Keep in mind that hydrogen bonds are inferred geometrically based on distance and angle criteria.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#other-contacts",
+    "href": "materials/07-chimerax_ligand.html#other-contacts",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.4 Other contacts",
+    "text": "7.4 Other contacts\nHydrogen bonds are not the only interactions stabilising ligand binding. Ligands are often held in place by non-specific contacts, such as van der Waals interactions.\nThese interactions can be detected using the contacts command.\ncontacts :EST reveal true log true\nThis command displays nearby atoms as green dashed lines, and reveals the corresponding atoms involved in the interaction.\nTogether, hydrogen bonds and other contacts provide a useful picture of how the ligand fits inside the binding pocket.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#surface-representation",
+    "href": "materials/07-chimerax_ligand.html#surface-representation",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.5 Surface representation",
+    "text": "7.5 Surface representation\nTo better visualise the binding pocket, we can display the molecular surface of the ligand.\nstyle :EST stick\nshow :EST surfaces\nsurface :EST color white transparency 65\nSurface representations help illustrate:\n\nhow tightly the ligand fits inside the pocket\nwhich parts of the ligand remain exposed to solvent\nthe shape of the binding cavity\n\nSurfaces are especially useful when examining drug binding sites.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#selecting-residues-near-the-ligand",
+    "href": "materials/07-chimerax_ligand.html#selecting-residues-near-the-ligand",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.6 Selecting residues near the ligand",
+    "text": "7.6 Selecting residues near the ligand\nOften we want to focus only on the residues that form the binding pocket. ChimeraX allows distance-based selections using the &lt; operator.\nThe following command shows residues within 5 Å of the ligand:\nhide protein cartoon\nhide protein atoms\nshow :EST :&lt;5\nThis reveals only the local environment surrounding the ligand.\nDistance-based selections are useful for:\n\nidentifying binding pocket residues\nanalysing mutation effects\npreparing structures for docking or modelling studies",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/07-chimerax_ligand.html#exercises",
+    "href": "materials/07-chimerax_ligand.html#exercises",
+    "title": "7  Analysing protein-ligand interactions",
+    "section": "7.7 Exercises",
+    "text": "7.7 Exercises\n\n\n\n\n\n\nExerciseExercise 1 - Select atoms involved in interactions\n\n\n\n\n\n\nIn this exercise we will attempt to colour the protein atoms involved in the interactions between the ligand and the protein.\n\n\n\nZoomed-in view of the oestrogen molecule bound to the oestrogen receptor. Atoms in orange are involved in hydrogen bonds (cyan lines); atoms in yellow are involved in other contacts (green lines).\n\n\nStart your session using the following code, which will show the ligand and the residues within 5 Å of the ligand, as well as the hydrogen bonds and contacts between the ligand and the protein.\nclose\nopen 1ERE\ndelete #1/B-F\nstyle protein ball\nstyle :EST stick\nhide protein\nhide solvent\ncolour :EST & C grey\ncolour :EST & O magenta\nshow :EST :&lt;5\ncofr :EST\nhbonds :EST reveal true log true\ncontacts :EST reveal true log true\nUsing a combination of select and new keywords listed below, try to:\n\nColour the protein atoms involved in hydrogen bonds in darkorange\nColour the protein atoms involved in contacts in gold\n\nHere are some useful keywords to select atoms involved in interactions:\n\nhbonds selects the pseudobonds (dashed lines) representing the hydrogen bonds\npbonds selects all pseudobonds (including both hydrogen bonds and contacts)\nhbondatoms selects the atoms as well as pseudobonds involved in the hydrogen bonds\npbondatoms selects the atoms as well as pseudobonds involved in the contacts\n\n\n\n\n\n\n\nHintHint\n\n\n\n\n\n\nWork on your selection incrementally, making use of the select subtract command to deselect certain items from your initial selection.\n\n\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe can achieve this in several incremental steps:\nselect pbondatoms\nselect subtract pbonds\nselect subtract :EST\ncolour sel gold\n\nselect pbondatoms selects all atoms and pseudobonds involved in both hydrogen bonds and contacts\nselect subtract pbonds deselects the pseudobonds, leaving only the atoms selected\nselect subtract :EST deselects the ligand atoms, leaving only the protein atoms selected\ncolour sel gold colours the selected atoms gold\n\nThen we can repeat the same steps for hydrogen bonds:\nselect hbondatoms\nselect subtract hbonds\nselect subtract :EST\ncolour sel darkorange\nselect clear\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Edit the bond representation\n\n\n\n\n\n\nYou may notice that some contacts overlap with the hydrogen bonds. Reading the documentation for the size command, can you find a way to make the hydrogen pseudobonds thicker, so they stand out?\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe can use the pseudobondRadius attribute to change the thickness of the pseudobonds, making sure to apply this only to the hydrogen bonds, using the hbonds selector keyword:\nsize hbonds pseudobondRadius 0.1",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Analysing protein-ligand interactions</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html",
+    "href": "materials/08-chimerax_alphamissense.html",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "",
+    "text": "8.1 Functional mutation consequences\nMutations can affect proteins in many different ways.\nA missense mutation replaces one amino acid with another. The impact of such mutations depends strongly on where they occur in the protein structure.\nFor example, mutations may disrupt:\nResidues involved in these functions are often less tolerant to mutation, because changes can destabilise the structure or disrupt key interactions.\nMapping mutation sensitivity onto protein structures therefore helps identify functionally important regions.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html#functional-mutation-consequences",
+    "href": "materials/08-chimerax_alphamissense.html#functional-mutation-consequences",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "",
+    "text": "ligand-binding sites\nprotein-protein interfaces\nDNA-binding regions\nthe structural core of the protein",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html#preparing-the-structure",
+    "href": "materials/08-chimerax_alphamissense.html#preparing-the-structure",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "8.2 Preparing the structure",
+    "text": "8.2 Preparing the structure\nFollowing from the model comparison chapter, we will use the human protein SLC52A2 (UniProt ID: Q9HAB3). As a reminder, this is a membrane transporter for vitamin B2 (riboflavin), and mutations in this protein can cause a childhood-onset neurological disorder called Brown-Vialetto-Van Laere syndrome.\nWe begin by loading the predicted structure from the AlphaFold Database:\nalphafold fetch Q9HAB3 version 6\n    \n    \n    \nIn this command we explicitly specify the model version. This ensures that we retrieve the correct version of the prediction, but you should always check what the latest version available is.\nWe can also load the corresponding PAE matrix:\nalphafold pae #1 palette paegreen uniprotId Q9HAB3 version 6\n\n8.2.1 Adding UniProt annotations\nStructural information is often easier to interpret alongside functional annotations. ChimeraX can retrieve UniProt annotations directly:\nopen Q9HAB3 from uniprot format uniprot\nThis opens a sequence annotation panel showing features such as:\n\nfunctional domains\ntransmembrane regions\nexperimentally observed variants\nbinding sites\n\nClicking a feature in the panel will highlight the corresponding residues in the structure.\nCombining structural and functional annotations helps identify regions likely to be sensitive to mutation.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html#alphamissense-mutation-scores",
+    "href": "materials/08-chimerax_alphamissense.html#alphamissense-mutation-scores",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "8.3 AlphaMissense mutation scores",
+    "text": "8.3 AlphaMissense mutation scores\nThe AlphaMissense model predicts the likely functional impact of every possible amino acid substitution in a protein. For each possible mutation, the model assigns a score between 0 and 1:\n\nvalues near 0 suggest the mutation is likely benign\nvalues near 1 suggest the mutation is likely deleterious\n\nThese scores can be loaded directly in ChimeraX.\nopen Q9HAB3 from alpha_missense format amiss\nThe scores are loaded and a histogram showing the distribution of mutation impact scores opens on the side.\nWe can add a label to each residue displaying the mutation impact score for every possible mutation:\nmutationscores label #1 amiss height 3 palette bluered\nThis view can be useful to look at the impact of specific mutations in each residue. However, it doesn’t give a good overall view of the mutational sensitivity across the protein.\nWe can remove the labels with:\nlabel delete\n\n8.3.1 Summarising scores\nBecause each residue can mutate to many different amino acids, it is often useful to summarise these predictions. For example, we can compute the average predicted mutation effect per residue:\nmutationscores define avg fromScore amiss setAttribute true combine mean mutationSet Q9HAB3\nThis creates a new residue attribute called avg. We can then map these scores onto the structure:\ncolor byattribute r:avg palette bluered key true range 0,1\ncartoon byattribute r:avg\n\nblue residues with a thinner cartoon representation are more tolerant to mutation\nred residues with a thicker cartoon representation are predicted to be highly sensitive to mutation\n\nMapping mutation sensitivity onto the structure provides insight into which regions of the protein are structurally or functionally constrained. These regions often correspond to:\n\ncatalytic residues\nligand-binding pockets\nprotein interaction interfaces\nstructurally critical elements of the fold\n\n\n\n\n\n\n\nWarningClosing mutation scores\n\n\n\nWhen working with multiple AlphaMissense scores, it’s important to either close ChimeraX or close the mutation scores explicitly to avoid confusion between different datasets.\nmutationscores close",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html#exercises",
+    "href": "materials/08-chimerax_alphamissense.html#exercises",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "8.4 Exercises",
+    "text": "8.4 Exercises\n\n\n\n\n\n\nExerciseExercise 1 - Mutation scores for ER\n\n\n\n\n\n\nIn this exercise we will map predicted mutation sensitivity onto the human estrogen receptor alpha (ERα) structure.\nTasks:\n\nLoad the AlphaFold model for human ERα (UniProt: P03372) together with the predicted alignment error (PAE).\nLoad the AlphaMissense mutation scores.\nCompute the average mutation score per residue and map it onto the structure.\nColour the structure according to the predicted mutation sensitivity and identify regions that appear particularly constrained.\n\nWhat parts of the protein appear most sensitive to mutation?\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nWe first load the AlphaFold structure and its associated PAE matrix:\nclose\nalphafold fetch P03372 version 6\nalphafold pae #1 palette paegreen uniprotId P03372 version 6\nNext we load the UniProt annotation and the AlphaMissense mutation scores:\nopen P03372 from uniprot format uniprot\nopen P03372 from alpha_missense format amiss\nEach residue has many possible amino acid substitutions. We compute the average predicted mutation effect per residue:\nmutationscores define avg fromScore amiss setAttribute true combine mean mutationSet P03372\nFinally, we map these scores onto the protein structure:\ncolor byattribute r:avg palette bluered key true\ncartoon byattribute r:avg\n\nIn this colouring scheme:\n\nBlue residues are more tolerant to mutation.\nRed residues are predicted to be more deleterious when mutated.\n\n\n\nWe can use the UniProt window to highlight important annotated regions of the protein. We observe that mutation-sensitive residues cluster in functionally important regions of the receptor, including:\n\nthe DNA-binding domain\nthe ligand-binding pocket\nthe binding sites.\n\nThese regions are strongly constrained because mutations there are more likely to disrupt protein function.\nMapping mutation sensitivity onto the structure reveals that deleterious mutations cluster in functional and structurally critical regions of the protein, showing how evolutionary and structural constraints shape where mutations can occur.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/08-chimerax_alphamissense.html#summary",
+    "href": "materials/08-chimerax_alphamissense.html#summary",
+    "title": "8  Mapping mutation effects onto structures",
+    "section": "8.5 Summary",
+    "text": "8.5 Summary\n\n\n\n\n\n\nTipKey points\n\n\n\n\nThe functional impact of mutations often depends on their structural location.\n\nVariants occurring in conserved structural regions are more likely to affect protein stability or function.\n\nComputational tools such as AlphaMissense can help prioritise mutations for further study.\nAlphaMissense scores can be imported into ChimeraX using: open &lt;UniProt_ID&gt; from alpha_missense format amiss.\nScores can be summarised using mutationscores define and mapped onto the structure using color byattribute and cartoon byattribute.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Mapping mutation effects onto structures</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html",
+    "href": "materials/09-chimerax_publication.html",
+    "title": "9  Publication-quality visualisations",
+    "section": "",
+    "text": "9.1 Surface representation\nHigh-quality molecular visualisations are an important part of communicating structural biology results. Figures used in publications or presentations should aim to be:\nChimeraX provides a wide range of tools for producing such figures.\nThe ChimeraX gallery showcases many examples of publication-quality visualisations. Each example includes a downloadable .cxc script that reproduces the image using ChimeraX commands.\nStudying these scripts is often a useful way to learn new visualisation techniques.\nConsider the following view of the estrogen receptor in complex with a conserved peptide motif characteristic of activator proteins (PDB: 4J26).\nThis visualisation combines several features to highlight the interaction between the receptor and the peptide.\nBelow are the commands used to generate the figure:\nLet’s break these down step-by-step.\nWe begin by loading the structure and simplifying the model.\nThe crystal structure contains two receptor-peptide complexes, so we remove chains A and I to keep only one complex.\nNext we adjust the global visual settings.\nThese commands:\nSilhouettes are particularly useful because they help the structure stand out clearly against the background.\nWe then highlight the relevant structural components.\nHere we:\nUsing distinct colours makes it easier to identify the different molecular components.\nFinally, we display transparent molecular surfaces for both chains:\nThe transparent surface illustrates the shape of the binding interface, while still allowing the underlying secondary structure to remain visible.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#surface-representation",
+    "href": "materials/09-chimerax_publication.html#surface-representation",
+    "title": "9  Publication-quality visualisations",
+    "section": "",
+    "text": "close\nopen 4J26\ndelete /A,I\nset bgcolor white\nlabel delete\nlight simple\ngraphics silhouettes true width 1\nshow /J atoms\ncolor /B steelblue\ncolor /J goldenrod\ncolor :EST red\nsurface /B transparency 85\nsurface /J transparency 85\n\n\n\ndelete /A,I\n\nset bgcolor white\nlabel delete\nlight simple\ngraphics silhouettes true width 1\n\n\nset a white background, which is standard for publications\nremove default residue labels\nuse simple lighting to improve contrast\nadd silhouettes (black outlines) around objects\n\n\n\nshow /J atoms\ncolor /B steelblue\ncolor /J goldenrod\ncolor :EST red\n\n\ndisplay the coactivator peptide atoms\ncolour the receptor chain blue\ncolour the peptide gold\ncolour the ligand red\n\n\n\nsurface /B transparency 85\nsurface /J transparency 85",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#creating-a-movie",
+    "href": "materials/09-chimerax_publication.html#creating-a-movie",
+    "title": "9  Publication-quality visualisations",
+    "section": "9.2 Creating a movie",
+    "text": "9.2 Creating a movie\nMovies can help illustrate structural features that are difficult to appreciate in a static image.\nChimeraX supports several types of automatic motion:\n\nrock - oscillating back-and-forth motion\nroll - continuous 360 degree rotation\nwobble - figure-eight style motion\nturn - flexible rotation around arbitrary axes\n\nThe general workflow for creating a movie is:\n\nstart recording\nperform the desired movement\nstop recording\nencode the frames into a video file\n\n\n9.2.1 Example: rocking animation\nWe can create a rocking animation of the estrogen receptor using:\nrock\nTo stop the motion:\nstop\nTo record a movie, we use the movie record command. It is helpful to record complete motion cycles, so that the movie loops smoothly.\nAccording to the ChimeraX documentation, the default rocking motion completes one cycle in 136 frames. We therefore record one full cycle using:\nmovie record\nrock\nwait 136\nstop\nFinally, we encode the movie as an MP4 file:\nmovie encode 4j26_rock.mp4 framerate 60\nThe framerate option determines how many frames are shown per second in the final movie.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#animated-views",
+    "href": "materials/09-chimerax_publication.html#animated-views",
+    "title": "9  Publication-quality visualisations",
+    "section": "9.3 Animated views",
+    "text": "9.3 Animated views\nChimeraX also allows you to define named views and smoothly transition between them. This approach is useful for guiding the viewer through different parts of a structure.\nFirst we define a set of views:\n\nView 1: entire protein\nView 2: coactivator peptide\nView 3: ligand binding site\n\nview protein\nview name 1\nview /J\nview name 2\nview ligand\nview name 3\nEach view name command stores the current camera position. We can then transition between these views while recording a movie. The syntax:\nview &lt;name&gt; &lt;frames&gt;\ncontrols how long the transition takes.\nFor example:\nview 1\nmovie record\nview 2 60\nwait 80\nview 1 30\nwait 30\nview 3 60\nwait 80\nview 1 30\nwait 30\nmovie encode 4j26_views.mp4 framerate 30\nDeciding on the framerates for each view and transition can require some trial and error, but it helps to think about it in relation to the framerate used to encode the movie. In this example:\n\nthe movie is encoded at 30 frames per second\na transition of 60 frames corresponds to 2 seconds\npauses are introduced using the wait command",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#uniprot-annotations",
+    "href": "materials/09-chimerax_publication.html#uniprot-annotations",
+    "title": "9  Publication-quality visualisations",
+    "section": "9.4 UniProt annotations",
+    "text": "9.4 UniProt annotations\nFunctional annotations can also be incorporated into visualisations.\nFor example, we can retrieve UniProt information for the estrogen receptor. The UniProt identifier for the receptor is P03372:\nopen P03372 from uniprot format uniprot\nThis opens the sequence annotation panel, where features such as domains, mutations, and binding sites can be inspected. Selecting a feature highlights the corresponding residues in the structure.\nFor example, one of the mutations annotated in UniProt is described as: “K → R completely inactive in positive regulation of DNA-binding transcription factor activity”. Once selected, the residue can be highlighted in the structure:\nselect /B:314\nshow sel atoms\nstyle sel ball\ncolour sel green\nselect clear\nHighlighting biologically important residues is often helpful when preparing figures that illustrate functional mechanisms.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#tiled-views",
+    "href": "materials/09-chimerax_publication.html#tiled-views",
+    "title": "9  Publication-quality visualisations",
+    "section": "9.5 Tiled views",
+    "text": "9.5 Tiled views\nChimeraX also supports tiled layouts, allowing multiple structures to be displayed side-by-side. This is particularly useful when comparing:\n\ndifferent ligand-bound structures\nconformational states\nhomologous proteins\n\nThe tile command automatically arranges open models into a grid layout. For example:\ntile column 4 spacingfactor 0.8\nThis arranges four models in a single row, with slightly reduced spacing between panels. Tiled views are frequently used in publications to compare related structures under consistent orientations.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/09-chimerax_publication.html#exercises",
+    "href": "materials/09-chimerax_publication.html#exercises",
+    "title": "9  Publication-quality visualisations",
+    "section": "9.6 Exercises",
+    "text": "9.6 Exercises\n\n\n\n\n\n\nExerciseExercise 1 - Roll animation\n\n\n\n\n\n\nCreate a movie of the oestrogen receptor structure rotating 360 degrees around the y-axis. Save it as a mp4 file.\n\n\n\n\n\n\n\n\n\n\n\nHintHint\n\n\n\n\n\n\n\nYou can use the roll command to rotate the structure around the y-axis.\nUse the wait command to specify how long you want the movie to be in framerates (number of frames per second). From the help for the roll command, we can see that by default the frames rotate at 1 degree per frame, so a full 360 degree rotation would take 360 frames.\nUse the movie record and movie encode commands to save the movie as an mp4 file.\n\n\n\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nHere are the commands to create the movie:\nroll\nmovie record\nwait 360\nstop\nmovie encode er_amphioxus_alignment_roll.mp4 framerate 60\nIn this case, we have decided to use a framerate of 60 frames per second, so the movie will be 6 seconds long (360 frames / 60 frames per second = 6 seconds). If you wanted a slower-rotating movie, you could use a lower framerate (e.g. 30 frames per second), which would make the movie 12 seconds long (360 frames / 30 frames per second = 12 seconds).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Combining animated views and rocking\n\n\n\n\n\n\nGoing back to our video transitioning between different views:\nview 1\nmovie record\nview 2 60\nwait 80\nview 1 30\nwait 30\nview 3 60\nwait 80\nview 1 30\nwait 30\nmovie encode 4j26_views.mp4 framerate 30\nCan you modify the code above, to include a rocking movement after zooming in on view 2 and view 3?\n\n\n\n\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nTo achieve this, we add a rock command after view 2 and view 3, ensuring to include a wait command before stopping the motion. The default rock framerate is 136, so we set wait to that same number of frames. We therefore include the following code after view 2 and view 3:\nrock\nwait 136\nHere is the commented code in full:\n# Start the movie with view 1\nview 1\nmovie record\n\n# Zoom-in on view 2\nview 2 60\nwait 60\n\n# Add rocking motion to view 2\nrock\nwait 136\n\n# Transition back to view 1\nview 1 30\nwait 30\n\n# Zoom-in on view 3\nview 3 60\nwait 60\n\n# Add rocking motion to view 3\nrock\nwait 136\n\n# Transition back to view 1\nview 1 30\nwait 30\n\n# Encode the movie as an mp4 file\nstop\nmovie encode 4j26_views_rock.mp4 framerate 30\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Tiled views\n\n\n\n\n\n\nTry to recreate this view of the Oestrogen Receptor complexed with different ligands (PDBs: 1GWR, 5W9C, 4XI3, and 7R62):\n\n\n\nFigure 1 from Hancock et al. 2022. Figure caption from the original publication: “Ligands are shown as spheres with carbon in green, oxygen in red, and nitrogen in blue, helix 12 is colored red, the helix 11–12 loop is colored orange, and coregulator peptide in cyan.”\n\n\n\nImport all the structures into a new ChimeraX session.\nThese models each have multiple chains, but we will work with only chain A in each structure, plus their respective ligands, listed below. Create a selection to only show these chains and ligands, and delete the rest of the structure.\n\n1GWR: bound to the hormone estradiol (residues named :EST); also include the coregulator peptide motif (chain /C)\n5W9C: bound to the tamoxifen-derived drug 4-hydroxytamoxifen (residues named :OHT)\n4XI3: bound to the drug bazedoxifene (residues named :29S)\n7R62: bound to a synthetic estradiol-like inhibitor (residues named :3YJ)\n\nAlign the structures to each other to ensure similar orientations, and tile the views in a 1x4 grid.\nColour the protein in silver, and the ligands by element (carbon in green, oxygen in red, and nitrogen in blue).\nShow the coregulator peptide motif in cyan.\nUse the sequence viewer to identify the positions of helix 12 in each structure, and colour it red, and the helix 11-12 loop in orange.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe start by opening the structures of interest:\nclose\nopen 1GWR\nopen 5W9C\nopen 4XI3\nopen 7R62\nWe then select chain A and the ligand for each structure, and delete the rest of the structure:\nselect #1/A | #1/C | #1/A:EST | #2/A | #2/A:OHT | #3/A | #3/A:29S | #4/A | #4/A:3YJ\ndelete ~sel\nselect clear\nWe have opted to use the OR | operator to select multiple chains and ligands at the same time, but you could also do this in multiple steps if you prefer using the select add command.\nWe then align the structures to each other to ensure similar orientations:\nmm #2-4 to #1\nWe tile the views using the tile command, and colour the structures using silver, similar to the original publication:\ntile column 4 spacingfactor 0.8\ncolour protein silver\nhide protein atoms\nWe represent the ligands as spheres, and colour them by element:\nshow ligand atoms\nstyle ligand sphere\ncolour ligand & C green\ncolour ligand & O red\ncolour ligand & N blue\nWe show the coregulator peptide in cyan:\nhide #1/C atoms\ncartoon #1/C\ncolour #1/C cyan\nTo identify the helix positions, we can use the sequence viewer, which highlights the secondary structure of each residue (helices shown as yellow boxes). Helix 12 is the last helix of each structure, and these are its positions:\ncolour #1/A:537-549 firebrick\ncolour #1/A:532-536 darkorange\ncolour #2/A:536-545 firebrick\ncolour #2/A:529-535 darkorange\ncolour #3/A:536-545 firebrick\ncolour #3/A:529-535 darkorange\ncolour #4/A:536-545 firebrick\ncolour #4/A:528-535 darkorange\nOptionally, we can hide the missing residue labels, which are stored as sub-models (see info models):\nhide #1.1.1 #2.1.1 #3.1.1 #4.1.1\nAnd this gets us close to the original publication:",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Structure analysis",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Publication-quality visualisations</span>"
+    ]
+  },
+  {
+    "objectID": "materials/additional_exercises/whib6.html",
+    "href": "materials/additional_exercises/whib6.html",
+    "title": "10  Transcriptional regulator WhiB6",
+    "section": "",
+    "text": "In this set of exercises, you will explore the structure and function of WhiB6, a transcriptional regulator from the bacterium Mycobacterium tuberculosis, the causative agent of tuberculosis.\nWhiB6 belongs to the WhiB-like (Wbl) family of proteins, a group of small iron–sulfur proteins that act as redox-sensitive transcriptional regulators. These proteins play important roles in bacterial stress responses and pathogenesis. Members of the Wbl family typically coordinate an iron–sulfur ([4Fe–4S]) cluster using conserved cysteine residues, which allows them to sense changes in cellular redox conditions.\nIn M. tuberculosis, WhiB6 regulates gene expression by interacting with RNA polymerase and sigma factors, helping the bacterium adapt to environmental stresses encountered during infection.\nIn this exercise series, you will:\n\nRetrieve sequence information from protein databases.\nPredict the structure of WhiB6 using AlphaFold.\nAssess model confidence using AlphaFold quality metrics.\nCompare models generated with different methods and parameters.\nAnalyse a predicted protein complex and compare it with an experimental structure.\n\n\n\n\n\n\n\nExerciseExercise 1 - Sequence retrieval\n\n\n\n\n\n\n\nFind the UniProt entry for whiB6 from Mycobacterium tuberculosis protein.\n\nQuestions:\n\nWhat is the length of the protein?\nDoes the annotation mention any domains or cofactors?\nCan you identify any functional sites or motifs?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nWe can find this protein in UniProt with the accession number P9WF37.\n\nIn the Sequence section we can see the protein is 116 amino acids long. We could use the Download button to obtain the sequence in FASTA format:\n&gt;sp|P9WF37|WHIB6_MYCTU Probable transcriptional regulator WhiB6 OS=Mycobacterium tuberculosis (strain ATCC 25618 / H37Rv) OX=83332 GN=whiB6 PE=1 SV=1\nMRYAFAAEATTCNAFWRNVDMTVTALYEVPLGVCTQDPDRWTTTPDDEAKTLCRACPRRW\nLCARDAVESAGAEGLWAGVVIPESGRARAFALGQLRSLAERNGYPVRDHRVSAQSA\nIn the Family & Domains section we can see there is an annotated domain called “4Fe-4S Wbl-type” in positions 33-86.\nIn the Function section we can see that this protein is a transcriptional regulator that binds an iron–sulfur ([4Fe–4S]) cluster, with binding sites at positions 12, 53, 56, 62.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 2 - Structure prediction with AlphaFold Server (AlphaFold3)\n\n\n\n\n\n\nWe will now predict the three-dimensional structure of WhiB6 using AlphaFold.\n\nSubmit the whiB6 sequence to the AlphaFold Server (AlphaFold3) to predict its structure.\n\nQuestions:\n\nWhat is the overall confidence of the model?\nAre there low-confidence regions? Where are they located?\nDo these regions correspond to any of the domains or functional sites you identified in the previous exercise?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\nAfter running the prediction we can see that:\n\nThe predicted template modeling (pTM) score was 0.63. As this is above 0.5, we may conclude the overall confidence of the model is good.\nThe pLDDT score is low (&lt; 70) at the N-terminus (around residues 1-30) and the C-terminus (around residues 109-116), while the core of the protein has a much higher pLDDT score (&gt; 70).\nAs the annotated domain is between residues 33-86, we can see that this region corresponds to the structured core of the protein, which has a high confidence score.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 3 - Structure prediction with ColabFold (AlphaFold2)\n\n\n\n\n\n\nAlphaFold3 predictions are convenient to run using the AlphaFold Server. However, many researchers still use AlphaFold2 implementations such as ColabFold, which allow more control over prediction parameters.\nColabFold is a user-friendly implementation of AlphaFold2 that runs on Google Colab. You can access it at this Colab notebook.\nAs running predictions with the free ColabFold can take some time, for this exercise, we will explore pre-processed results from previous runs:\n\nRun 1 - used default settings\nRun 2 - changed num_relax, template_mode and num_seeds\n\nQuestions:\n\nIdentify the parameter values that changed between the two runs.\nBased on the quality scores for both predictions (pLDDT, PAE and pTM), which do you think gives best results?\nLooking at the results for run 2, what can you conclude about the predictions from the five AlphaFold2 models?\nOptional: open the top-ranked model from run 1 in ChimeraX and explore the confidence scores and PAE matrix.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nRun 1 used default settings, while run 2 used the following:\n\n\nnum_relax = 1 (relax only the top-ranked model)\ntemplate_mode = pdb100 (uses the PDB100 database to find structural templates based on sequence similarity)\nnum_seeds = 4 (to generate a few models and choose the one with highest quality)\n\n\nThe top-ranking predictions of each run had:\n\n\nRun 1 (rank_001_alphafold2_ptm_model_4_seed_000): pLDDT=75.8; pTM=0.627\nRun 2 (rank_001_alphafold2_ptm_model_4_seed_000): pLDDT=78.5 pTM=0.661\n\nThese are both very similar, but run 2 has slightly higher confidence scores, suggesting it may be the better prediction.\n\nFor run 2 the top-ranked models all come from model 4 (with different seeds), suggesting this is the best-performing model for this protein.\nWe can open the model in ChimeraX with the following commands:\nclose\ncd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run1_af2/\nopen whiB6_monomer_run1_af2_f46cc_unrelaxed_rank_001_alphafold2_ptm_model_4_seed_000.pdb\ncolour byattribute bfactor palette alphafold\nalphafold pae #1 palette paegreen file whiB6_monomer_run1_af2_f46cc_scores_rank_001_alphafold2_ptm_model_4_seed_000.json\n\n\nWe initiate a fresh session using close.\nWe navigate to the folder where the results are stored using cd.\nWe open the top-ranked model (.pdb format) using open.\nWe colour the structure by pLDDT score using colour byattribute bfactor palette alphafold.\nWe open the PAE matrix using alphafold pae and colour it with a green palette.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 4 - Comparing two model predictions\n\n\n\n\n\n\nIn the previous exercises we generated predictions for WhiB6 using both AlphaFold2 and AlphaFold3. We will now compare the best-ranked models from each method by aligning them in ChimeraX.\nRun the following code in ChimeraX, which will open and align these models:\nclose\ncd ~/Course_Materials/whiB6_mtb/\nopen whiB6_monomer_run1_af2/whiB6_monomer_run1_af2_f46cc_unrelaxed_rank_001_alphafold2_ptm_model_4_seed_000.pdb\nopen whiB6_monomer_af3/fold_whib6_monomer_af3_model_0.cif\nmm #2 to #1\nQuestions:\n\nDo their overall folds look similar?\nWhich model prediction would you choose to work with and why?\nBonus: To make the visual assessment of the alignment easier, can you display the cartoon only for the high-confidence (pLDDT) region of the protein predictions?\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nComparing these two predictions, we can conclude that:\n\nThe core of the protein is very similar across the two models, with a similar fold and secondary structure elements.\nThe N-terminus and C-terminus are variable across the two models:\n\nThe AlphaFold3 model predicted a secondary structure element (α-helix) in the N-terminus, which the AlphaFold2 model did not.\nConversely, the AlphaFold2 model predicted a secondary structure element (α-helix) in the C-terminus, which the AlphaFold3 model did not.\n\n\nThe differences between the two models are mainly in regions with low pLDDT and PAE scores, while the core of the protein is very consistent between the two. The pTM scores for the two models are also identical (0.63), suggesting similar overall confidence in the predicted fold. Therefore, in this case, it probably does not matter which model we choose to work with.\nWe can confirm that the regions with high pLDDT score are very consistent across the two models:\nhide cartoon\ncartoon :31-108\n\nWe hide the full cartoon\nWe then show the cartoon only for the high-confidence region (residues 31-108), which also includes the annotated domain.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 5 - Comparing multiple models\n\n\n\n\n\n\nAlphaFold2 generates multiple predictions for each sequence using different neural network models and random seeds. Comparing these predictions can help assess the robustness of the predicted structure.\nIn this exercise we will compare several predictions generated with different random seeds.\nIn the second run of the AlphaFold2 predictions, we generated multiple models using different random seeds, which can be used to explore the consistency of the predictions across different runs.\nHere is the code to open multiple sequences and align them to each other with MatchMaker:\nclose\ncd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run2_af2/\nopen *unrelaxed*model_4*.pdb\nmm #2-4 to #1\n\nWe close the current session to start fresh.\nWe cd into the directory where the models are located.\nWe open all the models that correspond to model 4 (with different seeds) using the * wildcard.\nWe use mm (MatchMaker) to align several models #2-4 to model 1 (to #1), which we use as a reference.\n\nQuestions:\n\nWhat can you conclude about the prediction consistency across the different seeds?\nFollowing a similar code as above, start a new session to compare the outputs of the five AlphaFold2 models (1-5) for seed 000.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nRunning the code given, which compares the four random seed predictions for model_4, we can see that:\n\nThe main source of variation is in the N-terminus, which might be disordered and thus does not align well across the different seeds.\nThe C-terminus, although having low pLDDT scores, seems to be more consistent across the different seeds.\n\nWe can adapt the code to compare the top-ranked models from each of the five AlphaFold2 models (with seed 000):\nclose\ncd ~/Course_Materials/whiB6_mtb/whiB6_monomer_run2_af2/\nopen *unrelaxed*seed_000.pdb\nmm #2-5 to #1\n\n\nFrom this comparison, we can see that:\n\nThe core of the protein is very consistent across models\nThe N-terminus is very variable across the different models, with some predicting a secondary structure element in this regions, which the best-ranked model (number 4) did not.\nThe C-terminus is more consistent across the different models, although it has low pLDDT scores. This could suggest that the α-helix predicted for this region may be a real feature. However, from our previous comparison with the AlphaFold3 model, we know this is not the case.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExerciseExercise 6 - whiB6 bound to sigAr4-RNAP\n\n\n\n\n\n\nSo far we have analysed WhiB6 as an isolated protein. However, transcriptional regulators typically function as part of larger molecular complexes.\nIn this exercise we will analyse WhiB6 in complex with RNA polymerase and a sigma factor using both experimental and predicted structures.\nOn PDB entry 8D5V, whiB6 is available as a complex with sigAr4-RNAP: a fusion protein of SigmaA region 4 (sigAr4) and the tip of RNA polymerase (RNAP). This complex is used to study whiB6’s role in transcription.\nThese proteins were used in the CASP15 competition to test multimer prediction algorithms, and we will try to recreate the predictions for this complex using ColabFold and AlphaFold3.\n\nUse AlphaFold Server (AlphaFold3) to create a prediction for this heterodimer. Assess its quality based on global (pTM, ipTM) and local (pLDDT, PAE) scores.\n\nYou can obtain the sequences from the PDB entry here.\n\nCompare the result with this preprocessed ColabFold prediction in terms of global scores, but also local regions where each model may have lower confidence.\nLoad the experimental structure (8D5V) and the two models into ChimeraX. Compare the predicted interfaces with the experimental one, and note any differences.\n\n\n\n\n\n\n\nAnswerAnswer\n\n\n\n\n\n\n\nFor the AlphaFold3 model:\n\npTM = 0.76 indicating a high confidence in the overall fold of the complex.\nipTM = 0.78 indicating a high confidence in the interaction between the two chains.\n\nFor the ColabFold model: pTM = 0.766 and ipTM=0.792, which is very similar to the AlphaFold3 confidence scores.\nWe load the structures into ChimeraX with the following code:\n\nclose\ncd ~/Course_Materials/whiB6_mtb/\nopen 8D5V\nhide atoms\ndelete #1/C-D\nopen whiB6_heterodimer_af2/whiB6_heterodimer_af2_9518d_relaxed_rank_001_alphafold2_multimer_v3_model_1_seed_000.pdb\nopen whiB6_heterodimer_af3/fold_whib6_heterodimer_af3_model_0.cif\nmm #2-3 to #1\nselect :31-108",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Additional exercises",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Transcriptional regulator WhiB6</span>"
+    ]
+  },
+  {
+    "objectID": "versions.html",
+    "href": "versions.html",
+    "title": "Archived Versions",
+    "section": "",
+    "text": "Select a version to view the course materials as they were at that time.\nEach version represents a snapshot of the course materials at a specific point in time. This allows participants to access the exact version of the materials they used during their course, even as the content continues to evolve.\nThe latest version always contains the most up-to-date content and improvements.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Archived Versions"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html",
+    "href": "materials/appendices/further_reading.html",
+    "title": "Further Reading and Resources",
+    "section": "",
+    "text": "ChimeraX help and tutorials\nThis page contains additional resources related to protein structure analysis, structure prediction, and molecular visualisation. These materials are intended for readers who would like to explore the topics covered in the materials in greater depth.\nIf you need help using ChimeraX, the following resources are useful.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#chimerax-help-and-tutorials",
+    "href": "materials/appendices/further_reading.html#chimerax-help-and-tutorials",
+    "title": "Further Reading and Resources",
+    "section": "",
+    "text": "Official documentation\nChimeraX user guide\nhttps://www.cgl.ucsf.edu/chimerax/docs/user/index.html\nChimeraX tutorials\nhttps://www.cgl.ucsf.edu/chimerax/tutorials.html\nThe documentation contains detailed descriptions of all commands used in ChimeraX.\n\n\nBuilt-in help\nChimeraX also provides a built-in help system.\nhelp\nhelp &lt;command&gt;\nhelp commands\nFor example:\nhelp surface\nhelp color\n\n\nChimeraX user forum\nQuestions about ChimeraX can be sent to the user mailing list:\nchimerax-users@cgl.ucsf.edu\nYou can also browse the mailing list archive:\nhttps://mail.cgl.ucsf.edu/mailman/archives/list/chimerax-users@cgl.ucsf.edu/\nMany common questions have already been answered there.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#structure-prediction-literature",
+    "href": "materials/appendices/further_reading.html#structure-prediction-literature",
+    "title": "Further Reading and Resources",
+    "section": "Structure prediction literature",
+    "text": "Structure prediction literature\n\nCore AlphaFold papers\nJumper, J., Evans, R., Pritzel, A., et al. (2021) Highly accurate protein structure prediction with AlphaFold. Nature 596, 583-589. https://doi.org/10.1038/s41586-021-03819-2\nAbramson, J., Adler, J., Dunger, J., et al. (2024) Accurate structure prediction of biomolecular interactions with AlphaFold 3. Nature 630, 493-500. https://doi.org/10.1038/s41586-024-07487-w\n\n\nOther structure prediction and design methods\nDu, Z., Su, H., Wang, W., et al. (2021) The trRosetta server for fast and accurate protein structure prediction. Nature Protocols 16, 5634-5651. https://doi.org/10.1038/s41596-021-00628-9\nWatson, J. L., Juergens, D., Bennett, N. R., et al. (2023) De novo design of protein structure and function with RFdiffusion. Nature 620, 1089-1100. https://doi.org/10.1038/s41586-023-06415-8\nKrishna, R., Wang, J., Ahern, W., et al. (2024) Generalized biomolecular modelling and design with RoseTTAFold-All-Atom. Science 384, eadl2528. https://doi.org/10.1126/science.adl2528\nWohlwend, J., et al. (2024) Boltz-1: Democratizing biomolecular interaction modelling. bioRxiv. https://doi.org/10.1101/2024.11.19.624167\nChai Discovery (2024) Chai-1: Decoding the molecular interactions of life. bioRxiv. https://doi.org/10.1101/2024.10.10.615955\n\n\nApplications and extensions of AlphaFold\nWayment-Steele, H. K., Ojoawo, A., Otten, R., et al. (2024) Predicting multiple conformations via sequence clustering and AlphaFold2. Nature 625, 832-839. https://doi.org/10.1038/s41586-023-06832-9\nStahl, K., Warneke, R., Demann, L., et al. (2024) Modelling protein complexes with crosslinking mass spectrometry and deep learning. Nature Communications 15, 7866. https://doi.org/10.1038/s41467-024-51771-2\nHomma, F., Lyu, J., van der Hoorn, R. A. L. (2024) Using AlphaFold Multimer to discover interkingdom protein-protein interactions. Plant Journal 120, 19-28. https://doi.org/10.1111/tpj.16969\nYu, D., Chojnowski, G., Rosenthal, M., Kosinski, J. (2023) AlphaPulldown: a Python package for protein-protein interaction screens using AlphaFold-Multimer. Bioinformatics 39(1), btac749. https://doi.org/10.1093/bioinformatics/btac749\nBrotzakis, Z. F., Zhang, S., Murtada, M. H., et al. (2025) AlphaFold prediction of structural ensembles of disordered proteins. Nature Communications 16, 1632. https://doi.org/10.1038/s41467-025-56572-9\nHumphreys, I. R., Pei, J., Baek, M., et al. (2021) Computed structures of core eukaryotic protein complexes. Science 374(6573), 1340. https://doi.org/10.1126/science.abm4805\n\n\nModel evaluation and benchmarking\nWang, H., Sun, M., Xie, L., Liu, D., Zhang, G. (2025) Physical-aware model accuracy estimation for protein complex using deep learning method. Computational and Structural Biotechnology Journal 27, 478-487. https://doi.org/10.1016/j.csbj.2025.01.017\nWilliams, J., Gagnon, I. A., Sachleben, J. R. (2025) NMR spectroscopy for the validation of AlphaFold2 structures. bioRxiv. https://doi.org/10.1101/2025.02.04.636507\n\n\nMethod comparisons\nEshak, F., Goupil-Lamy, A. (2025) Advancements in nanobody epitope prediction: A comparative study of AlphaFold2-Multimer vs AlphaFold3. Journal of Chemical Information and Modeling 65(4), 1782-1797. https://doi.org/10.1021/acs.jcim.4c01877\nMalhotra, Y., John, J., Yadav, D., Sharma, D., Vanshika, Rawal, K., Mishra, V., Chaturvedi, N. (2025) Advancements in protein structure prediction: A comparative overview of AlphaFold and its derivatives. Computers in Biology and Medicine 188, 109842. https://doi.org/10.1016/j.compbiomed.2025.109842\nSharma, R., et al. (2024) Structural biology of RNA and protein-RNA complexes after AlphaFold3. ChemBioChem. https://doi.org/10.1002/cbic.202401047\n\n\nDatabases and model comparison tools\nManfredi, M., Savojardo, C., Iardukhin, G., Salomoni, D., Costantini, A., Martelli, P. L., Casadio, R. (2024) Alpha&ESMhFolds: A web server for comparing AlphaFold2 and ESMFold models of the human reference proteome. Journal of Molecular Biology 436(17), 168593. https://doi.org/10.1016/j.jmb.2024.168593\nManfredi, M., Vazzana, G., Savojardo, C., Martelli, P. L., Casadio, R. (2026) Alpha&ESMhFolds: An updated web server for the comparison, evaluation, and annotation of human AlphaFold2 and ESMFold models. Journal of Molecular Biology. https://doi.org/10.1016/j.jmb.2026.169663\n\n\nReviews\nSzczepski, K., Jaremko, L. (2025) AlphaFold and what is next: bridging functional, systems and structural biology. Expert Review of Proteomics 22(2), 45-58. https://doi.org/10.1080/14789450.2025.2456046\nKovalevskiy, O., Mateos-Garcia, J., Tunyasuvunakool, K. (2024) AlphaFold two years on: validation and impact. Proceedings of the National Academy of Sciences 121(34), e2315002121. https://doi.org/10.1073/pnas.2315002121\nBertoline, L. M. F., Lima, A. N., Krieger, J. E., Teixeira, S. K. (2023) Before and after AlphaFold2: an overview of protein structure prediction. Frontiers in Bioinformatics 3, 1120370. https://doi.org/10.3389/fbinf.2023.1120370\nChaaban, S., Ratkevičiūtė, G., Lau, C. (2024) AI told you so: navigating protein structure prediction in the era of machine learning. Biochemist 46(2), 7-12. https://doi.org/10.1042/bio_2024_118",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#textbooks-on-protein-structure",
+    "href": "materials/appendices/further_reading.html#textbooks-on-protein-structure",
+    "title": "Further Reading and Resources",
+    "section": "Textbooks on protein structure",
+    "text": "Textbooks on protein structure\nBerg, J. M., Gatto, G. J., Hines, J. K., Tymoczko, J. L., Stryer, L. (2024) Biochemistry, 10th edition.\nFersht, A. (1999) Structure and mechanism in protein science: A guide to enzyme catalysis and protein folding.\nSchweitzer-Stenner, R. (2024) The physics of protein structure and dynamics.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#protein-databases",
+    "href": "materials/appendices/further_reading.html#protein-databases",
+    "title": "Further Reading and Resources",
+    "section": "Protein databases",
+    "text": "Protein databases\n\nUniProt\nUniProt Consortium UniProt https://www.uniprot.org/\nUniProtKB statistics https://www.uniprot.org/uniprotkb/statistics\n\n\nStructural classification databases\nCATH https://cathdb.info/\n\n\nPredicted structure databases\nAlphaFold Protein Structure Database https://alphafold.ebi.ac.uk/",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#historical-resources-in-structural-bioinformatics",
+    "href": "materials/appendices/further_reading.html#historical-resources-in-structural-bioinformatics",
+    "title": "Further Reading and Resources",
+    "section": "Historical resources in structural bioinformatics",
+    "text": "Historical resources in structural bioinformatics\nDayhoff, M. O. (1965) Atlas of Protein Sequence and Structure. National Biomedical Research Foundation. https://ntrs.nasa.gov/api/citations/19660014530/downloads/19660014530.pdf\nBernstein, F. C., et al. (1977) The Protein Data Bank: A computer-based archival file for macromolecular structures. Journal of Molecular Biology 112, 535-542.\nBerman, H. M. (2008) The first years of the Protein Data Bank. Protein Science 17, 177-180. https://pmc.ncbi.nlm.nih.gov/articles/instance/2143743/pdf/9232661.pdf\nStrasser, B. J. (2010) Collecting, comparing, and computing sequences: The making of Margaret O. Dayhoff’s Atlas of Protein Sequence and Structure, 1954-1965. Journal of the History of Biology 43, 623-660. https://doi.org/10.1007/s10739-009-9221-0",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#tools-for-working-with-structure-files",
+    "href": "materials/appendices/further_reading.html#tools-for-working-with-structure-files",
+    "title": "Further Reading and Resources",
+    "section": "Tools for working with structure files",
+    "text": "Tools for working with structure files\n\nR\nbio3d (Grant Lab) http://thegrantlab.org/bio3d/\n\n\nPython\npdb-tools (Bonvin Lab) https://www.bonvinlab.org/pdb-tools/\nBio.PDB (Biopython structural bioinformatics module) https://biopython.org/wiki/The_Biopython_Structural_Bioinformatics_FAQ",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#educational-resources",
+    "href": "materials/appendices/further_reading.html#educational-resources",
+    "title": "Further Reading and Resources",
+    "section": "Educational resources",
+    "text": "Educational resources\n\nBlogs and explainers\nOxford Protein Informatics Group (Charlotte Deane lab) AlphaFold2 is here: what’s behind the structure prediction miracle? https://www.blopig.com/blog/2021/07/alphafold-2-is-here-whats-behind-the-structure-prediction-miracle/\nHas AlphaFold2 solved the protein structure problem? https://medium.com/towards-data-science/how-to-solve-the-protein-folding-problem-alphafold2-6c81faba670d\nOxford Protein Informatics Group (Charlotte Deane lab) Architectural highlights of AlphaFold3 https://www.blopig.com/blog/2024/08/architectural-highlights-of-alphafold3/\nAlphaFold3 and its improvements compared to AlphaFold2 https://medium.com/@falk_hoffmann/alphafold3-and-its-improvements-in-comparison-to-alphafold2-96815ffbb044\nHas AlphaFold3 reached success for RNAs? https://medium.com/@clement.bernard.these/has-alphafold-3-reached-its-success-for-rnas-benchmark-on-five-datasets-bcc0e11809cb\nSparks of chemical intuition and limitations in AlphaFold3 https://towardsdatascience.com/sparks-of-chemical-intuition-and-gross-limitations-in-alphafold-3-8487ba4dfb53/\nIllustrated AlphaFold https://elanapearl.github.io/blog/2024/the-illustrated-alphafold/\nAn opinionated AlphaFold3 field guide https://research.dimensioncap.com/p/an-opinionated-alphafold3-field-guide\n\n\nVideo resources\n5-minute AlphaFold overview https://www.youtube.com/watch?v=7q8Uw3rmXyE\nIntroduction to machine learning https://www.youtube.com/watch?v=Gv9_4yMHFhI\nMIT introduction to machine learning https://www.youtube.com/watch?v=h0e2HAPTGF4\nDeep learning and neural networks https://www.youtube.com/watch?v=aircAruvnKk\nAlphaFold: Use and Applications (Sami Chaaban, LMB) https://www.youtube.com/watch?v=yJKfn6rvHmg\nLookingGlassUniverse YouTube channel https://www.youtube.com/@LookingGlassUniverse\nBoston Protein Structure Modelling and Design Club seminar series https://www.bpdmc.org/",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/further_reading.html#additional-tools-and-databases",
+    "href": "materials/appendices/further_reading.html#additional-tools-and-databases",
+    "title": "Further Reading and Resources",
+    "section": "Additional tools and databases",
+    "text": "Additional tools and databases\nInterPro https://www.ebi.ac.uk/interpro/\nIntFOLD https://www.reading.ac.uk/bioinf/IntFOLD/\nRFDiffusion tutorial https://meilerlab.org/wp-content/uploads/2023/12/RFDiffusion_tutorial.pdf\nBioinformatic Sweeties https://bioinformaticsweeties.biocomp.unibo.it/",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Further Reading and Resources"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/glossary.html",
+    "href": "materials/appendices/glossary.html",
+    "title": "Glossary",
+    "section": "",
+    "text": "Structural biology terms\nAmino acid - The basic building block of proteins; 20 standard amino acids form peptide chains through covalent peptide bonds.\nPolypeptide / Chain - A single continuous sequence of amino acids connected by peptide bonds. In PDB files, each chain is labelled with a unique identifier (e.g. chain A, chain B).\nProtein - A functional biological molecule composed of one or more polypeptide chains, folded into a specific three-dimensional structure.\nResidue - A single amino acid within a polypeptide chain (after incorporation into the chain).\nFold - The overall 3D arrangement of secondary structure elements (helices, sheets, loops) that defines a protein’s topology and shape.\nDomain - A compact, independently folding unit within a protein, often associated with a specific function. A protein may have one or multiple domains.\nSubunit - A single polypeptide chain within a larger multi-chain assembly. For example, each chain in a dimer or tetramer is a subunit.\nComplex - An assembly of two or more protein subunits or different biomolecules (e.g. DNA, RNA, ligands) that interact to perform a function.\nOligomer - A complex of multiple subunits (can be identical or different).\nHomo-oligomer - A complex composed of identical subunits (e.g. a homodimer or homotetramer).\nHetero-oligomer - A complex composed of different subunits (e.g. a heterodimer).\nQuaternary structure - The arrangement and interactions of multiple subunits within a protein complex.\nLigand - A small molecule, ion, or cofactor that binds to a protein and may regulate or stabilise its function.\nCofactor / Prosthetic group - A non-protein chemical compound (e.g. metal ion, heme, or [Fe-S] cluster) essential for the protein’s biological activity.\nBinding site - A region on a protein surface where a ligand, cofactor, or another protein binds specifically.\nConformation - The spatial arrangement of atoms in a protein at a given time; proteins may adopt multiple conformations during function.\nInterface - The region where two protein subunits (or proteins) make contact within a complex.\nModel - A computational or experimentally determined representation of a protein’s 3D structure.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Glossary"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/glossary.html#databases",
+    "href": "materials/appendices/glossary.html#databases",
+    "title": "Glossary",
+    "section": "Databases",
+    "text": "Databases\nPDB (Protein Data Bank) - A public database of experimentally determined 3D structures of proteins and nucleic acids.\nUniProt - A comprehensive database of protein sequence and functional information.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Glossary"
+    ]
+  },
+  {
+    "objectID": "materials/appendices/glossary.html#computational-prediction-terms",
+    "href": "materials/appendices/glossary.html#computational-prediction-terms",
+    "title": "Glossary",
+    "section": "Computational prediction terms",
+    "text": "Computational prediction terms\nPredicted model - A computationally generated structure (e.g. from AlphaFold or Rosetta), not determined experimentally.\nTemplate - A known structure used as a reference or starting point for modelling a related protein.\nRMSD (Root Mean Square Deviation) - A measure of the average distance between atoms (usually backbone atoms) of two superimposed protein structures, used to assess structural similarity.\npLDDT (predicted Local Distance Difference Test) - A confidence score provided by AlphaFold for each residue in a predicted protein structure, indicating the reliability of the prediction.\npTM (predicted Template Modelling score) - A confidence score provided by AlphaFold-Multimer for predicted protein complexes, indicating the reliability of the overall quaternary structure prediction.\nipTM (interface predicted Template Modelling score) - A confidence score provided by AlphaFold-Multimer that specifically assesses the quality of the predicted interfaces between subunits in a protein complex.\nPAE (Predicted Aligned Error) - A matrix provided by AlphaFold that estimates the expected positional error between pairs of residues in a predicted structure, useful for assessing confidence in relative domain positions.",
+    "crumbs": [
+      "{{< iconify fa6-brands github size=lg title='CRIT GitHub' >}}",
+      "Appendices",
+      "Glossary"
+    ]
+  }
+]

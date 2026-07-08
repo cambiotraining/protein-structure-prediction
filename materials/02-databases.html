@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Protein structure databases</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../materials/03-chimerax_basics.html" rel="next">
+<link href="../materials/01-intro.html" rel="prev">
+<link href="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university-of-cambridge-favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bb373a9d6c60814f0d90357058c9134b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo light-content">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Prediction and Analysis of Protein Structures</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/cambiotraining/protein-structure-prediction"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="CRIT GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/bioinfocambs.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="CRIT Bluesky"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://genomic.social/@BioInfoCambs"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="CRIT Mastodon"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bioinfotraining.bio.cam.ac.uk/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="mdi:web" style="font-size: 1.25em;" aria-label="Icon web from mdi Iconify.design set." title="CRIT Website"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    
+    <style>
+    #version-dropdown {
+      list-style: none;
+    }
+    </style>
+    
+
+  <li id="version-dropdown" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="menu-text">Version:</span> <span class="version-badge" aria-hidden="true">Latest</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-versions">
+      <li>
+        <a class="dropdown-item" href="/protein-structure-prediction/index.html">
+          <span class="dropdown-text">Latest</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Protein structure databases</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Welcome</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data &amp; Setup</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to protein structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-databases.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Protein structure databases</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/03-chimerax_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualising structures with ChimeraX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure prediction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/04-monomer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/05-model_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/06-multimer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predicting protein complexes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/07-chimerax_ligand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysing protein-ligand interactions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/08-chimerax_alphamissense.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mapping mutation effects onto structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/09-chimerax_publication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Publication-quality visualisations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Additional exercises</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/additional_exercises/whib6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Transcriptional regulator WhiB6</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../versions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archived Versions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/further_reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Further Reading and Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">2.1</span> Overview</a></li>
+  <li><a href="#why-databases-matter" id="toc-why-databases-matter" class="nav-link" data-scroll-target="#why-databases-matter"><span class="header-section-number">2.2</span> Why databases matter</a></li>
+  <li><a href="#core-databases" id="toc-core-databases" class="nav-link" data-scroll-target="#core-databases"><span class="header-section-number">2.3</span> Core databases</a>
+  <ul class="collapse">
+  <li><a href="#uniprot" id="toc-uniprot" class="nav-link" data-scroll-target="#uniprot"><span class="header-section-number">2.3.1</span> UniProt</a></li>
+  <li><a href="#the-protein-data-bank-pdb" id="toc-the-protein-data-bank-pdb" class="nav-link" data-scroll-target="#the-protein-data-bank-pdb"><span class="header-section-number">2.3.2</span> The Protein Data Bank (PDB)</a></li>
+  <li><a href="#alphafolddb" id="toc-alphafolddb" class="nav-link" data-scroll-target="#alphafolddb"><span class="header-section-number">2.3.3</span> AlphaFoldDB</a></li>
+  <li><a href="#interpro" id="toc-interpro" class="nav-link" data-scroll-target="#interpro"><span class="header-section-number">2.3.4</span> InterPro</a></li>
+  <li><a href="#cath" id="toc-cath" class="nav-link" data-scroll-target="#cath"><span class="header-section-number">2.3.5</span> CATH</a></li>
+  </ul></li>
+  <li><a href="#choosing-the-right-database" id="toc-choosing-the-right-database" class="nav-link" data-scroll-target="#choosing-the-right-database"><span class="header-section-number">2.4</span> Choosing the right database</a></li>
+  <li><a href="#file-formats" id="toc-file-formats" class="nav-link" data-scroll-target="#file-formats"><span class="header-section-number">2.5</span> File formats</a>
+  <ul class="collapse">
+  <li><a href="#the-pdb-format" id="toc-the-pdb-format" class="nav-link" data-scroll-target="#the-pdb-format"><span class="header-section-number">2.5.1</span> The PDB format</a></li>
+  <li><a href="#the-pdbxmmcif-format" id="toc-the-pdbxmmcif-format" class="nav-link" data-scroll-target="#the-pdbxmmcif-format"><span class="header-section-number">2.5.2</span> The PDBx/mmCIF format</a></li>
+  <li><a href="#key-components-of-structural-files" id="toc-key-components-of-structural-files" class="nav-link" data-scroll-target="#key-components-of-structural-files"><span class="header-section-number">2.5.3</span> Key components of structural files</a></li>
+  <li><a href="#the-fasta-format" id="toc-the-fasta-format" class="nav-link" data-scroll-target="#the-fasta-format"><span class="header-section-number">2.5.4</span> The FASTA format</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.6</span> Exercises</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">2.7</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Protein structure databases</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Describe the main databases that store information about protein structure (UniProt, PDB, CATH, AlphaFoldDB, InterPro)</li>
+<li>Understand which database is most suitable for different tasks</li>
+<li>Find and retrieve data from major structure databases</li>
+<li>Interpret the main components of structural files (PDB and PDBx/mmCIF), including atomic coordinates, secondary structure annotations, and metadata.</li>
+<li>Convert between PDB and mmCIF formats</li>
+</ul>
+</div>
+</div>
+<section id="overview" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">2.1</span> Overview</h2>
+<p>Modern structural biology generates a huge amount of data. Researchers solve thousands of new protein structures each year. Computational tools now add millions more predicted structures.</p>
+<p>These data only become useful if we can <strong>store, organise, and retrieve them efficiently</strong>. For this reason, several public databases collect information about protein sequences, structures, and domains.</p>
+</section>
+<section id="why-databases-matter" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="why-databases-matter"><span class="header-section-number">2.2</span> Why databases matter</h2>
+<p>A single protein structure contains a large amount of information. For example, a typical structural file includes:</p>
+<ul>
+<li>the amino acid sequence</li>
+<li>the 3D coordinates of every atom</li>
+<li>chain organisation</li>
+<li>ligands and cofactors</li>
+<li>experimental details</li>
+<li>references to the scientific literature</li>
+</ul>
+<p>Without databases, each research group would store these data in its own format. That would make sharing and analysis very difficult.</p>
+<p>Instead, structural biology relies on <strong>standardised repositories</strong>. These resources allow researchers to:</p>
+<ul>
+<li>deposit newly solved structures</li>
+<li>search existing structures</li>
+<li>retrieve data in standard formats</li>
+<li>connect structures to sequence and functional annotations</li>
+</ul>
+<p>Several databases now form the core infrastructure of structural bioinformatics.</p>
+</section>
+<section id="core-databases" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="core-databases"><span class="header-section-number">2.3</span> Core databases</h2>
+<section id="uniprot" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="uniprot"><span class="header-section-number">2.3.1</span> UniProt</h3>
+<p><strong>UniProt</strong> is the central database for protein sequence information. Each protein entry in UniProt includes:</p>
+<ul>
+<li>the amino acid sequence</li>
+<li>protein name and function</li>
+<li>organism</li>
+<li>domain annotations</li>
+<li>cross-references to other databases</li>
+<li>known variants and mutations</li>
+</ul>
+<p>UniProt serves as the <strong>hub</strong> that links many biological resources together. For example, a UniProt entry may link to:</p>
+<ul>
+<li>experimental structures in the Protein Data Bank</li>
+<li>predicted models in AlphaFoldDB</li>
+<li>domain annotations from InterPro</li>
+<li>structural classifications such as CATH</li>
+</ul>
+<p>When working with proteins, UniProt often provides the best <strong>starting point</strong>.</p>
+<p>A typical workflow begins by:</p>
+<ol type="1">
+<li>Searching for a protein in UniProt.</li>
+<li>Inspecting its annotations.</li>
+<li>Following links to structural databases.</li>
+</ol>
+</section>
+<section id="the-protein-data-bank-pdb" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="the-protein-data-bank-pdb"><span class="header-section-number">2.3.2</span> The Protein Data Bank (PDB)</h3>
+<p>The <strong>Protein Data Bank (PDB)</strong> stores experimentally determined macromolecular structures.</p>
+<p>Researchers deposit structures into the PDB after solving them using methods such as X-ray crystallography, NMR spectroscopy or cryo-electron microscopy. Each entry contains:</p>
+<ul>
+<li>atomic coordinates</li>
+<li>experimental metadata</li>
+<li>structural annotations</li>
+<li>information about ligands and cofactors</li>
+</ul>
+<p>The PDB currently contains <strong>hundreds of thousands of structures</strong>. These include proteins, nucleic acids, and large molecular complexes.</p>
+<p>Each entry receives a unique <strong>four-character identifier</strong>. Examples include:</p>
+<ul>
+<li><code>1A52</code> - estrogen receptor ligand-binding domain</li>
+<li><code>1HCQ</code> - estrogen receptor DNA-binding domain bound to DNA</li>
+</ul>
+<p>Researchers commonly refer to structures by these codes.</p>
+</section>
+<section id="alphafolddb" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="alphafolddb"><span class="header-section-number">2.3.3</span> AlphaFoldDB</h3>
+<p>Experimental structures remain limited compared with the number of known protein sequences. This gap motivated large-scale prediction efforts.</p>
+<p><strong>AlphaFoldDB</strong> provides predicted structures generated using AlphaFold. The database contains models for:</p>
+<ul>
+<li>entire proteomes</li>
+<li>millions of proteins across many organisms</li>
+</ul>
+<p>Each AlphaFoldDB entry links directly to a <strong>UniProt identifier</strong>. These predicted models include useful information such as prediction confidence scores, which will be <a href="../materials/04-monomer.html">discussed later</a>.</p>
+<p>Predicted structures can often guide experiments, particularly when no experimental structure exists. However, they remain <strong>computational models</strong>, not experimental observations. Researchers must always interpret them with care.</p>
+</section>
+<section id="interpro" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="interpro"><span class="header-section-number">2.3.4</span> InterPro</h3>
+<p>Proteins often contain <strong>domains</strong> - conserved structural units that perform specific functions. <strong>InterPro</strong> collects domain annotations from many specialised databases (e.g.&nbsp;PFAM and CATH), integrating them into one place.</p>
+<p>InterPro helps researchers identify:</p>
+<ul>
+<li>conserved domains</li>
+<li>functional motifs</li>
+<li>protein families</li>
+</ul>
+<p>For example, a transcription factor might contain:</p>
+<ul>
+<li>a DNA-binding domain</li>
+<li>a ligand-binding domain</li>
+<li>regulatory regions</li>
+</ul>
+</section>
+<section id="cath" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="cath"><span class="header-section-number">2.3.5</span> CATH</h3>
+<p><strong>CATH</strong> classifies proteins based on <strong>three-dimensional structure</strong>. CATH groups proteins into hierarchical categories:</p>
+<ul>
+<li><strong>Class</strong> - overall secondary structure composition</li>
+<li><strong>Architecture</strong> - general spatial arrangement</li>
+<li><strong>Topology</strong> - fold connectivity</li>
+<li><strong>Homologous superfamily</strong> - proteins with shared ancestry</li>
+</ul>
+<p>This classification helps researchers study:</p>
+<ul>
+<li>structural evolution</li>
+<li>recurring protein folds</li>
+<li>relationships between distant proteins</li>
+</ul>
+<p>In other words, CATH helps answer the question: <em>Which proteins share similar structures, even if their sequences differ?</em></p>
+</section>
+</section>
+<section id="choosing-the-right-database" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="choosing-the-right-database"><span class="header-section-number">2.4</span> Choosing the right database</h2>
+<p>Each database answers different questions.</p>
+<p>A useful rule of thumb:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Best database</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Find basic protein information</td>
+<td>UniProt</td>
+</tr>
+<tr class="even">
+<td>Retrieve experimental structures</td>
+<td>PDB</td>
+</tr>
+<tr class="odd">
+<td>Explore predicted structures</td>
+<td>AlphaFoldDB</td>
+</tr>
+<tr class="even">
+<td>Identify domains and motifs</td>
+<td>InterPro</td>
+</tr>
+<tr class="odd">
+<td>Study structural classification</td>
+<td>CATH</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, researchers often move between several databases during analysis.</p>
+<p>For example:</p>
+<ol type="1">
+<li>Start with <strong>UniProt</strong> to find the protein sequence.</li>
+<li>Check <strong>PDB</strong> for experimental structures.</li>
+<li>Use <strong>AlphaFoldDB</strong> if no structure exists.</li>
+<li>Examine <strong>InterPro</strong> to identify domains.</li>
+<li>Use <strong>CATH</strong> to look for structural relationships.</li>
+</ol>
+</section>
+<section id="file-formats" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="file-formats"><span class="header-section-number">2.5</span> File formats</h2>
+<p>Once we find a structure, we usually download it as a <strong>coordinate file</strong>.</p>
+<p>Two formats dominate structural biology:</p>
+<ul>
+<li><strong>PDB format</strong></li>
+<li><strong>PDBx/mmCIF format</strong></li>
+</ul>
+<p>Both store the same core information. They differ mainly in structure and flexibility.</p>
+<section id="the-pdb-format" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="the-pdb-format"><span class="header-section-number">2.5.1</span> The PDB format</h3>
+<p>The original PDB format dates back to the 1970s. It uses fixed-width text lines to describe atoms and metadata.</p>
+<p>A typical line looks like this:</p>
+<pre><code>ATOM   1523  CA  LEU A 203      12.456  18.233   9.612</code></pre>
+<p>This contains several pieces of information:</p>
+<ul>
+<li>record type (<code>ATOM</code>)</li>
+<li>atom number</li>
+<li>atom name</li>
+<li>residue name</li>
+<li>chain identifier</li>
+<li>residue number</li>
+<li>x, y, z coordinates</li>
+</ul>
+<p>These coordinates define the atom’s position in three-dimensional space.</p>
+<p>Software such as ChimeraX reads these coordinates and reconstructs the molecular structure.</p>
+</section>
+<section id="the-pdbxmmcif-format" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="the-pdbxmmcif-format"><span class="header-section-number">2.5.2</span> The PDBx/mmCIF format</h3>
+<p>As structures became larger and more complex, the original PDB format showed its limits. The <strong>PDBx/mmCIF format</strong> replaced it as the official standard.</p>
+<p>mmCIF files store the same information but use a more flexible table-like structure. They can represent:</p>
+<ul>
+<li>very large complexes</li>
+<li>extensive metadata</li>
+<li>detailed experimental information</li>
+</ul>
+<p>Most modern PDB entries now appear primarily in <strong>mmCIF format</strong>. Fortunately, most molecular visualisation tools can read both formats.</p>
+<p>Sometimes there is a need to convert structures between formats, for example for compatibility with different software tools. Many programs support conversion, including ChimeraX, which we will introduce in the <a href="../materials/03-chimerax_basics.html">next section</a>.</p>
+<p>In practice, the <strong>mmCIF format</strong> has become the preferred standard, while PDB files remain common for legacy workflows.</p>
+</section>
+<section id="key-components-of-structural-files" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="key-components-of-structural-files"><span class="header-section-number">2.5.3</span> Key components of structural files</h3>
+<p>Regardless of format, structural files contain several important types of information.</p>
+<ul>
+<li><p><strong>Atomic coordinates:</strong> These lines define the position of every atom in the structure. Visualisation software uses these coordinates to build the 3D model.</p></li>
+<li><p><strong>Chain and residue information:</strong> Structures often contain multiple chains. For example: protein chains, DNA strands, ligands, cofactors. Chain identifiers allow software to separate these components.</p></li>
+<li><p><strong>Secondary structure annotations:</strong> Many files include annotations that describe secondary structures such as helices and beta strands. These annotations help visualisation tools display the protein in cartoon form.</p></li>
+<li><p><strong>Metadata:</strong> Structural files also store experimental information. This includes the method used to solve the structure, the resolution, authors and publication details.</p></li>
+</ul>
+</section>
+<section id="the-fasta-format" class="level3" data-number="2.5.4">
+<h3 data-number="2.5.4" class="anchored" data-anchor-id="the-fasta-format"><span class="header-section-number">2.5.4</span> The FASTA format</h3>
+<p>FASTA is a simple text format for storing protein or nucleotide sequences. Each entry has two parts:</p>
+<ul>
+<li><strong>Header line</strong> - starts with &gt; and usually contains an identifier and brief description.</li>
+<li><strong>Sequence lines</strong> - the sequence itself, written in standard one-letter codes.</li>
+</ul>
+<p>Example:</p>
+<pre><code>&gt;sp|P9WF37|WHIB6_MYCTU Probable transcriptional regulator WhiB6 OS=Mycobacterium tuberculosis
+MRYAFAAEATTCNAFWRNVDMTVTALYEVPLGVCTQDPDRWTTTPDDEAKTLCRACPRRW
+LCARDAVESAGAEGLWAGVVIPESGRARAFALGQLRSLAERNGYPVRDHRVSAQSA</code></pre>
+<p>FASTA is widely used because it is <strong>human-readable, compact, and compatible</strong> with most bioinformatics tools. UniProt allows you to download protein sequences directly in FASTA format for further analysis.</p>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.6</span> Exercises</h2>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 1 - Exploring the PDB
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<ul>
+<li>Go to the <a href="https://www.rcsb.org/" target="_blank">RCSB PDB portal</a></li>
+<li>Search for “<strong>vitamin D receptor</strong>”, or directly by the PDB ID: “<strong>1DB1</strong>”
+<ul>
+<li>Note: use the CSM toggle when you also want to include high-accuracy AlphaFold2 models (not experimentally determined)</li>
+</ul></li>
+</ul>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What expression system and method was used to determine this structure?</li>
+<li>Does this protein have any known domains?</li>
+</ul>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<p>Looking at the <a href="https://www.rcsb.org/structure/1DB1">PDB entry for 1DB1</a>, we can see:</p>
+<ul>
+<li>From the <strong>Structure Summary</strong> tab: The structure was determined using X-ray crystallography, and the expression system used was <em>Escherichia coli</em>.</li>
+<li>From the <strong>Annotations</strong> tab: We can see the “Vitamin D nuclear receptor” domain is annotated for this protein.</li>
+</ul>
+<p>We could find further details for the protein, namely specific binding sites from <a href="https://www.uniprot.org/uniprotkb/P11473/entry">UniProt entry P11473</a>, which is linked from the “Structure Summary” tab of the PDB entry.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.7</span> Summary</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key Points
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Structural biology relies on a network of databases that store and organise protein information.</p></li>
+<li><p>Some of the main resources include:</p>
+<ul>
+<li><strong>UniProt</strong> - protein sequence and functional annotation <a href="https://www.uniprot.org/">https://www.uniprot.org/</a></li>
+<li><strong>PDB</strong> - experimentally determined structures <a href="https://www.rcsb.org/">https://www.rcsb.org/</a></li>
+<li><strong>AlphaFoldDB</strong> - predicted protein structures <a href="https://alphafold.ebi.ac.uk/">https://alphafold.ebi.ac.uk/</a></li>
+<li><strong>InterPro</strong> - domain and motif annotations <a href="https://www.ebi.ac.uk/interpro/">https://www.ebi.ac.uk/interpro/</a></li>
+<li><strong>CATH</strong> - structural classification of protein folds <a href="https://cathdb.github.io/">https://cathdb.github.io/</a></li>
+</ul></li>
+<li><p>Two main file formats are used to store protein structures:</p>
+<ul>
+<li><strong>PDB</strong> - the original file format definition to store three-dimensional structures, which is still used by many applications.</li>
+<li><strong>PDBx/mmCIF</strong> - a modern format that is now widely adopted, allowing storing larger structures and more complex metadata.</li>
+</ul></li>
+<li><p>Protein sequences are stored in FASTA format.</p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../materials/01-intro.html" class="pagination-link" aria-label="Introduction to protein structure prediction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to protein structure prediction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../materials/03-chimerax_basics.html" class="pagination-link" aria-label="Visualising structures with ChimeraX">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualising structures with ChimeraX</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> <img src="https://creativecommons.org/images/deed/cc_icon_black_x2.png" class="img-fluid" width="25"> Cambridge Research Informatics Training</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

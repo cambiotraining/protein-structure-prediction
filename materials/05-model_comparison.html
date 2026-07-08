@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Comparing protein structures</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../materials/06-multimer.html" rel="next">
+<link href="../materials/04-monomer.html" rel="prev">
+<link href="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university-of-cambridge-favicon.ico" rel="icon">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bb373a9d6c60814f0d90357058c9134b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo light-content">
+    <img src="../site_libs/quarto-contrib/quarto-project/cambiotraining/crit-format/img/university_crest_reversed.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Prediction and Analysis of Protein Structures</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/cambiotraining/protein-structure-prediction"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:github" style="font-size: 1.25em;" aria-label="Icon github from fa6-brands Iconify.design set." title="CRIT GitHub"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/bioinfocambs.bsky.social"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" style="font-size: 1.25em;" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="CRIT Bluesky"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://genomic.social/@BioInfoCambs"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="fa6-brands:mastodon" style="font-size: 1.25em;" aria-label="Icon mastodon from fa6-brands Iconify.design set." title="CRIT Mastodon"></iconify-icon></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bioinfotraining.bio.cam.ac.uk/"> 
+<span class="menu-text"><iconify-icon role="img" inline="" icon="mdi:web" style="font-size: 1.25em;" aria-label="Icon web from mdi Iconify.design set." title="CRIT Website"></iconify-icon></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    
+    <style>
+    #version-dropdown {
+      list-style: none;
+    }
+    </style>
+    
+
+  <li id="version-dropdown" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-versions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="menu-text">Version:</span> <span class="version-badge" aria-hidden="true">Latest</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-versions">
+      <li>
+        <a class="dropdown-item" href="/protein-structure-prediction/index.html">
+          <span class="dropdown-text">Latest</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Welcome</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data &amp; Setup</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to protein structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Protein structure databases</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/03-chimerax_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Visualising structures with ChimeraX</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure prediction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/04-monomer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/05-model_comparison.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/06-multimer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predicting protein complexes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Structure analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/07-chimerax_ligand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysing protein-ligand interactions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/08-chimerax_alphamissense.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Mapping mutation effects onto structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/09-chimerax_publication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Publication-quality visualisations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Additional exercises</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/additional_exercises/whib6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Transcriptional regulator WhiB6</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../versions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archived Versions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/further_reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Further Reading and Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/appendices/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">5.1</span> Overview</a></li>
+  <li><a href="#example-protein-slc52a2" id="toc-example-protein-slc52a2" class="nav-link" data-scroll-target="#example-protein-slc52a2"><span class="header-section-number">5.2</span> Example protein: SLC52A2</a></li>
+  <li><a href="#searching-for-homologous-structures" id="toc-searching-for-homologous-structures" class="nav-link" data-scroll-target="#searching-for-homologous-structures"><span class="header-section-number">5.3</span> Searching for homologous structures</a>
+  <ul class="collapse">
+  <li><a href="#foldseek" id="toc-foldseek" class="nav-link" data-scroll-target="#foldseek"><span class="header-section-number">5.3.1</span> FoldSeek</a></li>
+  <li><a href="#dali" id="toc-dali" class="nav-link" data-scroll-target="#dali"><span class="header-section-number">5.3.2</span> DALI</a></li>
+  </ul></li>
+  <li><a href="#structural-alignment-with-matchmaker" id="toc-structural-alignment-with-matchmaker" class="nav-link" data-scroll-target="#structural-alignment-with-matchmaker"><span class="header-section-number">5.4</span> Structural alignment with MatchMaker</a></li>
+  <li><a href="#visualising-structural-differences" id="toc-visualising-structural-differences" class="nav-link" data-scroll-target="#visualising-structural-differences"><span class="header-section-number">5.5</span> Visualising structural differences</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.6</span> Exercises</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.7</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Comparing protein structures</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Learning objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Align protein structures using structural alignment tools such as MatchMaker.</li>
+<li>Compare predicted models with experimentally solved structures.</li>
+<li>Interpret structural differences using RMSD-based colouring.</li>
+<li>Recognise when global alignments fail for multidomain proteins.</li>
+<li>Evaluate the consistency of multiple AlphaFold predictions.</li>
+<li>Identify conserved structural features across species.</li>
+</ul>
+</div>
+</div>
+<section id="overview" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">5.1</span> Overview</h2>
+<p>Predicting a protein structure is only the first step. We must also ask an important question:</p>
+<p><strong>How reliable is this model?</strong></p>
+<p>One useful approach is <strong>structural comparison</strong>. By aligning a predicted structure with other models or experimentally solved structures, we can:</p>
+<ul>
+<li>evaluate whether the predicted fold is plausible</li>
+<li>identify conserved structural regions</li>
+<li>detect flexible or uncertain parts of the protein</li>
+</ul>
+<p>In this section we will explore several common comparison scenarios:</p>
+<ul>
+<li>compare a predicted structure with <strong>homologous experimental structures</strong></li>
+<li>compare predictions from <strong>different AlphaFold versions</strong></li>
+<li>compare <strong>multiple predictions of the same protein</strong></li>
+<li>interpret structural differences using <strong>RMSD colouring</strong></li>
+</ul>
+</section>
+<section id="example-protein-slc52a2" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="example-protein-slc52a2"><span class="header-section-number">5.2</span> Example protein: SLC52A2</h2>
+<p>We will begin with a human protein called <strong>SLC52A2</strong> (UniProt ID: <strong>Q9HAB3</strong>).</p>
+<p>SLC52A2 is a <strong>membrane transporter for vitamin B2 (riboflavin)</strong>. Mutations in this protein can cause a childhood-onset neurological disorder called <strong>Brown-Vialetto-Van Laere syndrome</strong>.</p>
+<p>Many of these mutations reduce protein expression, or riboflavin transport activity. At present, <strong>no experimentally determined structure</strong> exists for the human protein. This makes it a good example for exploring how predicted structures can be evaluated using structural comparisons.</p>
+<p>First, we load the AlphaFold prediction from AlphaFoldDB:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">close</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">alphafold</span> fetch Q9HAB3 version 6</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">hide</span> atoms</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> <span class="im">#1</span> salmon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="searching-for-homologous-structures" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="searching-for-homologous-structures"><span class="header-section-number">5.3</span> Searching for homologous structures</h2>
+<p>Even when a protein has no solved structure, <strong>related proteins may have been crystallised</strong>. If a homologous structure exists, we can align it to our model and examine how well the folds match.</p>
+<p>Two web-based tools for comparing protein structures are:</p>
+<ul>
+<li><strong>DALI</strong> - high-sensitivity method of structure alignment (<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.4519">Holm et al.&nbsp;2023</a>)</li>
+<li><strong>FoldSeek</strong> - rapid structure search at proteome scale (<a href="https://www.nature.com/articles/s41587-023-01773-0">van Kempen et al.&nbsp;2024</a>)</li>
+</ul>
+<p>Both of these tools allow searching structural databases using the three-dimensional fold rather than sequence similarity alone.</p>
+<section id="foldseek" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="foldseek"><span class="header-section-number">5.3.1</span> FoldSeek</h3>
+<p>FoldSeek can be accessed:</p>
+<ul>
+<li>Through the <a href="https://search.foldseek.com/search" target="_blank"><strong>FoldSeek web server</strong></a></li>
+<li>Directly within ChimeraX: <code>Tools &gt; Structure Comparison &gt; FoldSeek</code></li>
+</ul>
+<p>After submiting a PDB file, FoldSeek will return a ranked list of similar structures against several of its databases. For experimentally-resolved structures, the most relevant database is the <strong>PDB100</strong>.</p>
+<p>The results table includes:</p>
+<ul>
+<li><strong>Target:</strong> The PDB ID of each hit, with a suffix indicating the assembly and specific chain. E.g. <code>6ob6-assembly1_A</code> refers to chain A of the first assembly in PDB entry 6OB6.</li>
+<li><strong>Description:</strong> A short description of the hit, often including the protein name.</li>
+<li><strong>Scientific name:</strong> The species from which the structure was derived.</li>
+<li><strong>Prob:</strong> The probability that the hit is a true structural homologue.</li>
+<li><strong>Seq. Id.:</strong> The identity between the aligned sequences of the hit and the query.</li>
+<li><strong>E-Value:</strong> The expectation value for the hit, indicating the significance of the match. Lower E-values indicate more significant matches.</li>
+<li><strong>Position in query:</strong> A schematic representation of the range of residues in the query structure that align with the hit.</li>
+<li><strong>Alignment:</strong> Clicking this button will display the sequence alignment between the query and the hit, along with a superposition of the two structures.</li>
+</ul>
+<p>The top hits often include structures with similar folds, even if their sequences are very different. For example, one of the top hits for SLC52A2 the Human equilibrative nucleoside transporter-1 (PDB <strong>6OB6</strong>), which shares only ~12% sequence identity with SLC52A2.</p>
+<p>The structural alignment provides two scores:</p>
+<ul>
+<li><strong>TM-score:</strong> A measure of structural similarity that is independent of protein length. Scores above 0.5 generally indicate similar folds.</li>
+<li><strong>RMSD:</strong> The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Redundancy-filtered PDB lists
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may often see references to “PDB25”, “PDB50”, “PDB90” or “PDB100” in the results of database searching tools such as FoldSeek and DALI.</p>
+<p>These refer to different versions of the Protein Data Bank (PDB) that have been filtered to remove redundant structures based on sequence similarity.</p>
+<ul>
+<li><strong>PDB25</strong> - contains only one representative structure for each cluster of sequences with &gt;25% identity. This is a highly non-redundant set, useful for identifying distant homologues.</li>
+<li><strong>PDB50</strong> - contains one representative for each cluster of sequences with &gt;50% identity. This is a moderately non-redundant set, useful for general searches.</li>
+<li><strong>PDB90</strong> - contains one representative for each cluster of sequences with &gt;90% identity. This is a less redundant set, useful for finding closely related structures.</li>
+<li><strong>PDB100</strong> - contains all structures in the PDB, only removing chains that are 100% identical. This is the most comprehensive set, but may include many similar structures.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="dali" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="dali"><span class="header-section-number">5.3.2</span> DALI</h3>
+<p>DALI can be accessed from the <a href="http://ekhidna2.biocenter.helsinki.fi/dali/" target="_blank">DALI web server</a>. Click on “PDB Search” and upload your structure file to search for similar folds in the PDB.</p>
+<p>The results will often be similar to FoldSeek, although the ranking of hits may differ due to differences in the underlying algorithms.</p>
+<p>One the job completes, you can choose to view the results from against different redundancy-filtered versions of the PDB (see information box above). DALI provides three target lists: PDB25, PDB50 and PDB90. Lower numbers remove more redundancy and highlight more distant structural relationships. You can also view the results against the full PDB, which may include more redundant structures.</p>
+<p>The results table includes:</p>
+<ul>
+<li><strong>Chain:</strong> The PDB ID and chain of the hit structure. E.g. <code>6OB6-A</code> refers to chain A of PDB entry 6OB6.</li>
+<li><strong>Z:</strong> A Z-score indicating the significance of the structural match. Higher Z-scores indicate more significant matches, with scores above 2 generally considered significant.</li>
+<li><strong>rmsd:</strong> The root mean square deviation of atomic positions after superposition. Lower RMSD values indicate better structural agreement.</li>
+<li><strong>lali:</strong> The number of aligned residues between the query and the hit.</li>
+<li><strong>nres:</strong> The total number of residues in the hit structure.</li>
+<li><strong>%id:</strong> The percentage of identical residues in the aligned region between the query and the hit.</li>
+<li><strong>PDB:</strong> A link to the PDB structure.</li>
+<li><strong>Description:</strong> A brief description of the hit structure.</li>
+</ul>
+<p>You can select a hit and click:</p>
+<ul>
+<li><strong>Structural Alignment</strong> to view the sequence alignment</li>
+<li><strong>3D Superposition</strong> to view the 3D alignment of the two structures</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>DALI server security and stability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The DALI server currently <strong>only supports HTTP</strong> (rather than HTTPS), which may cause security warnings in modern browsers. Although unlikely, data transferred over HTTP could potentially be intercepted by third parties. If you encounter security warnings, you can usually proceed, however, be cautious if you are working with sensitive data.</p>
+<p>We have also sometimes found the <strong>DALI server to be unstable</strong>, with long wait times or failed jobs. You may experience a “Connection has timed out” error after submitting a job. We have found that <strong>refreshing the results page</strong> after a while will often reveal the results.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="structural-alignment-with-matchmaker" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="structural-alignment-with-matchmaker"><span class="header-section-number">5.4</span> Structural alignment with MatchMaker</h2>
+<p>Once we have identified a homologous structure, we can perform a structural alignment in ChimeraX to compare the folds in more detail.</p>
+<p>As an example, consider one of the top FoldSeek hits for SLC52A2: <strong>6OB6</strong>. We can import this structure into the session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> 6ob6</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> delete</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">hide</span> atoms</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Before aligning structures, it is helpful to check the models and chains present in the session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">info</span> chains</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>chain id #1/A chain_id A
+chain id #2/A chain_id A
+chain id #2/B chain_id B</code></pre>
+<p>Here we see that:</p>
+<ul>
+<li>the <strong>AlphaFold model</strong> is stored in <strong>model #1</strong></li>
+<li>the <strong>PDB structure</strong> is stored in <strong>model #2</strong></li>
+<li>the experimental structure contains <strong>two chains (A and B)</strong></li>
+</ul>
+<p>We are now ready to perform a structural alignment.</p>
+<p>ChimeraX provides the <strong>MatchMaker (<code>mm</code>)</strong> command for structural alignment.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#1</span> to <span class="im">#2</span> showAlignment true</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This command:</p>
+<ul>
+<li>aligns model <strong>#1</strong> (the predicted structure) to model <strong>#2</strong> (the experimental structure)</li>
+<li>displays the <strong>sequence alignment</strong> in the Sequence Viewer</li>
+</ul>
+<p>Structural alignment works by finding the best superposition of corresponding residues between two structures.</p>
+<p>Because the alignment only involves <strong>chain B</strong>, we hide the other chain to simplify the view:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">cartoon</span> hide <span class="im">#2</span><span class="fu">/A</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This allows us to focus on the comparison between the predicted model and the experimental structure.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_6ob6_alignment.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/chimerax_6ob6_alignment.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="visualising-structural-differences" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="visualising-structural-differences"><span class="header-section-number">5.5</span> Visualising structural differences</h2>
+<p>After the alignment, ChimeraX calculates several useful attributes, including <strong>per-residue RMSD values</strong>. The attribute <code>seq_rmsd</code> stores the RMSD for each aligned residue.</p>
+<p>RMSD measures <strong>how far corresponding atoms are apart</strong> after structural superposition. Small RMSD values indicate strong agreement between structures.</p>
+<p>We can colour the predicted model according to this attribute (we hide the experimental structure to make the colouring easier to see):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> <span class="im">#1</span> white</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> byattribute r<span class="im">:seq</span>_rmsd <span class="im">#1</span> target csab palette RdYlBu key true</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">cartoon</span> hide <span class="im">#2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This produces a colour gradient showing structural agreement:</p>
+<ul>
+<li><strong>Red</strong> - smaller deviation, strong structural agreement</li>
+<li><strong>Yellow</strong> - intermediate values</li>
+<li><strong>Blue</strong> - larger structural differences</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_6ob6_rmsd_colouring_default.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/chimerax_6ob6_rmsd_colouring_default.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+<p>One important thing to note is the choice of colour scale breaks. Above, the breaks between colours are automatically set by ChimeraX based on the distribution of RMSD values. This can sometimes lead to a colour scheme that is dominated by a few outliers with very high RMSD values, making it difficult to see the variation in the rest of the structure. It may also give the impression that most of the structure has very high agreement, when in fact several of the residues have intermediate or even high RMSD values.</p>
+<p>An alternative approach is to set the colour breaks manually, using the graphical user interface <strong>“Tools → Structure Analysis → Render/Select by Attribute”</strong>:</p>
+<ul>
+<li>Choose: “Attributes of residues”</li>
+<li>Choose: “Attribute: seq_rmsd”</li>
+<li>Adjust colouring thresholds using the sliding bars on the histogram of RMSD values</li>
+</ul>
+<p>The image below shows the same alignment with:</p>
+<ul>
+<li>Lower threshold (red) set to 0 Å, indicating perfect agreement</li>
+<li>Midpoint (yellow) set to 5 Å, which would indicate some deviation from the reference structure</li>
+<li>Upper threshold (blue) set to 10 Å, meaning that anything above that value will be coloured blue</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_6ob6_rmsd_colouring_manual.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/chimerax_6ob6_rmsd_colouring_manual.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></a></p>
+</figure>
+</div>
+</section>
+<section id="exercises" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.6</span> Exercises</h2>
+<p><strong>Reminder:</strong> In this exercise series you are investigating the structure of the amphioxus estrogen receptor and comparing it with experimentally determined human ER structures.</p>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 1 - Comparing two model predictions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>In the <a href="../materials/04-monomer.html">monomer prediction exercises</a>, we predicted the structure of the full amphioxus ER protein using AlphaFold3. We will now align and compare this model with the prediction available in AlphaFoldDB, which was generated using AlphaFold2.</p>
+<p>Run the following code in ChimeraX to open and align the two models:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">close</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">cd</span> <span class="op">~</span><span class="fu">/C</span>ourse_Materials<span class="fu">/e</span>r_amphioxus<span class="fu">/f</span>ull_monomer_af3</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> fold_er_amphioxus_full_monomer_af3_model_0.cif</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">alphafold</span> fetch B3V8B7 version 6</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> <span class="im">#2</span> steelblue</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#2</span> to <span class="im">#1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Questions:</strong></p>
+<ol type="1">
+<li>What do you observe about the alignment of the two models?
+<ul>
+<li>Consider both the agreement within individual domains and the relative orientation of the domains.</li>
+<li>Focus in particular on the DNA-binding (294-370) and ligand-binding (441-682) domains.</li>
+</ul></li>
+<li>Given the issues you see when aligning the entire protein, can you think of a different way to approach this comparison?</li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>Aligning the entire protein produces a suboptimal alignment. The ligand-binding domain aligns well between the two models, but the DNA-binding domain does not.</p>
+<p>This occurs because the two models predict slightly different orientations for the domains relative to each other. The flexible linker between the domains introduces uncertainty in their relative positioning, which makes a global alignment of the entire protein less reliable.</p></li>
+<li><p>A better approach is to align each domain separately.</p>
+<ul>
+<li>First align the DNA-binding domain:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">hide</span> cartoon</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">cartoon</span> <span class="im">:294-370</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#2:294-370</span> to <span class="im">#1:294-370</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Then align the ligand-binding domain:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">hide</span> cartoon</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">cartoon</span> <span class="im">:441-682</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#2:441-682</span> to <span class="im">#1:441-682</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When aligning the domains separately, the DNA-binding domain shows very strong agreement between the two models. The ligand-binding domain also aligns well overall, although there are small differences near the start of the domain, where the AlphaFold3 model predicts a slightly longer alpha-helix than the AlphaFold2 model.</p>
+<p>This demonstrates that while the internal structure of each domain is predicted consistently, the relative orientation of domains in flexible multidomain proteins may vary between models.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 2 - Comparing multiple models
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>In the <a href="../materials/04-monomer.html">monomer prediction exercises</a>, we predicted the structure of the ligand-binding domain (LBD) of the ER protein using ColabFold (AlphaFold2).</p>
+<p>In the second run of the AlphaFold2 predictions, we used <strong>four random seeds</strong> for each of the <strong>five AlphaFold2 neural network models</strong>, resulting in a total of <strong>20 structure predictions</strong>.</p>
+<p>We can use this ensemble of models to evaluate how consistent the predicted structure is for this domain.</p>
+<p>Run the following commands in ChimeraX to open the models and align them:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">close</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">cd</span> <span class="op">~</span><span class="fu">/C</span>ourse_Materials<span class="fu">/e</span>r_amphioxus<span class="fu">/l</span>bd_monomer_af2_run2/</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> *unrelaxed*.pdb</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#2-20</span> to <span class="im">#1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>close</code> starts a new ChimeraX session.</li>
+<li><code>cd</code> moves to the directory containing the prediction outputs.</li>
+<li><code>open</code> loads all structure files matching the pattern <code>*unrelaxed*.pdb</code> (the <code>*</code> is known as a “wildcard” and matches any characters in the file names).</li>
+<li><code>mm</code> (MatchMaker) sequentially aligns models <code>#2-20</code> to model <code>#1</code>, which is used as the reference structure.</li>
+</ul>
+<p><strong>Questions:</strong></p>
+<ol type="1">
+<li>What can you conclude about the consistency of the predicted structures across the different models and random seeds?</li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>After aligning all 20 models, we observe that:</p>
+<ul>
+<li>The core of the ligand-binding domain shows very strong structural agreement across all models.</li>
+<li>The main variation occurs near the N-terminus and C-terminus, which correspond to regions flanking the annotated LBD domain.</li>
+<li>These terminal regions appear more flexible and are predicted less consistently.</li>
+</ul>
+<p>Overall, the strong agreement in the core of the domain suggests that the predicted fold of the LBD is robust and not sensitive to the choice of AlphaFold model or random seed. Variation at the termini is common in structure predictions and often reflects flexible regions of the protein.</p></li>
+</ol>
+<p>To make our comparisons visually easier, we could colour the structures in different ways:</p>
+<ul>
+<li><p>Give each structure its own colour (the default, when importing multiple structures):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> bymodel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Use a sequential colour palette from the N-terminus to the C-terminus:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">rainbow</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 3 - Comparing predictions with resolved structures
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>Finally, we will compare our <em>de novo</em> prediction of the LBD region using AlphaFold3 with an experimentally determined human structure that includes the estradiol ligand (PDB: <strong>1ERE</strong>).</p>
+<p>The PDB entry contains three assemblies of the receptor as a homodimer (i.e.&nbsp;a total of six chains). For simplicity, we will keep only one chain for the comparison:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">close</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> 1ERE</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> <span class="fu">/B-F</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">hide</span> atoms</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">show</span> cartoon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Next, open the AlphaFold3 prediction of the amphioxus ligand-binding domain:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">cd</span> <span class="op">~</span><span class="fu">/C</span>ourse_Materials<span class="fu">/e</span>r_amphioxus<span class="fu">/l</span>bd_monomer_af3/</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> fold_er_amphioxus_lbd_monomer_af3_model_0.cif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Questions:</strong></p>
+<ol type="1">
+<li>Align the two structures using the PDB structure as the reference. Colour the amphioxus prediction by RMSD.</li>
+<li>Display the ligand atoms in stick style, colour them <code>gold</code>, and add a ligand surface with 50% transparency.</li>
+<li>What can you conclude about the alignment of the amphioxus prediction, particularly around the ligand-binding region?
+<ul>
+<li>Hint: hiding the reference PDB model may help you see the coloured RMSD values.</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Answer</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="callout-answer">
+<ol type="1">
+<li><p>We align the structures using the MatchMaker command and colour the prediction by RMSD relative to the experimental structure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mm</span> <span class="im">#2</span> to <span class="im">#1</span> showalignment true</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> byattribute r<span class="im">:seq</span>_rmsd <span class="im">#2</span> target csab palette RdYlBu key true</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This colours residues in the predicted structure according to their structural deviation from the reference.</p></li>
+<li><p>We display the ligand in stick representation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode chimerax code-with-copy"><code class="sourceCode chimerax"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">show</span> <span class="im">ligand</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">style</span> <span class="im">ligand</span> stick</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">color</span> <span class="im">ligand</span> gold</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">surface</span> <span class="im">ligand</span> color gold transparency 50</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>After hiding the cartoon representation of the reference structure (<code>hide #1 cartoon</code>), we can more easily see the RMSD colouring on the amphioxus prediction.</p>
+<p>We can see that residues forming the ligand-binding pocket show <strong>low RMSD values</strong>, indicating strong structural agreement with the experimentally determined human structure. This suggests that the architecture of the ligand-binding pocket is highly conserved, even between distantly related species such as amphioxus and humans.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/chimerax_er_alignment_roll.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/chimerax_er_alignment_roll.gif" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
+</figure>
+</div>
+<p>This analysis illustrates how key functional regions of proteins can remain structurally conserved over long evolutionary timescales.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Exercise</span>Exercise 4 - Search for homologous structures
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="callout-exercise">
+<p>We have focused our comparisons of the amphioxus ER with experimentally determined human structures. However, it is possible that more closely related structures exist in the PDB, for example from other invertebrates.</p>
+<ul>
+<li>Search for homologous structures using FoldSeek, either through the web server or directly in ChimeraX.</li>
+<li>Search using the Dali server as an alternative approach.</li>
+<li>Compare the top hits between the two search methods. Do they identify the same structures? Are there any differences in the ranking of hits?</li>
+<li>Align the top hits to your amphioxus prediction and evaluate the structural agreement, particularly in the ligand-binding domain.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.7</span> Summary</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key points
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Structural comparison tools (e.g.&nbsp;FoldSeek, DALI, or structural alignment methods) can identify related proteins even when sequence similarity is low.</p></li>
+<li><p>Conserved protein domains often maintain similar three-dimensional folds across large evolutionary distances.</p></li>
+<li><p>Structural alignment allows comparison of predicted models with experimentally determined structures.</p></li>
+<li><p>RMSD-based colouring can highlight regions of strong agreement or divergence between structures.</p></li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../materials/04-monomer.html" class="pagination-link" aria-label="Monomer structure prediction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Monomer structure prediction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../materials/06-multimer.html" class="pagination-link" aria-label="Predicting protein complexes">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Predicting protein complexes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> <img src="https://creativecommons.org/images/deed/cc_icon_black_x2.png" class="img-fluid" width="25"> Cambridge Research Informatics Training</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
