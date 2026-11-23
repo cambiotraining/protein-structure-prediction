@@ -13,8 +13,8 @@ project:
     - materials/*
     - "!materials/*/no_render"
 
-format: 
-  crit-format-html: 
+format:
+  crit-format-html:
     syntax-definitions:
       - chimerax.xml
 
@@ -67,5 +67,7 @@ book:
           href: index.md
         - text: "Data & Setup"
           href: setup.md
-  appendices: 
+        - text: "Slides"
+          href: materials/slides.md
+  appendices:
     - href: versions.md
