@@ -5,7 +5,7 @@
 ::: {.callout-tip}
 #### Downloading the slides
 
-The original presentation can be found <a href="https://docs.google.com/presentation/d/1Gk4rXO0221SiQp1fG-ApTc57Tihpi8XuFFr7jh3WbOo/edit?usp=sharing" target="_blank">here</a>, where it can be easily downloaded in different formats (File > Download).
+The original presentation can be found <a href="https://docs.google.com/presentation/d/1TqGs8-I0GGBwgruWjZGfWfhjmQFYy4e9_ViCtn25XSc/edit?usp=sharing" target="_blank">here</a>, where it can be easily downloaded in different formats (File > Download).
 :::
 
 <style>
@@ -23,5 +23,5 @@ The original presentation can be found <a href="https://docs.google.com/presenta
 </style>
 
 <div class="slide-container">
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRtehOP2JdbPjCDb-Tua-aY3WzajbPNqakevekocnsOI5ommy2hs12oC4oi7ayglViE9diEf_jJoVVs/pubembed?start=false&loop=false&delayms=60000" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQi2Lu1U9nO7AB55NqILMnsZ2BXiWEt2ty-jQM0JGPHNAS7sJFyW_fE9rY3kBflEJFfs4jkRA3q1kMy/pubembed?start=false&loop=false&delayms=60000" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 </div>
